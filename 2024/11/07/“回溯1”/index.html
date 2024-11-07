@@ -4,14 +4,20 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>回溯1-组合问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="解决问题  回溯为一种穷尽方法组合问题：N个数里面按一定规则找出k个数的集合切割问题：一个字符串按一定规则有几种切割方式子集问题：一个N个数的集合里有多少符合条件的子集排列问题：N个数按一定规则全排列，有几种排列方式棋盘问题：N皇后，解数独等等 回溯三步函数设置 1void backtracking(参数) 终止条件 1234if (终止条件) &#123;    存放结果;    return;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回溯1-组合问题">
+<meta property="og:url" content="http://example.com/2024/11/07/%E2%80%9C%E5%9B%9E%E6%BA%AF1%E2%80%9D/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="解决问题  回溯为一种穷尽方法组合问题：N个数里面按一定规则找出k个数的集合切割问题：一个字符串按一定规则有几种切割方式子集问题：一个N个数的集合里有多少符合条件的子集排列问题：N个数按一定规则全排列，有几种排列方式棋盘问题：N皇后，解数独等等 回溯三步函数设置 1void backtracking(参数) 终止条件 1234if (终止条件) &#123;    存放结果;    return;">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-11-07T07:37:43.000Z">
+<meta property="article:modified_time" content="2024-11-07T16:17:43.681Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="回溯算法">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -67,9 +73,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-“回溯1”" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-“回溯1”" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/11/07/%E2%80%9C%E5%9B%9E%E6%BA%AF1%E2%80%9D/" class="article-date">
   <time class="dt-published" datetime="2024-11-07T07:37:43.000Z" itemprop="datePublished">2024-11-07</time>
@@ -82,8 +86,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/11/07/%E2%80%9C%E5%9B%9E%E6%BA%AF1%E2%80%9D/">回溯1-组合问题</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      回溯1-组合问题
     </h1>
   
 
@@ -129,115 +133,19 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-“二叉树”" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/11/06/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91%E2%80%9D/" class="article-date">
-  <time class="dt-published" datetime="2024-11-06T15:36:15.000Z" itemprop="datePublished">2024-11-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/11/06/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91%E2%80%9D/">二叉树类型回顾</a>
-    </h1>
+    <a href="/2024/11/06/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91%E2%80%9D/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">二叉树类型回顾</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="经过验证我认为-return-root和前中后序没关系-随时都可以使用"><a href="#经过验证我认为-return-root和前中后序没关系-随时都可以使用" class="headerlink" title="经过验证我认为 return root和前中后序没关系 随时都可以使用"></a>经过验证我认为 return root和前中后序没关系 随时都可以使用</h1><h1 id="二叉树累加计算"><a href="#二叉树累加计算" class="headerlink" title="二叉树累加计算"></a>二叉树累加计算</h1><p>从后往前写 第一个：<br>给出二叉搜树的根节点，该树的节点值各不相同，请你将其转换为累加树（Greater Sum Tree），使每个节点 node 的新值等于原树中大于或等于 node.val 的值之和。</p>
-<p>因为累加树的原因所以要求从最大的开始累加，定义就是从右到左 所以遍历顺序<br>右边 中 左边 加入一个数值用来记录前面所有的累加值</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> pre =<span class="number">0</span>;</span><br><span class="line">    <span class="function">TreeNode* <span class="title">convertBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!root) <span class="keyword">return</span> <span class="literal">NULL</span> ;</span><br><span class="line">        <span class="built_in">convertBST</span>(root-&gt;right);</span><br><span class="line">        root-&gt;val +=pre;</span><br><span class="line">        pre = root-&gt;val;</span><br><span class="line">        <span class="built_in">convertBST</span>(root-&gt;left);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h1 id="将有序数组转换为二叉搜索树"><a href="#将有序数组转换为二叉搜索树" class="headerlink" title="将有序数组转换为二叉搜索树"></a>将有序数组转换为二叉搜索树</h1><p>将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。<br>本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。</p>
-<p><span style="color: red;">因为是有序树，同时是高度平衡的，所以不用担心切割的时候找不到中间位置，通过中间位置的计算切割，之后递归的时候接住就可以了</span></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">traversal</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> left, <span class="type">int</span> right)</span> </span>&#123;<span class="comment">//左右闭区间</span></span><br><span class="line">        <span class="keyword">if</span> (left &gt; right) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="type">int</span> mid = left + ((right - left) / <span class="number">2</span>);</span><br><span class="line">        TreeNode* root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(nums[mid]);</span><br><span class="line">        root-&gt;left = <span class="built_in">traversal</span>(nums, left, mid - <span class="number">1</span>);</span><br><span class="line">        root-&gt;right = <span class="built_in">traversal</span>(nums, mid + <span class="number">1</span>, right);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">sortedArrayToBST</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        TreeNode* root = <span class="built_in">traversal</span>(nums, <span class="number">0</span>, nums.<span class="built_in">size</span>() - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h1 id="修剪二叉搜索树"><a href="#修剪二叉搜索树" class="headerlink" title="修剪二叉搜索树"></a>修剪二叉搜索树</h1><p>给定一个二叉搜索树，同时给定最小边界L 和最大边界 R。通过修剪二叉搜索树，使得所有节点的值在[L, R]中 (R&gt;&#x3D;L) 。你可能需要改变树的根节点，所以结果应当返回修剪好的二叉搜索树的新的根节点。</p>
-<p><span style="color: red;">每一次修建二叉树的时候有可能会发生二叉树的节点在这个边界里面，所以在删除节点的时候要求判定不违规的子节点续上。因为要续上所以返回的是有用的节点 retrun，  主要还是要判断之后跳过这个节点</span></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">trimBST</span><span class="params">(TreeNode* root, <span class="type">int</span> low, <span class="type">int</span> high)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">nullptr</span> ) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &lt; low) &#123;</span><br><span class="line">            TreeNode* right = <span class="built_in">trimBST</span>(root-&gt;right, low, high); <span class="comment">// 寻找符合区间[low, high]的节点</span></span><br><span class="line">            <span class="keyword">return</span> right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &gt; high) &#123;</span><br><span class="line">            TreeNode* left = <span class="built_in">trimBST</span>(root-&gt;left, low, high); <span class="comment">// 寻找符合区间[low, high]的节点</span></span><br><span class="line">            <span class="keyword">return</span> left;</span><br><span class="line">        &#125;</span><br><span class="line">        root-&gt;left = <span class="built_in">trimBST</span>(root-&gt;left, low, high); <span class="comment">// root-&gt;left接入符合条件的左孩子</span></span><br><span class="line">        root-&gt;right = <span class="built_in">trimBST</span>(root-&gt;right, low, high); <span class="comment">// root-&gt;right接入符合条件的右孩子</span></span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>快乐的一生</p>
-<h1 id=""><a href="#" class="headerlink" title=""></a></h1>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/06/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91%E2%80%9D/" data-id="cm3634hxx0001kgvq0s5mhzxw" data-title="二叉树类型回顾" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Binary-Tree/" rel="tag">Binary Tree</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/11/06/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2024-11-06T12:20:42.188Z" itemprop="datePublished">2024-11-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/11/06/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/06/hello-world/" data-id="cm3634hxo0000kgvq3sgj1xvz" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
 </section>
