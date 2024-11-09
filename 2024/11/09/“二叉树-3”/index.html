@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>“二叉树-3” | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="中序后序遍历构造二叉树这个远古记忆观察中序遍历发现根节点在中间，所以可以通过根节点左右区分左右子树，通过后续遍历的最后一个数值-代表着根节点 找到节点之后成功从中序里面划分了左右子树，通过左子树的个数 划分后序遍历的左右子树。之后继续来回划分就行 一直到最后这个里面只有一个节点了结束。 &#x2F;&#x2F;出现了逗号错误12345678910111213141516171819202122232425262728">
+<meta property="og:type" content="article">
+<meta property="og:title" content="“二叉树-3”">
+<meta property="og:url" content="http://example.com/2024/11/09/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-3%E2%80%9D/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="中序后序遍历构造二叉树这个远古记忆观察中序遍历发现根节点在中间，所以可以通过根节点左右区分左右子树，通过后续遍历的最后一个数值-代表着根节点 找到节点之后成功从中序里面划分了左右子树，通过左子树的个数 划分后序遍历的左右子树。之后继续来回划分就行 一直到最后这个里面只有一个节点了结束。 &#x2F;&#x2F;出现了逗号错误12345678910111213141516171819202122232425262728">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-11-09T07:57:32.000Z">
+<meta property="article:modified_time" content="2024-11-09T16:35:38.352Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="二叉树">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-“二叉树-3”" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/09/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-3%E2%80%9D/" class="article-date">
+  <time class="dt-published" datetime="2024-11-09T07:57:32.000Z" itemprop="datePublished">2024-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      “二叉树-3”
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="中序后序遍历构造二叉树"><a href="#中序后序遍历构造二叉树" class="headerlink" title="中序后序遍历构造二叉树"></a>中序后序遍历构造二叉树</h2><h2 id="这个远古记忆"><a href="#这个远古记忆" class="headerlink" title="这个远古记忆"></a>这个远古记忆</h2><p>观察中序遍历发现根节点在中间，所以可以通过根节点左右区分左右子树，通过后续遍历的最后一个数值-代表着根节点 找到节点之后成功从中序里面划分了左右子树，通过左子树的个数 划分后序遍历的左右子树。之后继续来回划分就行 一直到最后这个里面只有一个节点了结束。</p>
+<figure class="highlight cpp"><figcaption><span>//出现了逗号错误</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从这道题上来看最好还是返回节点</span></span><br><span class="line"> <span class="function">TreeNode* <span class="title">compare</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; inorder,vector&lt;<span class="type">int</span>&gt;&amp; postorder，<span class="type">int</span> inorder_begin,<span class="type">int</span> inorder_end,<span class="type">int</span> postorder_begin,<span class="type">int</span> postorder_end)</span></span>&#123;<span class="comment">//我想使用坐标的话必须再添加两个参数 对应是四个 为了方便设置为左闭右开</span></span><br><span class="line">    <span class="keyword">if</span>(postorder_begin &gt;= postorder_end) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="comment">//找出根节点</span></span><br><span class="line">    TreeNode* root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(postorder[postorder_end<span class="number">-1</span>]);</span><br><span class="line">    <span class="keyword">if</span>(postorder_end - postorder_begin ==<span class="number">1</span>) <span class="keyword">return</span> root;</span><br><span class="line">    <span class="type">int</span> index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = inorder_begin;i &lt; inorder_end;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(inorder[i] == root-&gt;val)&#123;</span><br><span class="line">            index = i;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> inorder_left_begin = inorder_begin;</span><br><span class="line">    <span class="type">int</span> inorder_left_end = index ;</span><br><span class="line">    <span class="type">int</span> inorder_right_begin = index<span class="number">+1</span>;</span><br><span class="line">    <span class="type">int</span> inorder_right_end = inorder_end;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> postorder_left_begin = postorder_begin;</span><br><span class="line">    <span class="type">int</span> postorder_left_end = postorder_begin +inorder_left_end - inorder_left_begin;</span><br><span class="line">    <span class="type">int</span> postorder_right_begin = postorder_left_end;</span><br><span class="line">    <span class="type">int</span> postorder_right_end = postorder_end<span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    root-&gt;left = <span class="built_in">compare</span>(inorder,postorder,inorder_left_begin,inorder_left_end,postorder_left_begin,postorder_left_end);</span><br><span class="line">    root-&gt;right = <span class="built_in">compare</span>(inorder,postorder,inorder_right_begin,inorder_right_end,postorder_right_begin,postorder_right_end);</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line"> &#125; </span><br><span class="line"> <span class="function">TreeNode* <span class="title">buildTree</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; inorder, vector&lt;<span class="type">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(inorder.<span class="built_in">size</span>()==<span class="number">0</span> ||postorder.<span class="built_in">size</span>() ==<span class="number">0</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">compare</span>(inorder,postorder,<span class="number">0</span>,inorder.<span class="built_in">size</span>(),<span class="number">0</span>,postorder.<span class="built_in">size</span>());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="求路径总和"><a href="#求路径总和" class="headerlink" title="求路径总和"></a>求路径总和</h2><p>给定一个二叉树和一个目标和，判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和。</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>我认为这道题拿过来就是一个搜索 通过给定的值去减去每一个遍历节点的值 一直到正好为0返回true;<br>同时还应该添加个回溯过程来保证一个路程可以多次使用；</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">buildTree</span><span class="params">(TreeNode* root,<span class="type">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(target == <span class="number">0</span> &amp;&amp; !root-&gt;left &amp;&amp; !root-&gt;right)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(!root) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(root-&gt;left)&#123;</span><br><span class="line">    target -= root-&gt;left-&gt;val;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">buildTree</span>(root-&gt;left,target)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    target +=root-&gt;left-&gt;val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;right)&#123;</span><br><span class="line">    target -= root-&gt;right-&gt;val;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">buildTree</span>(root-&gt;right,target)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    target +=root-&gt;right-&gt;val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">compare</span><span class="params">(TreeNode* root,<span class="type">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">NULL</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">buildTree</span>(root,target - root -&gt;val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="找树左下角的值"><a href="#找树左下角的值" class="headerlink" title="找树左下角的值"></a>找树左下角的值</h2><p>给定一个二叉树，在树的最后一行找到最左边的值。</p>
+<h3 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h3><p>我认为这个关键在于最后一行的最左边，那么层序遍历很简单就能找到，递归的话得记录深度了 ，深度最深的情况下找到左节点，不管什么遍历方式第一个最深的肯定是左节点 这里用层序练练手</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> result;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">compare</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    queue &lt;TreeNode*&gt;que;</span><br><span class="line">    <span class="keyword">if</span>(root) que.<span class="built_in">push</span>(root);</span><br><span class="line">    <span class="keyword">while</span>(!que.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        <span class="type">int</span> size = que.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>;i&lt;size;i++)&#123;</span><br><span class="line">            TreeNode*newroot = que.<span class="built_in">front</span>(); </span><br><span class="line">            que.<span class="built_in">pop</span>();</span><br><span class="line">           <span class="keyword">if</span>(newroot-&gt;left) que.<span class="built_in">push</span>(newroot-&gt;left);</span><br><span class="line">           <span class="keyword">if</span>(newroot-&gt;right) que.<span class="built_in">push</span>(newroot-&gt;right);</span><br><span class="line">           <span class="keyword">if</span>(i==<span class="number">0</span>) result = newroot-&gt;val;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="计算给定二叉树的所有左叶子之和"><a href="#计算给定二叉树的所有左叶子之和" class="headerlink" title="计算给定二叉树的所有左叶子之和"></a>计算给定二叉树的所有左叶子之和</h2><h3 id="解法-2"><a href="#解法-2" class="headerlink" title="解法"></a>解法</h3><p>这个没有什么描述 遍历到一个树有左没右的时候加左边的 之后把当前和左右节点中的符合的节点求和</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">sumOfLeftLeaves</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> leftValue = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断当前节点的左子节点是否为左叶子节点</span></span><br><span class="line">        <span class="keyword">if</span> (root-&gt;left &amp;&amp; !root-&gt;left-&gt;left &amp;&amp; !root-&gt;left-&gt;right) &#123;</span><br><span class="line">            leftValue = root-&gt;left-&gt;val;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 递归累加左子树和右子树中的左叶子节点和</span></span><br><span class="line">        leftValue += <span class="built_in">sumOfLeftLeaves</span>(root-&gt;left);</span><br><span class="line">        <span class="type">int</span> rightValue = <span class="built_in">sumOfLeftLeaves</span>(root-&gt;right);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> sum = leftValue + rightValue;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二叉树的所有路径"><a href="#二叉树的所有路径" class="headerlink" title="二叉树的所有路径"></a>二叉树的所有路径</h2><p>给定一个二叉树，返回所有从根节点到叶子节点的路径。<br>说明: 叶子节点是指没有子节点的节点 </p>
+<h3 id="解法-3"><a href="#解法-3" class="headerlink" title="解法"></a>解法</h3><p>这道题应该是回溯 知道最终节点返回 全都放在一个数组里面 按道理来说是前序遍历</p>
+<p><span style="color: red;">这道题在实际写的时候遇到的问题是字符串转换 还有回溯分开</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">compare</span><span class="params">(TreeNode* root, vector&lt;<span class="type">int</span>&gt; &amp;a, vector&lt;string&gt; &amp;b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!root) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    a.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 如果是叶子节点，构造路径字符串并加入结果</span></span><br><span class="line">    <span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;</span><br><span class="line">        string new_a;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; a.<span class="built_in">size</span>() - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            new_a += <span class="built_in">to_string</span>(a[i]) + <span class="string">&quot;-&gt;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        new_a += <span class="built_in">to_string</span>(a.<span class="built_in">back</span>());</span><br><span class="line">        b.<span class="built_in">push_back</span>(new_a);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 递归处理左子树并回溯</span></span><br><span class="line">    <span class="keyword">if</span> (root-&gt;left) &#123;</span><br><span class="line">        <span class="built_in">compare</span>(root-&gt;left, a, b);</span><br><span class="line">        a.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 递归处理右子树并回溯</span></span><br><span class="line">    <span class="keyword">if</span> (root-&gt;right) &#123;</span><br><span class="line">        <span class="built_in">compare</span>(root-&gt;right, a, b);</span><br><span class="line">        a.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">vector&lt;string&gt; <span class="title">binaryTreePaths</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt;a;</span><br><span class="line">    vector&lt;string&gt;b;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">NULL</span>) <span class="keyword">return</span> root;</span><br><span class="line">    <span class="built_in">compare</span>(root,a,b);</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h2><p>给定一个二叉树，判断它是否是高度平衡的二叉树。<br>本题中，一棵高度平衡二叉树定义为：一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。</p>
+<h3 id="解法-4"><a href="#解法-4" class="headerlink" title="解法"></a>解法</h3><p>返回BOOL类型 每次左右子树比对超过1返回错误-1 没超过1返回最大层数加上当前的层 1</p>
+<h3 id="这里我出现的错误就是没有在左右子树返回的第一时间判断是否有错误结果直接进行计算了-因为这个否决有搜索性质"><a href="#这里我出现的错误就是没有在左右子树返回的第一时间判断是否有错误结果直接进行计算了-因为这个否决有搜索性质" class="headerlink" title="这里我出现的错误就是没有在左右子树返回的第一时间判断是否有错误结果直接进行计算了 因为这个否决有搜索性质"></a>这里我出现的错误就是没有在左右子树返回的第一时间判断是否有错误结果直接进行计算了 因为这个否决有搜索性质</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">compare</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> left = <span class="built_in">compare</span>(root-&gt;left);</span><br><span class="line">    <span class="keyword">if</span> (left == <span class="number">-1</span>) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 如果左子树不平衡，立即返回 -1</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> right = <span class="built_in">compare</span>(root-&gt;right);</span><br><span class="line">    <span class="keyword">if</span> (right == <span class="number">-1</span>) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 如果右子树不平衡，立即返回 -1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果当前节点的左右子树高度差大于 1，标记为不平衡</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">abs</span>(right - left) &gt; <span class="number">1</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回当前子树的高度</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">max</span>(left, right) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isBalanced</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">compare</span>(root);</span><br><span class="line">    <span class="keyword">return</span> a != <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="完全二叉树的节点个数-二叉树-2里面有这道题-刚一天这脑子是寄了"><a href="#完全二叉树的节点个数-二叉树-2里面有这道题-刚一天这脑子是寄了" class="headerlink" title="完全二叉树的节点个数 二叉树-2里面有这道题 刚一天这脑子是寄了"></a>完全二叉树的节点个数 二叉树-2里面有这道题 刚一天这脑子是寄了</h2><p>给出一个完全二叉树，求出该树的节点个数。<br>示例 1：<br>输入：root &#x3D; [1,2,3,4,5,6]<br>输出：6<br>示例 2：<br>输入：root &#x3D; []<br>输出：0<br>示例 3：<br>输入：root &#x3D; [1]<br>输出：1</p>
+<h3 id="解法-5"><a href="#解法-5" class="headerlink" title="解法"></a>解法</h3><p>这题直接用层序遍历秒了 但是用递归练练手<br>递归的话还是对于这个性质在底层用满二叉树进行求解<br>唯一出现的问题就是我多判断了一步 不需要判断左右子树有无；</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">compare</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!root)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    TreeNode* left = root-&gt;left;</span><br><span class="line">    TreeNode* right = root-&gt;right;</span><br><span class="line">    <span class="type">int</span> leftdepth = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> rightdepth = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(left)&#123;</span><br><span class="line">        left = left-&gt;left;</span><br><span class="line">        leftdepth ++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(right)&#123;</span><br><span class="line">        right = right-&gt;right;</span><br><span class="line">        rightdepth++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (rightdepth == leftdepth)&#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">1</span>&lt;&lt;(leftdepth <span class="number">+1</span>))<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> leftdeep = <span class="built_in">compare</span>(root-&gt;left);</span><br><span class="line">    <span class="type">int</span> rightdeep =<span class="built_in">compare</span>(root-&gt;right);</span><br><span class="line">    <span class="keyword">return</span> leftdeep<span class="number">+1</span>+rightdeep;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二叉树的最小深度"><a href="#二叉树的最小深度" class="headerlink" title="二叉树的最小深度"></a>二叉树的最小深度</h2><p>给定一个二叉树，找出其最小深度。<br>最小深度是从根节点到最近叶子节点的最短路径上的节点数量。<br>说明: 叶子节点是指没有子节点的节点。<br>这个肯定有坑 使用前序遍历同时 在子节点什么都没有的情况下比大小？是一种思路，这种前序方法使用了回溯 一直到触底开始结算  后续的方法属于从下往上同时在根节点不断处理。<br><span style="color: red;">看来对于深度问题还是后续遍历比较好理解</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">getDepth</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> left = <span class="built_in">getDepth</span>(root-&gt;left);</span><br><span class="line">  <span class="type">int</span> right = <span class="built_in">getDepth</span>(root-&gt;right);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(root-&gt;left &amp;&amp; !root-&gt;right)&#123;</span><br><span class="line">      <span class="keyword">return</span> left <span class="number">+1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(!root-&gt;left &amp;&amp; root-&gt;right)&#123;</span><br><span class="line">      <span class="keyword">return</span> right <span class="number">+1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="built_in">min</span>(left,right) <span class="number">+1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对于前序遍历也能用int返回吗 很难 我设置个全局变量吧</span></span><br><span class="line">    <span class="type">int</span> result = INT_MAX;</span><br><span class="line">   <span class="function"><span class="type">void</span> <span class="title">getDepth</span><span class="params">(TreeNode* node,<span class="type">int</span> deep)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!node) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!node-&gt;right &amp;&amp; !node-&gt;left)&#123;</span><br><span class="line">        result = <span class="built_in">min</span>(result,deep);</span><br><span class="line">    &#125;<span class="comment">//前序 处理节点</span></span><br><span class="line">     </span><br><span class="line">     <span class="built_in">getDepth</span>(node-&gt;left,deep<span class="number">+1</span>);</span><br><span class="line">     <span class="built_in">getDepth</span>(node-&gt;right,deep<span class="number">+1</span>);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="最大深度"><a href="#最大深度" class="headerlink" title="最大深度"></a>最大深度</h2><p>给定一个二叉树，找出其最大深度。<br>二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。<br>说明: 叶子节点是指没有子节点的节点。</p>
+<h2 id="解法-6"><a href="#解法-6" class="headerlink" title="解法"></a>解法</h2><p>这个最大深度层序遍历可解，循环后面套一个计数器记着就行，递归的话后序遍历比大小 前序遍历回溯的同时需要再跟节点比大小</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/09/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-3%E2%80%9D/" data-id="cm3a13xon0000d4vqgn1z7igc" data-title="“二叉树-3”" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/11/08/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-2%E2%80%9D/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">“二叉树-2”</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 15px;">二叉树</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 10px;">回溯算法</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/11/09/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-3%E2%80%9D/">“二叉树-3”</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/08/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-2%E2%80%9D/">“二叉树-2”</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/08/%E2%80%9C%E5%9B%9E%E6%BA%AF%E5%88%87%E5%89%B2%E2%80%9D/">“回溯切割-1”</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/07/%E2%80%9C%E5%9B%9E%E6%BA%AF1%E2%80%9D/">回溯1-组合问题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/06/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91%E2%80%9D/">二叉树类型回顾</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
