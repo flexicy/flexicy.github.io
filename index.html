@@ -69,6 +69,199 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-贪心" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/12/%E8%B4%AA%E5%BF%83/" class="article-date">
+  <time class="dt-published" datetime="2024-11-12T03:08:49.000Z" itemprop="datePublished">2024-11-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/11/12/%E8%B4%AA%E5%BF%83/">贪心</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="喂小孩饼干"><a href="#喂小孩饼干" class="headerlink" title="喂小孩饼干"></a>喂小孩饼干</h2><p>假设你是一位很棒的家长，想要给你的孩子们一些小饼干。但是，每个孩子最多只能给一块饼干。</p>
+<p>对每个孩子 i，都有一个胃口值  g[i]，这是能让孩子们满足胃口的饼干的最小尺寸；并且每块饼干 j，都有一个尺寸 s[j] 。如果 s[j] &gt;&#x3D; g[i]，我们可以将这个饼干 j 分配给孩子 i ，这个孩子会得到满足。你的目标是尽可能满足越多数量的孩子，并输出这个最大数值。</p>
+<p>示例  1:</p>
+<p>输入: g &#x3D; [1,2,3], s &#x3D; [1,1]<br>输出: 1 解释:你有三个孩子和两块小饼干，3 个孩子的胃口值分别是：1,2,3。虽然你有两块小饼干，由于他们的尺寸都是 1，你只能让胃口值是 1 的孩子满足。所以你应该输出 1。<br>示例  2:</p>
+<p>输入: g &#x3D; [1,2], s &#x3D; [1,2,3]<br>输出: 2<br>解释:你有两个孩子和三块小饼干，2 个孩子的胃口值分别是 1,2。你拥有的饼干数量和尺寸都足以让所有孩子满足。所以你应该输出 2.<br>提示：</p>
+<p>1 &lt;&#x3D; g.length &lt;&#x3D; 3 * 10^4<br>0 &lt;&#x3D; s.length &lt;&#x3D; 3 * 10^4<br>1 &lt;&#x3D; g[i], s[j] &lt;&#x3D; 2^31 - 1</p>
+<h3 id="解法·"><a href="#解法·" class="headerlink" title="解法·"></a>解法·</h3><p>尽可能让大的饼干给大孩 就从最大的孩开始 喂它最大的饼干 之后循环孩子 用剩下最大的饼干匹配</p>
+<figure class="highlight cpp"><figcaption><span>//忘了 index要大于0了  不止大于0还要注意等于0因为等于0的时候也能匹配一次；</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">findContentChildren</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; g, vector&lt;<span class="type">int</span>&gt;&amp; s)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">sort</span>(g.<span class="built_in">begin</span>(),g.<span class="built_in">end</span>());</span><br><span class="line">        <span class="built_in">sort</span>(s.begin,s.<span class="built_in">end</span>());</span><br><span class="line">        <span class="type">int</span> result =<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> index = s.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = g.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s[index] &gt;= g[i] &amp;&amp; index&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">                result ++;</span><br><span class="line">                index--;&#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="摆动序列"><a href="#摆动序列" class="headerlink" title="摆动序列"></a>摆动序列</h2><p>如果连续数字之间的差严格地在正数和负数之间交替，则数字序列称为摆动序列。第一个差（如果存在的话）可能是正数或负数。少于两个元素的序列也是摆动序列。<br>例如， [1,7,4,9,2,5] 是一个摆动序列，因为差值 (6,-3,5,-7,3)  是正负交替出现的。相反, [1,4,7,2,5]  和  [1,7,4,5,5] 不是摆动序列，第一个序列是因为它的前两个差值都是正数，第二个序列是因为它的最后一个差值为零。<br>给定一个整数序列，返回作为摆动序列的最长子序列的长度。 通过从原始序列中删除一些（也可以不删除）元素来获得子序列，剩下的元素保持其原始顺序。<br>示例 1:<br>输入: [1,7,4,9,2,5]<br>输出: 6<br>解释: 整个序列均为摆动序列。<br>示例 2:<br>输入: [1,17,5,10,13,15,10,5,16,8]<br>输出: 7<br>解释: 这个序列包含几个长度为 7 摆动序列，其中一个可为[1,17,10,13,10,16,8]。<br>示例 3:<br>输入: [1,2,3,4,5,6,7,8,9]<br>输出: 2</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>对于这个贪心就是让波动尽量多 没有波动的就不计算它 之后看总共有多少个波动<br>所以波动的计算有些特殊情况需要处理 首先是第一个和最后一个点 这两个点无法判定前一个和后一个差值 所以可以默认有，也可以默认结尾有 加一个虚拟头节点-&gt;这个虚拟头节点的引入就会让判定等式加进去个等于号 这个等于号同样可以用于第二种特殊情况 就是有多个点连续一样 这样波动回为0 为了统合这两种情况 这里就把前面波动等于0这个判定加入进去了 但是这里出现了第三个问题：如果有相同的同时相同的前面和后面趋势是一样的 这样的话会多计入一个点，所以为了避免这种情况 可以在波动点的时候再让前面的趋势开始更新 这样最后一个相同的的点比较的就是相同点最开始的前面的趋势后相同点最后那个点的后面的趋势 可以用来判定</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">wiggleMaxLength</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123; <span class="comment">// 关注越界问题</span></span><br><span class="line">     <span class="keyword">if</span> (nums.<span class="built_in">size</span>() &lt;= <span class="number">1</span>) <span class="keyword">return</span> nums.<span class="built_in">size</span>();</span><br><span class="line">    <span class="type">int</span> pre = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> result =<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>()<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        count = nums[i<span class="number">+1</span>] - nums[i];</span><br><span class="line">        <span class="keyword">if</span>((count &gt; <span class="number">0</span> &amp;&amp; pre &lt;=<span class="number">0</span>) || (count &lt;<span class="number">0</span> &amp;&amp; pre &gt;=<span class="number">0</span>))&#123;</span><br><span class="line">            result ++;</span><br><span class="line">            pre = count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="最大子序和"><a href="#最大子序和" class="headerlink" title="最大子序和"></a>最大子序和</h2><p>给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。<br>示例:<br>输入: [-2,1,-3,4,-1,2,1,-5,4]<br>输出: 6<br>解释:  连续子数组  [4,-1,2,1] 的和最大，为  6。</p>
+<h3 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h3><p>这道题我拿过来不一定贪心 直接暴力循环了 但是贪心解法没问题：当加上当前的值之后小于0的时候应该放弃这一段了 直接从下一段开始 要不就是拖累之后的求和过程</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxSubArray</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> result = INT_MIN;</span><br><span class="line">    <span class="type">int</span> count = <span class="number">0</span> ;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">        count += nums[i];</span><br><span class="line">        result = result &gt; count ? result : count; </span><br><span class="line">        <span class="keyword">if</span>(count &lt;<span class="number">0</span>)&#123;</span><br><span class="line">            count = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="买卖股票的最佳时期"><a href="#买卖股票的最佳时期" class="headerlink" title="买卖股票的最佳时期"></a>买卖股票的最佳时期</h2><p>给定一个数组，它的第  i 个元素是一支给定股票第 i 天的价格。<br>设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。<br>注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。<br>示例 1:<br>输入: [7,1,5,3,6,4]<br>输出: 7<br>解释: 在第 2 天（股票价格 &#x3D; 1）的时候买入，在第 3 天（股票价格 &#x3D; 5）的时候卖出, 这笔交易所能获得利润 &#x3D; 5-1 &#x3D; 4。随后，在第 4 天（股票价格 &#x3D; 3）的时候买入，在第 5 天（股票价格 &#x3D; 6）的时候卖出, 这笔交易所能获得利润 &#x3D; 6-3 &#x3D; 3 。<br>示例 2:<br>输入: [1,2,3,4,5]<br>输出: 4<br>解释: 在第 1 天（股票价格 &#x3D; 1）的时候买入，在第 5 天 （股票价格 &#x3D; 5）的时候卖出, 这笔交易所能获得利润 &#x3D; 5-1 &#x3D; 4 。注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。因为这样属于同时参与了多笔交易，你必须在再次购买前出售掉之前的股票。<br>示例  3:<br>输入: [7,6,4,3,1]<br>输出: 0<br>解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。</p>
+<h3 id="解法-2"><a href="#解法-2" class="headerlink" title="解法"></a>解法</h3><p>这求最大利润的问题可以求和计算 但是求和的话还不能简单相加 应该逐级做差得到每天的利润 每天的利润求和就是投资的利润 这样也能避免多线交易 只能单线交易</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxProfit</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (prices.<span class="built_in">size</span>() &lt; <span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// 如果天数少于 2，无法交易，直接返回 0</span></span><br><span class="line"></span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">new_price</span><span class="params">(prices.size() - <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; prices.<span class="built_in">size</span>() - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        new_price[i] = prices[i + <span class="number">1</span>] - prices[i]; <span class="comment">// 计算相邻两天之间的价格差</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> result = <span class="number">0</span>; <span class="comment">// 初始化结果</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; prices.<span class="built_in">size</span>() - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (new_price[i] &gt; <span class="number">0</span>) &#123; <span class="comment">// 只累加正的差值</span></span><br><span class="line">            result += new_price[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result; <span class="comment">// 返回最大利润</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">maxProfit</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; prices.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            result += <span class="built_in">max</span>(prices[i] - prices[i - <span class="number">1</span>], <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="跳跃游戏"><a href="#跳跃游戏" class="headerlink" title="跳跃游戏"></a>跳跃游戏</h2><p>给定一个非负整数数组，你最初位于数组的第一个位置。<br>数组中的每个元素代表你在该位置可以跳跃的最大长度。<br>判断你是否能够到达最后一个位置。<br>示例  1:<br>输入: [2,3,1,1,4]<br>输出: true<br>解释: 我们可以先跳 1 步，从位置 0 到达 位置 1, 然后再从位置 1 跳 3 步到达最后一个位置。<br>示例  2:<br>输入: [3,2,1,0,4]<br>输出: false<br>解释: 无论怎样，你总会到达索引为 3 的位置。但该位置的最大跳跃长度是 0 ， 所以你永远不可能到达最后一个位置。</p>
+<h3 id="解法-3"><a href="#解法-3" class="headerlink" title="解法"></a>解法</h3><p>每次在覆盖范围内部计算最大范围 看能不能到达要求</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">canJump</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">   <span class="type">int</span> cover =<span class="number">0</span>;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span> ;i &lt;= cover;i++)&#123;<span class="comment">//注意是小于cover 这表示这个i能到这个范围</span></span><br><span class="line">       cover = <span class="built_in">max</span>(i + nums[i],cover);<span class="comment">//最远能到的位置</span></span><br><span class="line">       <span class="keyword">if</span>(cover &gt;= nums.<span class="built_in">size</span>()<span class="number">-1</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="跳跃游戏2"><a href="#跳跃游戏2" class="headerlink" title="跳跃游戏2"></a>跳跃游戏2</h2><p>给定一个非负整数数组，你最初位于数组的第一个位置。<br>数组中的每个元素代表你在该位置可以跳跃的最大长度。<br>你的目标是使用最少的跳跃次数到达数组的最后一个位置。<br>示例:<br>输入: [2,3,1,1,4]<br>输出: 2<br>解释: 跳到最后一个位置的最小跳跃数是 2。从下标为 0 跳到下标为 1 的位置，跳  1  步，然后跳  3  步到达数组的最后一个位置。<br>说明: 假设你总是可以到达数组的最后一个位置</p>
+<h3 id="解法-4"><a href="#解法-4" class="headerlink" title="解法"></a>解法</h3><p>从逻辑上来说 应该是覆盖范围问题 当我的覆盖范围够这个所有的题解就够了<br>但是怎么保证最小的跳跃步骤呢 当我这个覆盖范围不够到达最右侧的点的时候 从出发点向前一步更新覆盖范围看是否到达覆盖点<br>2 1 3 1 4<br>· · ·<br>  · ·<br>    · · · </p>
+<figure class="highlight cpp"><figcaption><span>//这个没做出来</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">jump</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(nums.<span class="built_in">size</span>()==<span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   <span class="type">int</span> newfan =<span class="number">0</span>;</span><br><span class="line">   <span class="type">int</span> fan =<span class="number">0</span>;</span><br><span class="line">   <span class="type">int</span> result =<span class="number">0</span>;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>()<span class="number">-1</span>;i++)&#123;</span><br><span class="line">       newfan = <span class="built_in">max</span>(newfan, i + nums[i]);</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">if</span>( i == fan )&#123;</span><br><span class="line">           result ++ ;</span><br><span class="line">           fan = newfan;</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">if</span>(fan &gt;= nums.<span class="built_in">size</span>()<span class="number">-1</span>) <span class="keyword">break</span>;</span><br><span class="line">       &#125;<span class="comment">//注意 这个最大距离是在确定上一个距离不行的情况下，直接进行判定的</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/12/%E8%B4%AA%E5%BF%83/" data-id="cm3fmnkf60003xwvqgav92av6" data-title="贪心" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-回溯-进阶" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/12/%E5%9B%9E%E6%BA%AF-%E8%BF%9B%E9%98%B6/" class="article-date">
+  <time class="dt-published" datetime="2024-11-11T16:39:38.000Z" itemprop="datePublished">2024-11-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/11/12/%E5%9B%9E%E6%BA%AF-%E8%BF%9B%E9%98%B6/">回溯-进阶</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="重新安排形成"><a href="#重新安排形成" class="headerlink" title="重新安排形成"></a>重新安排形成</h2><p>给定一个机票的字符串二维数组 [from, to]，子数组中的两个成员分别表示飞机出发和降落的机场地点，对该行程进行重新规划排序。所有这些机票都属于一个从 JFK（肯尼迪国际机场）出发的先生，所以该行程必须从 JFK 开始。</p>
+<p>提示：</p>
+<p>如果存在多种有效的行程，请你按字符自然排序返回最小的行程组合。例如，行程 [“JFK”, “LGA”] 与 [“JFK”, “LGB”] 相比就更小，排序更靠前<br>所有的机场都用三个大写字母表示（机场代码）。<br>假定所有机票至少存在一种合理的行程。<br>所有的机票必须都用一次 且 只能用一次。<br>示例 1：</p>
+<p>输入：[[“MUC”, “LHR”], [“JFK”, “MUC”], [“SFO”, “SJC”], [“LHR”, “SFO”]]<br>输出：[“JFK”, “MUC”, “LHR”, “SFO”, “SJC”]<br>示例 2：</p>
+<p>输入：[[“JFK”,”SFO”],[“JFK”,”ATL”],[“SFO”,”ATL”],[“ATL”,”JFK”],[“ATL”,”SFO”]]<br>输出：[“JFK”,”ATL”,”JFK”,”SFO”,”ATL”,”SFO”]<br>解释：另一种有效的行程是 [“JFK”,”SFO”,”ATL”,”JFK”,”ATL”,”SFO”]。但是它自然排序更大更靠后。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="comment">// unordered_map&lt;出发机场, map&lt;到达机场, 航班次数&gt;&gt; targets</span></span><br><span class="line">unordered_map&lt;string, map&lt;string, <span class="type">int</span>&gt;&gt; targets;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">backtracking</span><span class="params">(<span class="type">int</span> ticketNum, vector&lt;string&gt;&amp; result)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (result.<span class="built_in">size</span>() == ticketNum + <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (pair&lt;<span class="type">const</span> string, <span class="type">int</span>&gt;&amp; target : targets[result[result.<span class="built_in">size</span>() - <span class="number">1</span>]]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (target.second &gt; <span class="number">0</span> ) &#123; <span class="comment">// 记录到达机场是否飞过了</span></span><br><span class="line">            result.<span class="built_in">push_back</span>(target.first);</span><br><span class="line">            target.second--;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">backtracking</span>(ticketNum, result)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            result.<span class="built_in">pop_back</span>();</span><br><span class="line">            target.second++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">unordered_map&lt;string,map&lt;string,<span class="type">int</span>&gt;&gt; targets;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">backtracking</span><span class="params">(<span class="type">int</span> ticketNum,vector&lt;string&gt;&amp; result)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(result.<span class="built_in">size</span>() == ticketNum <span class="number">+1</span>) <span class="keyword">return</span> <span class="literal">true</span>;<span class="comment">//站点数是票数多一个 正好结束旅程</span></span><br><span class="line">    <span class="keyword">for</span>(pair&lt;<span class="type">const</span> string,<span class="type">int</span>&gt;&amp; target :targets[result[result.<span class="built_in">size</span>()<span class="number">-1</span>]])&#123;<span class="comment">//看看当前最后一站还能飞向哪里</span></span><br><span class="line">        <span class="keyword">if</span>(target.second &gt; <span class="number">0</span>)<span class="comment">//表示这个车票显示还有飞的次数</span></span><br><span class="line">        &#123;</span><br><span class="line">            result.<span class="built_in">push_back</span>(target.first);<span class="comment">//添加这个要飞站</span></span><br><span class="line">            target.second--;<span class="comment">//剩余次数</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">backtracking</span>(tickNum,result)) <span class="keyword">return</span> <span class="literal">true</span>;<span class="comment">//有了就可以返回效果</span></span><br><span class="line">            result.<span class="built_in">pop_back</span>();<span class="comment">//回溯</span></span><br><span class="line">            target.second ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">bool</span> </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;string&gt; <span class="title">findItinerary</span><span class="params">(vector&lt;vector&lt;string&gt;&gt;&amp; tickets)</span> </span>&#123;</span><br><span class="line">        targets.<span class="built_in">clear</span>();</span><br><span class="line">        vector&lt;string&gt; result;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> vector&lt;string&gt;&amp; vec : tickets) &#123;</span><br><span class="line">            targets[vec[<span class="number">0</span>]][vec[<span class="number">1</span>]]++; <span class="comment">// 记录映射关系</span></span><br><span class="line">        &#125;</span><br><span class="line">        result.<span class="built_in">push_back</span>(<span class="string">&quot;JFK&quot;</span>); <span class="comment">// 起始机场</span></span><br><span class="line">        <span class="built_in">backtracking</span>(tickets.<span class="built_in">size</span>(), result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/12/%E5%9B%9E%E6%BA%AF-%E8%BF%9B%E9%98%B6/" data-id="cm3fmnkf50001xwvq5kslax75" data-title="回溯-进阶" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-回溯子集" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/11/%E5%9B%9E%E6%BA%AF%E5%AD%90%E9%9B%86/" class="article-date">
+  <time class="dt-published" datetime="2024-11-11T13:52:38.000Z" itemprop="datePublished">2024-11-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/11/11/%E5%9B%9E%E6%BA%AF%E5%AD%90%E9%9B%86/">回溯子集</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="递增子序列-不能排序了"><a href="#递增子序列-不能排序了" class="headerlink" title="递增子序列 不能排序了"></a>递增子序列 不能排序了</h2><p>给定一个整型数组, 你的任务是找到所有该数组的递增子序列，递增子序列的长度至少是2。<br>示例:<br>输入: [4, 6, 7, 7]<br>输出: [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]<br>说明:<br>给定数组的长度不会超过15。<br>数组中的整数范围是 [-100,100]。<br>给定数组中可能包含重复数字，相等的数字应该被视为递增的一种情况。</p>
+<p>可以用set序列找找递增 也可以用第一个去判定有没有</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; result;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">backtracking</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> startIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(path.<span class="built_in">size</span>()&gt;<span class="number">1</span>)&#123;</span><br><span class="line">        result.<span class="built_in">push_back</span>(path);</span><br><span class="line">    &#125;</span><br><span class="line">     unordered_set&lt;<span class="type">int</span>&gt; uset;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = startIndex;i&lt;nums.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">     <span class="keyword">if</span> ((!path.<span class="built_in">empty</span>() &amp;&amp; nums[i] &lt; path.<span class="built_in">back</span>())|| uset.<span class="built_in">find</span>(nums[i]) != uset.<span class="built_in">end</span>()) &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">back</span>(nums[i]);</span><br><span class="line">        uset.<span class="built_in">insert</span>(nums[i]);</span><br><span class="line">        <span class="built_in">backtracking</span>(nums,i + <span class="number">1</span>);</span><br><span class="line">        path.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">findSubsequences</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        result.<span class="built_in">clear</span>();</span><br><span class="line">        path.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="built_in">backtracking</span>(nums, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为不能再使用排序了 所以换一种方法</p>
+<h2 id="全排列"><a href="#全排列" class="headerlink" title="全排列"></a>全排列</h2><p>给定一个 没有重复 数字的序列，返回其所有可能的全排列。<br>示例:<br>输入: [1,2,3]<br>输出: [ [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1] ]</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>解法按照模板来说还算好解算 直接从头开始循环，没用过才能取出来递归</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//忘了 return</span></span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; result;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">backtracking</span> <span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, vector&lt;<span class="type">bool</span>&gt;&amp; used)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(path.<span class="built_in">size</span>() == nums.<span class="built_in">size</span>())&#123;</span><br><span class="line">            result.<span class="built_in">push_back</span>(path);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(used[i] == <span class="literal">true</span>) <span class="keyword">continue</span>;</span><br><span class="line">            used[i] = <span class="literal">true</span>;</span><br><span class="line">            path.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">            <span class="built_in">backtracking</span>(nums,used);</span><br><span class="line">            used[i] = <span class="literal">false</span>;</span><br><span class="line">            path.pop_back;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">permute</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        result.<span class="built_in">clear</span>();</span><br><span class="line">        path.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">used</span><span class="params">(nums.size(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">        <span class="built_in">backtracking</span>(nums, used);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="全排列-1"><a href="#全排列-1" class="headerlink" title="全排列"></a>全排列</h2><p>给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。</p>
+<h3 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h3><p>我的想法就是把这个原始的顺序改了 重新拍下序 这样后面的就禁止用前面用过的 但是容易混淆啊 我这个数组可以看用没用过 同时再次之上再看是否相等前后 </p>
+<pre><code class="cpp">
+vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking (vector&lt;int&gt;&amp; nums, vector&lt;bool&gt;&amp; used) &#123;
+        if(path.size()==nums.size())&#123;
+            result.push_back(path);
+            return;
+        &#125;
+        for(int i = 0;i&lt;nums.size();i++)&#123;
+            if(i&gt;0 &amp;&amp; nums[i]==nums[i-1] &amp;&amp; used[i-1]==false) continue;
+            if(used[i]==false)&#123;
+                used[i]=true;
+                path.push_back(nums[i]);
+                backtracking(nums,used);
+                used[i]=false;
+                path.pop_back();
+            &#125;
+        &#125;
+    &#125;
+
+vector&lt;vector&lt;int&gt;&gt; permuteUnique(vector&lt;int&gt;&amp; nums) 
+&#123;
+    result.clear();
+    path.clear();
+    vector&lt;bool&gt;used(nums.size(),false);
+    sort(nums.begin(),nums.end());
+    backtracking(nums,used);
+&#125;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/11/%E5%9B%9E%E6%BA%AF%E5%AD%90%E9%9B%86/" data-id="cm3fmnkf40000xwvq513fhcwb" data-title="回溯子集" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-“二叉树-3”" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/11/09/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-3%E2%80%9D/" class="article-date">
@@ -124,6 +317,127 @@
 
 <h2 id="最大深度"><a href="#最大深度" class="headerlink" title="最大深度"></a>最大深度</h2><p>给定一个二叉树，找出其最大深度。<br>二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。<br>说明: 叶子节点是指没有子节点的节点。</p>
 <h2 id="解法-6"><a href="#解法-6" class="headerlink" title="解法"></a>解法</h2><p>这个最大深度层序遍历可解，循环后面套一个计数器记着就行，递归的话后序遍历比大小 前序遍历回溯的同时需要再跟节点比大小</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">compare</span><span class="params">(TreeNode*root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> left =<span class="built_in">compare</span>(root-&gt;left);</span><br><span class="line">    <span class="type">int</span> right = <span class="built_in">compare</span>(root-&gt;right);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">max</span>(right,left) <span class="number">+1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//前序遍历写法 根据要求不一样 你这个前序节点处理的时刻也不一样 最小的时候需要再只有叶子节点更新 最大的可以时刻更新</span></span><br><span class="line"><span class="type">int</span> result = INT_MIN;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">compare</span><span class="params">(TreeNode*root,<span class="type">int</span> deep)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!root) <span class="keyword">return</span> ;</span><br><span class="line">     result = deep &gt; result ? deep :result;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">compare</span>(root-&gt;left,deep<span class="number">+1</span>);</span><br><span class="line">     <span class="built_in">compare</span>(root-&gt;right,deep<span class="number">+1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="对称二叉树"><a href="#对称二叉树" class="headerlink" title="对称二叉树"></a>对称二叉树</h2><p>给定一个二叉树，检查它是否是镜像对称的。</p>
+<h3 id="解法-7"><a href="#解法-7" class="headerlink" title="解法"></a>解法</h3><p>我拿过来想做的就是想的同时遍历两个二叉树 方向完全相反 同时判断是否相同 根左右 根右左<br><span style="color: red;">但是使用前序遍历就不能在根节点判断是否合规了，所以改成左右根 右左根</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//其实用什么都行就是判定每个是否对应 这里写个后续的</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">compare</span><span class="params">(TreeNode*left,TreeNode*right)</span></span>&#123;</span><br><span class="line">     <span class="keyword">if</span>(!left &amp;&amp; !right) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(!left &amp;&amp; right) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(left &amp;&amp; !right) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(! (left-&gt;val == right-&gt;val)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">     <span class="type">bool</span> new_left = <span class="built_in">compare</span>(left-&gt;left,right-&gt;right);</span><br><span class="line">     <span class="type">bool</span> new_right =<span class="built_in">compare</span>(left-&gt;right,right-&gt;left);</span><br><span class="line">     <span class="keyword">return</span> new_left &amp;&amp; new_right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="反转二叉树"><a href="#反转二叉树" class="headerlink" title="反转二叉树"></a>反转二叉树</h2><p>翻转一棵二叉树。</p>
+<h3 id="解法-8"><a href="#解法-8" class="headerlink" title="解法"></a>解法</h3><p>这道题拿过来我想的是同时遍历左右 反向遍历 之后交换左右节点的值<br><span style="color: red;">但是错了 很离谱 正确的解法是直接交换点之后交换后面的</span><br>确实 直接交换指针效率更高</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">TreeNode* <span class="title">compare</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(!root) <span class="keyword">return</span> root;</span><br><span class="line">   <span class="built_in">swap</span>(root-&gt;left,root-&gt;right);</span><br><span class="line">   <span class="built_in">compare</span>(root-&gt;left);</span><br><span class="line">   <span class="built_in">compare</span>(root-&gt;right);</span><br><span class="line">   <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="二叉树层序遍历"><a href="#二叉树层序遍历" class="headerlink" title="二叉树层序遍历"></a>二叉树层序遍历</h2><p>考验层序遍历写法的</p>
+<h3 id="二叉树的层序遍历"><a href="#二叉树的层序遍历" class="headerlink" title="二叉树的层序遍历"></a>二叉树的层序遍历</h3><p>给你一个二叉树，请你返回其按 层序遍历 得到的节点值</p>
+<pre><code class="cpp">
+//先设置两个变量放层序遍历的结果
+ vector&lt;vector&lt;int&gt;&gt;compare(TreeNode* root)&#123;
+    queue&lt;TreeNode*&gt;que;
+    vector&lt;vector&lt;int&gt;&gt; result;
+    if(!root) return result;
+    else que.push(root);
+    while(!que.empty())&#123;
+        int size = que.size();
+        vector&lt;int&gt; cur;
+        for(int i= 0;i&lt; size;i++)&#123;
+            TreeNode* newroot = que.front();
+            que.pop();
+            if(newroot-&gt;left) que.push(newroot-&gt;left);
+            if(newroot-&gt;right) que.push(newroot-&gt;right);
+            cur.push_back(newroot-&gt;val);
+        &#125;
+        result.push_back(cur);
+    &#125;
+    return result;
+&#125;
+
+//给定一个二叉树，返回其节点值自底向上的层次遍历。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）
+//最后把结果reverse
+reverse(result.begin(),result.end());
+
+//二叉树的右视图
+//给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
+每次在 i = size()-1 时刻收集
+
+//二叉树的层平均值
+//给定一个非空二叉树, 返回一个由每层节点平均值组成的数组。
+average = sum / size double 
+
+//N叉树的层序遍历
+//给定一个 N 叉树，返回其节点值的层序遍历。 (即从左到右，逐层遍历)。
+for(int i; i&lt;size;i++)&#123;
+    TreeNode* newroot = que.front();
+    que.pop();
+    cur.push_back(newroot-&gt;val);
+    for(int i =0;i&lt; newroot-&gt;children.size();i++)&#123;
+        que.push(node-&gt;children[i]);
+    &#125;
+&#125;
+
+//在每个树行中找最大值
+//您需要在二叉树的每一行中找到最大的值。
+int result = INT_MIN;
+result = max(result,newroot-&gt;val);
+
+//填充每个节点的下一个右侧节点指针
+//给定一个完美二叉树，其所有叶子节点都在同一层，每个父节点都有两个子节点。二叉树定义如下：
+struct Node &#123;
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+&#125;
+//填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
+TreeNode* newroot = que.front();
+que.pop();
+if(!que.empty() )newroot-&gt;next = que.front();
+
+class Solution &#123;
+public:
+    Node* connect(Node* root) &#123;
+        queue&lt;Node*&gt; que;
+        if (root != NULL) que.push(root);
+        while (!que.empty()) &#123;
+            int size = que.size();
+            // vector&lt;int&gt; vec;
+            Node* node;
+            for (int i = 0; i &lt; size; i++) &#123;
+                node = que.front();
+                que.pop();
+                if(i &lt; size-1 )node-&gt;next = que.front();
+                else node-&gt;next = NULL;
+                
+                if (node-&gt;left) que.push(node-&gt;left);
+                if (node-&gt;right) que.push(node-&gt;right);
+            &#125;
+            &#125;
+        &#125;
+        return root;
+    &#125;
+
+//填充每个节点的下一个右侧节点指针II
+//这道题目说是二叉树，但116题目说是完整二叉树，其实没有任何差别，一样的代码一样的逻辑一样的味道
+
+//二叉树的最大深度
+//给定一个二叉树，找出其最大深度。
+二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+说明: 叶子节点是指没有子节点的节点。
+
+int sum = 0;
+sum += 1;//最好放在FOR前面
+
+//二叉树的最小深度
+//相对于 104.二叉树的最大深度 ，本题还也可以使用层序遍历的方式来解决，思路是一样的。
+//注意的是，只有当左右孩子都为空的时候，才说明遍历的最低点了。如果其中一个孩子为空则不是最低点
+if (node-&gt;left) que.push(node-&gt;left);
+if (node-&gt;right) que.push(node-&gt;right);
+if(!node-&gt;right &amp;&amp; !node-&gt;left) result = min(deep,result); //直接return deeo最好；
+
+//
+
+
+</code></pre>
 
       
     </div>
@@ -272,9 +586,22 @@ public:
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h1 id="分割回文串"><a href="#分割回文串" class="headerlink" title="分割回文串"></a>分割回文串</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">给定一个字符串 s，将 s 分割成一些子串，使每个子串都是回文串。</span><br><span class="line">返回 s 所有可能的分割方案。</span><br><span class="line">示例: 输入: <span class="string">&quot;aab&quot;</span> 输出: [ [<span class="string">&quot;aa&quot;</span>,<span class="string">&quot;b&quot;</span>], [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>] ]</span><br></pre></td></tr></table></figure>
+
 <p>解决这个问题有两个方面 首先要明确切割的逻辑 这里切割的逻辑就是只切割有用的，只有切割了回文的之后才能继续递归切割</p>
-<h2 id="先写一个快速判定字符串是否回文的函数"><a href="#先写一个快速判定字符串是否回文的函数" class="headerlink" title="先写一个快速判定字符串是否回文的函数"></a>先写一个快速判定字符串是否回文的函数</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">computePalindrome</span><span class="params">(<span class="type">const</span> string&amp; s)</span> </span>&#123;</span><br><span class="line">    com.<span class="built_in">resize</span>(s.<span class="built_in">size</span>(),<span class="built_in">vector</span>&lt;<span class="type">bool</span>&gt;(s.<span class="built_in">size</span>(),<span class="literal">false</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = s.<span class="built_in">size</span>()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;s.<span class="built_in">size</span>()<span class="number">-1</span>;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j == i) com[i][j]=<span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(j-i==<span class="number">1</span>)com[i][j]=(s[i] == s[j]);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(j-i&gt;<span class="number">1</span>) com[i][j] = (s[i]==s[j] &amp;&amp; com[i<span class="number">+1</span>][j<span class="number">-1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="先写一个快速判定字符串是否回文的函数"><a href="#先写一个快速判定字符串是否回文的函数" class="headerlink" title="先写一个快速判定字符串是否回文的函数"></a>先写一个快速判定字符串是否回文的函数</h2><p>&#x2F;&#x2F;定义一个矩阵来判断是否是回文</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">computePalindrome</span><span class="params">(<span class="type">const</span> string&amp; s)</span> </span>&#123;</span><br><span class="line">    com.<span class="built_in">resize</span>(s.<span class="built_in">size</span>(),<span class="built_in">vector</span>&lt;<span class="type">bool</span>&gt;(s.<span class="built_in">size</span>(),<span class="literal">false</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = s.<span class="built_in">size</span>()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;s.<span class="built_in">size</span>()<span class="number">-1</span>;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j == i) com[i][j]=<span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(j-i==<span class="number">1</span>)com[i][j]=(s[i] == s[j]);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(j-i&gt;<span class="number">1</span>) com[i][j] = (s[i]==s[j] &amp;&amp; com[i<span class="number">+1</span>][j<span class="number">-1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;string&gt;&gt; result;</span><br><span class="line">    vector&lt;string&gt;path;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">compare</span> <span class="params">(string &amp;s,<span class="type">int</span> con)</span></span>&#123; <span class="comment">//一个集合取用的需要限制</span></span><br><span class="line">    <span class="keyword">if</span>(con &gt;= s.<span class="built_in">size</span>())&#123;</span><br><span class="line">        result.<span class="built_in">push_back</span>(path);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = con;i&lt;s.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(com[con][i])&#123;</span><br><span class="line">            string str = s.<span class="built_in">substr</span>(con,i-con<span class="number">+1</span>)</span><br><span class="line">            path.<span class="built_in">push_back</span>(str);</span><br><span class="line">            <span class="built_in">compare</span>(s,i<span class="number">+1</span>);#可以吗？</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;<span class="keyword">continue</span>;&#125;</span><br><span class="line">            path.<span class="built_in">pop_back</span>(); </span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;string&gt;&gt; <span class="built_in">partition</span>(string s) &#123;</span><br><span class="line">        <span class="built_in">computePalindrome</span>(s);</span><br><span class="line">        <span class="built_in">compare</span>(s,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="复原ip地址"><a href="#复原ip地址" class="headerlink" title="复原ip地址"></a>复原ip地址</h2><p>给定一个只包含数字的字符串，复原它并返回所有可能的 IP 地址格式。</p>
+<p>有效的 IP 地址 正好由四个整数（每个整数位于 0 到 255 之间组成，且不能含有前导 0），整数之间用 ‘.’ 分隔。</p>
+<p>例如：”0.1.2.201” 和 “192.168.1.1” 是 有效的 IP 地址，但是 “0.011.255.245”、”192.168.1.312” 和 “<a href="mailto:&#49;&#x39;&#50;&#46;&#x31;&#54;&#x38;&#64;&#x31;&#x2e;&#49;">&#49;&#x39;&#50;&#46;&#x31;&#54;&#x38;&#64;&#x31;&#x2e;&#49;</a>“ 是 无效的 IP 地址。</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>和回文串一个道理 建立函数去判定这个切割的数是否符合回文 如果符合继续递归  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;string&gt; result;<span class="comment">// 记录结果</span></span><br><span class="line">  <span class="comment">// startIndex: 搜索的起始位置，pointNum:添加逗点的数量</span></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">backtracking</span><span class="params">(string&amp; s, <span class="type">int</span> startIndex, <span class="type">int</span> pointNum)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(pointNum==<span class="number">3</span>)&#123;</span><br><span class="line">          <span class="keyword">if</span>(<span class="built_in">valid</span>(s,startIndex,s.<span class="built_in">size</span>()<span class="number">-1</span>))&#123;</span><br><span class="line">          result.<span class="built_in">push_back</span>(s);&#125;</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> i = startIndex, i&lt;s.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">          <span class="keyword">if</span>(<span class="built_in">valid</span>(s,startIndex,i))&#123;</span><br><span class="line">              s.<span class="built_in">insert</span>(s.<span class="built_in">begin</span>()+i<span class="number">+1</span>,<span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">              pointNum++;</span><br><span class="line">              <span class="built_in">backtracking</span>(s,startIndex,i)</span><br><span class="line">              pointNum--;</span><br><span class="line">              s.<span class="built_in">erase</span>(s.<span class="built_in">begin</span>()+i<span class="number">+1</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">      <span class="function"><span class="type">bool</span> <span class="title">valid</span><span class="params">(<span class="type">const</span> string&amp; s, <span class="type">int</span> start, <span class="type">int</span> end)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (start &gt; end) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (s[start] == <span class="string">&#x27;0&#x27;</span> &amp;&amp; start != end) &#123; <span class="comment">// 0开头的数字不合法</span></span><br><span class="line">              <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="type">int</span> num = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> i = start; i &lt;= end; i++) &#123;</span><br><span class="line">          <span class="keyword">if</span> (s[i] &gt; <span class="string">&#x27;9&#x27;</span> || s[i] &lt; <span class="string">&#x27;0&#x27;</span>) &#123; <span class="comment">// 遇到非数字字符不合法</span></span><br><span class="line">              <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          num = num * <span class="number">10</span> + (s[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">          <span class="keyword">if</span> (num &gt; <span class="number">255</span>) &#123; <span class="comment">// 如果大于255了不合法</span></span><br><span class="line">              <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="子集问题"><a href="#子集问题" class="headerlink" title="子集问题"></a>子集问题</h2><h3 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h3><p>给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。<br>说明：解集不能包含重复的子集。<br>示例: 输入: nums &#x3D; [1,2,3] 输出: [ [3],   [1],   [2],   [1,2,3],   [1,3],   [2,3],   [1,2],   [] ]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; result;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">backtracking</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> startIndex)</span> </span>&#123;</span><br><span class="line">    result.<span class="built_in">push_back</span>(path);<span class="comment">//收集上一层处理的子集 //这么写也是为了表示子集问题属于所有节点的收集问题</span></span><br><span class="line">    <span class="keyword">if</span>(startIndex &gt;= nums.<span class="built_in">size</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = startIndex;i &lt; nums.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">        path.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">        <span class="built_in">backtracking</span>(nums,i<span class="number">+1</span>);</span><br><span class="line">        path.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">subsets</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">result.<span class="built_in">clear</span>();</span><br><span class="line">path.<span class="built_in">clear</span>();</span><br><span class="line"> <span class="built_in">backtracking</span>(nums,<span class="number">0</span>);</span><br><span class="line"> <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="子集II"><a href="#子集II" class="headerlink" title="子集II"></a>子集II</h2><p>给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。<br>说明：解集不能包含重复的子集。</p>
+<h3 id="不一样的点在于重复元素"><a href="#不一样的点在于重复元素" class="headerlink" title="不一样的点在于重复元素"></a>不一样的点在于重复元素</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">这回有重复元素了 所以需要排序处理 同时因为有重复的元素 加上我给的结果不能重复 所以建造一个数组来显示前一个数组用没用</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; result;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">backtracking</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> startIndex,vector&lt;<span class="type">bool</span>&gt; &amp; cur)</span> </span>&#123;</span><br><span class="line">    result.<span class="built_in">push_back</span>(path);</span><br><span class="line">    <span class="keyword">if</span>(startIndex &gt;= nums.<span class="built_in">size</span>())&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = startIndex;i &lt; nums.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>( i &gt;<span class="number">0</span> &amp;&amp; nums[i]==nums[i<span class="number">-1</span>] &amp;&amp; cur[i<span class="number">-1</span>] == <span class="literal">false</span>)&#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cur[i] = <span class="literal">true</span>;</span><br><span class="line">        path.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">        <span class="built_in">backtracking</span>(nums,i<span class="number">+1</span>,cur);</span><br><span class="line">        cur[i] = <span class="literal">false</span>;</span><br><span class="line">        path.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">subsets</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums)&#123;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">cur</span><span class="params">(nums.size(),<span class="literal">false</span>)</span></span>;</span><br><span class="line">    result.<span class="built_in">clear</span>();</span><br><span class="line">    path.<span class="built_in">clear</span>();</span><br><span class="line">    <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(),nums.<span class="built_in">end</span>();)</span><br><span class="line">    <span class="built_in">backtracking</span>(nums,<span class="number">0</span>,cur);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -479,7 +806,7 @@ public:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li></ul>
     </div>
   </div>
 
@@ -489,7 +816,7 @@ public:
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 15px;">二叉树</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 10px;">回溯算法</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a>
+      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 13.33px;">二叉树</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 16.67px;">回溯算法</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a>
     </div>
   </div>
 
@@ -511,23 +838,23 @@ public:
       <ul>
         
           <li>
+            <a href="/2024/11/12/%E8%B4%AA%E5%BF%83/">贪心</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/12/%E5%9B%9E%E6%BA%AF-%E8%BF%9B%E9%98%B6/">回溯-进阶</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/11/%E5%9B%9E%E6%BA%AF%E5%AD%90%E9%9B%86/">回溯子集</a>
+          </li>
+        
+          <li>
             <a href="/2024/11/09/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-3%E2%80%9D/">“二叉树-3”</a>
           </li>
         
           <li>
             <a href="/2024/11/08/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-2%E2%80%9D/">“二叉树-2”</a>
-          </li>
-        
-          <li>
-            <a href="/2024/11/08/%E2%80%9C%E5%9B%9E%E6%BA%AF%E5%88%87%E5%89%B2%E2%80%9D/">“回溯切割-1”</a>
-          </li>
-        
-          <li>
-            <a href="/2024/11/07/%E2%80%9C%E5%9B%9E%E6%BA%AF1%E2%80%9D/">回溯1-组合问题</a>
-          </li>
-        
-          <li>
-            <a href="/2024/11/06/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91%E2%80%9D/">二叉树类型回顾</a>
           </li>
         
       </ul>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>回溯子集 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="递增子序列 不能排序了给定一个整型数组, 你的任务是找到所有该数组的递增子序列，递增子序列的长度至少是2。示例:输入: [4, 6, 7, 7]输出: [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]说明:给定数组的长度不会超过15。数组中的整数范围是 [-100,100]。给定数组中可能包含重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回溯子集">
+<meta property="og:url" content="http://example.com/2024/11/11/%E5%9B%9E%E6%BA%AF%E5%AD%90%E9%9B%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="递增子序列 不能排序了给定一个整型数组, 你的任务是找到所有该数组的递增子序列，递增子序列的长度至少是2。示例:输入: [4, 6, 7, 7]输出: [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]说明:给定数组的长度不会超过15。数组中的整数范围是 [-100,100]。给定数组中可能包含重">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-11-11T13:52:38.000Z">
+<meta property="article:modified_time" content="2024-11-11T16:12:02.618Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="回溯算法">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-回溯子集" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/11/%E5%9B%9E%E6%BA%AF%E5%AD%90%E9%9B%86/" class="article-date">
+  <time class="dt-published" datetime="2024-11-11T13:52:38.000Z" itemprop="datePublished">2024-11-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      回溯子集
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="递增子序列-不能排序了"><a href="#递增子序列-不能排序了" class="headerlink" title="递增子序列 不能排序了"></a>递增子序列 不能排序了</h2><p>给定一个整型数组, 你的任务是找到所有该数组的递增子序列，递增子序列的长度至少是2。<br>示例:<br>输入: [4, 6, 7, 7]<br>输出: [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]<br>说明:<br>给定数组的长度不会超过15。<br>数组中的整数范围是 [-100,100]。<br>给定数组中可能包含重复数字，相等的数字应该被视为递增的一种情况。</p>
+<p>可以用set序列找找递增 也可以用第一个去判定有没有</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; result;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">backtracking</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> startIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(path.<span class="built_in">size</span>()&gt;<span class="number">1</span>)&#123;</span><br><span class="line">        result.<span class="built_in">push_back</span>(path);</span><br><span class="line">    &#125;</span><br><span class="line">     unordered_set&lt;<span class="type">int</span>&gt; uset;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = startIndex;i&lt;nums.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">     <span class="keyword">if</span> ((!path.<span class="built_in">empty</span>() &amp;&amp; nums[i] &lt; path.<span class="built_in">back</span>())|| uset.<span class="built_in">find</span>(nums[i]) != uset.<span class="built_in">end</span>()) &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">back</span>(nums[i]);</span><br><span class="line">        uset.<span class="built_in">insert</span>(nums[i]);</span><br><span class="line">        <span class="built_in">backtracking</span>(nums,i + <span class="number">1</span>);</span><br><span class="line">        path.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">findSubsequences</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        result.<span class="built_in">clear</span>();</span><br><span class="line">        path.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="built_in">backtracking</span>(nums, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为不能再使用排序了 所以换一种方法</p>
+<h2 id="全排列"><a href="#全排列" class="headerlink" title="全排列"></a>全排列</h2><p>给定一个 没有重复 数字的序列，返回其所有可能的全排列。<br>示例:<br>输入: [1,2,3]<br>输出: [ [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1] ]</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>解法按照模板来说还算好解算 直接从头开始循环，没用过才能取出来递归</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//忘了 return</span></span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; result;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">backtracking</span> <span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, vector&lt;<span class="type">bool</span>&gt;&amp; used)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(path.<span class="built_in">size</span>() == nums.<span class="built_in">size</span>())&#123;</span><br><span class="line">            result.<span class="built_in">push_back</span>(path);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(used[i] == <span class="literal">true</span>) <span class="keyword">continue</span>;</span><br><span class="line">            used[i] = <span class="literal">true</span>;</span><br><span class="line">            path.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">            <span class="built_in">backtracking</span>(nums,used);</span><br><span class="line">            used[i] = <span class="literal">false</span>;</span><br><span class="line">            path.pop_back;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">permute</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        result.<span class="built_in">clear</span>();</span><br><span class="line">        path.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">used</span><span class="params">(nums.size(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">        <span class="built_in">backtracking</span>(nums, used);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="全排列-1"><a href="#全排列-1" class="headerlink" title="全排列"></a>全排列</h2><p>给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。</p>
+<h3 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h3><p>我的想法就是把这个原始的顺序改了 重新拍下序 这样后面的就禁止用前面用过的 但是容易混淆啊 我这个数组可以看用没用过 同时再次之上再看是否相等前后 </p>
+<pre><code class="cpp">
+vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking (vector&lt;int&gt;&amp; nums, vector&lt;bool&gt;&amp; used) &#123;
+        if(path.size()==nums.size())&#123;
+            result.push_back(path);
+            return;
+        &#125;
+        for(int i = 0;i&lt;nums.size();i++)&#123;
+            if(i&gt;0 &amp;&amp; nums[i]==nums[i-1] &amp;&amp; used[i-1]==false) continue;
+            if(used[i]==false)&#123;
+                used[i]=true;
+                path.push_back(nums[i]);
+                backtracking(nums,used);
+                used[i]=false;
+                path.pop_back();
+            &#125;
+        &#125;
+    &#125;
+
+vector&lt;vector&lt;int&gt;&gt; permuteUnique(vector&lt;int&gt;&amp; nums) 
+&#123;
+    result.clear();
+    path.clear();
+    vector&lt;bool&gt;used(nums.size(),false);
+    sort(nums.begin(),nums.end());
+    backtracking(nums,used);
+&#125;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/11/%E5%9B%9E%E6%BA%AF%E5%AD%90%E9%9B%86/" data-id="cm3fmnkf40000xwvq513fhcwb" data-title="回溯子集" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/11/12/%E5%9B%9E%E6%BA%AF-%E8%BF%9B%E9%98%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          回溯-进阶
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/11/09/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-3%E2%80%9D/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">“二叉树-3”</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 13.33px;">二叉树</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 16.67px;">回溯算法</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/11/12/%E8%B4%AA%E5%BF%83/">贪心</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/12/%E5%9B%9E%E6%BA%AF-%E8%BF%9B%E9%98%B6/">回溯-进阶</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/11/%E5%9B%9E%E6%BA%AF%E5%AD%90%E9%9B%86/">回溯子集</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/09/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-3%E2%80%9D/">“二叉树-3”</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/08/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-2%E2%80%9D/">“二叉树-2”</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
