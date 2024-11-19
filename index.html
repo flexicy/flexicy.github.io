@@ -69,6 +69,172 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-dp-背包问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/17/dp-%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-11-17T12:19:51.000Z" itemprop="datePublished">2024-11-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/11/17/dp-%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">dp-背包问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="背包理论"><a href="#背包理论" class="headerlink" title="背包理论"></a>背包理论</h2><p>dp[i][j] &#x3D; max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);<br>表示当前物品状态下（从没有到装这个物品的排列组合）对应的不同背包限制重量下的价值 比较不装当前这个物品最大价值和（当前这个物品的价值和在装这个物品之后剩余重量下最大价值的和） 得到对应最大价值</p>
+<p>初始化问题：j&#x3D;0表示背包限制0 那么这一列价值都是0；同时把第一行推出了来：就j&lt;wight[0]的时候都为0；其他时刻就是vale[0]；</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j&lt;wighr[<span class="number">0</span>];j++)&#123;</span><br><span class="line">    dp[<span class="number">0</span>][j] =<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> j =weight[<span class="number">0</span>];j&lt;=bagweight;j++)&#123;</span><br><span class="line">    dp[<span class="number">0</span>][j] = weight[<span class="number">0</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//遍历顺序 哪个先遍历都可以</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span> </span></span><br><span class="line"></span><br><span class="line">这里练习一下照抄遍历物品在外 背包容量在内部</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;weight.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;=bagweight&gt;\;j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(j&lt;weight[i])dp[i][j] =dp[i<span class="number">-1</span>][j];</span><br><span class="line">        <span class="keyword">else</span> dp[i][j] =<span class="built_in">max</span>(dp[i<span class="number">-1</span>][j],dp[i<span class="number">-1</span>][j-weight[i]]+value[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">反过来</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> j =<span class="number">0</span>;j&lt;=bagweight;j++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;weight.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(j&lt;weight[i])dp[i][j] = dp[i<span class="number">-1</span>][j];</span><br><span class="line">        <span class="keyword">else</span> dp[i][j] = <span class="built_in">max</span>(dp[i<span class="number">-1</span>][j],dp[i<span class="number">-1</span>][j-weight[i]]+value[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//一维模式</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>;i&lt;M;i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = N;j&gt;=costs[i];j--)&#123;<span class="comment">//只改变能放下自己容量的情况 同时使用倒序防止正序重复叠加</span></span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j],dp[j-costs[i]+value[i]]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分割等和子集"><a href="#分割等和子集" class="headerlink" title="分割等和子集"></a>分割等和子集</h2><p>给定一个只包含正整数的非空数组。是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。</p>
+<p>注意: 每个数组中的元素不会超过 100 数组的大小不会超过 200</p>
+<p>示例 1:</p>
+<p>输入: [1, 5, 11, 5]<br>输出: true<br>解释: 数组可以分割成 [1, 5, 5] 和 [11].<br>示例 2:</p>
+<p>输入: [1, 2, 3, 5]<br>输出: false<br>解释: 数组不能分割成两个元素和相等的子集.<br>提示：</p>
+<p>1 &lt;&#x3D; nums.length &lt;&#x3D; 200<br>1 &lt;&#x3D; nums[i] &lt;&#x3D; 100</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>看着有点类似回溯算法 但是回溯好像不容易判断两个部分是否相等 好的回溯只要是最后可以到达数组和的一半暴力就可以了</p>
+<p>背包问题</p>
+<p>所有的元素只能放入一次 所以是01背包问题</p>
+<p>背包的体积为sum &#x2F; 2<br>背包要放入的商品（集合里的元素）重量为 元素的数值，价值也为元素的数值<br>背包如果正好装满，说明找到了总和为 sum &#x2F; 2 的子集。<br>背包中每一个元素是不可重复放入。&#x2F;&#x2F;这个·是重点</p>
+<p>这道题能用背包主要是因为重量和价值是一个东西 那么我只要让求一半重量的时候价值是否也是一半就可以了 最大对应一半 背包可以装下一半数组的时候 这一半的数组确实也能达到总和是一半</p>
+<p>五个步骤分析<br>1数组 dp表示能装下这些数组的时候这些数组的和为多少<br>2递推 dp[j]  &#x3D;max(dp[j],dp[j-nums[i]+nums[i]]);nums既是重量也是价值<br>3 如何初始化 dp全部都是初始化为0<br>4 遍历条件 一维度的话 就先正向遍历横坐标 再反向遍历纵坐标<br>5 推导数组<br>1 5 11 5<br>&#x2F;&#x2F;<br>这个时候就要了解一个问题了 我们遍历价值当然可以从0开始遍历 但是遍历重量的时候我们的纵坐标应该是物体的每个重量 这样才能体现了选择这些物体后的最大可容重量 所以得的的结果也是表示背包重量限制的坐标结果 dp[背包可容重量]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">canPartition</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">   vector&lt;<span class="type">int</span>&gt;<span class="built_in">dp</span>(nums.<span class="built_in">size</span>()<span class="number">+1</span>,<span class="number">0</span>);</span><br><span class="line">   <span class="type">int</span> sum =<span class="number">0</span>;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>;i &lt; nums.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">       sum +=nums[i];</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(sum % <span class="number">2</span> ==<span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">   <span class="type">int</span> new_sum = sum /<span class="number">2</span>;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;=nums.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> j = new_sum; j &gt;= nums[i];j--)&#123;<span class="comment">//大于等于当前的最小花费 这样才能改变</span></span><br><span class="line">           dp[j] = <span class="built_in">max</span>(dp[j],dp[j-nums[i]]+nums[i]);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(dp[new_sum] == new_sum) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">   <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="最后一块石头的重量2"><a href="#最后一块石头的重量2" class="headerlink" title="最后一块石头的重量2"></a>最后一块石头的重量2</h2><p>题目难度：中等</p>
+<p>有一堆石头，每块石头的重量都是正整数。</p>
+<p>每一回合，从中选出任意两块石头，然后将它们一起粉碎。假设石头的重量分别为 x 和 y，且 x &lt;&#x3D; y。那么粉碎的可能结果如下：</p>
+<p>如果 x &#x3D;&#x3D; y，那么两块石头都会被完全粉碎；</p>
+<p>如果 x !&#x3D; y，那么重量为 x 的石头将会完全粉碎，而重量为 y 的石头新重量为 y-x。</p>
+<p>最后，最多只会剩下一块石头。返回此石头最小的可能重量。如果没有石头剩下，就返回 0。</p>
+<p>示例：</p>
+<p>输入：[2,7,4,1,8,1]<br>输出：1<br>解释：</p>
+<p>组合 2 和 4，得到 2，所以数组转化为 [2,7,1,8,1]，<br>组合 7 和 8，得到 1，所以数组转化为 [2,1,1,1]，<br>组合 2 和 1，得到 1，所以数组转化为 [1,1,1]，<br>组合 1 和 1，得到 0，所以数组转化为 [1]，这就是最优值。<br>提示：</p>
+<p>1 &lt;&#x3D; stones.length &lt;&#x3D; 30<br>1 &lt;&#x3D; stones[i] &lt;&#x3D; 1000</p>
+<h3 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h3><p>考虑一下为什么遍历的时候不能反着来</p>
+<p>尽量让石头分成重量相同的两堆，相撞之后剩下的石头最小，这样就化解成01背包问题了。<br>感觉和昨天讲解的416. 分割等和子集 (opens new window)非常像了。<br>本题物品的重量为stones[i]，物品的价值也为stones[i]。<br>对应着01背包里的物品重量weight[i]和 物品价值value[i]。</p>
+<p>就是说重量一半的背包拿出来最大多少重量的石头去和剩下的石头做差 就能得到一半切割的最小值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">lastStoneWeightII</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; stones)</span> </span>&#123;</span><br><span class="line">   vector&lt;<span class="type">int</span>&gt;<span class="built_in">dp</span>(stones.<span class="built_in">size</span>(),<span class="number">0</span>);</span><br><span class="line">   <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>;i&lt;stones.<span class="built_in">size</span>();i++) sum += stones[i];</span><br><span class="line">   new_sum = sum /<span class="number">2</span>;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;stones.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> j = new_sum;j &gt;= stones[i];j--)&#123;</span><br><span class="line">           dp[j] = <span class="built_in">max</span>(dp[j],dp[j - stones[i]]+stones[i]);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="type">int</span> new_min = sum - dp[new_sum]  - dp[new_sum];</span><br><span class="line">   <span class="keyword">return</span> new_min;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="目标和"><a href="#目标和" class="headerlink" title="目标和"></a>目标和</h2><p>给定一个非负整数数组，a1, a2, …, an, 和一个目标数，S。现在你有两个符号 + 和 -。对于数组中的任意一个整数，你都可以从 + 或 -中选择一个符号添加在前面。</p>
+<p>返回可以使最终数组和为目标数 S 的所有添加符号的方法数。</p>
+<p>示例：</p>
+<p>输入：nums: [1, 1, 1, 1, 1], S: 3<br>输出：5<br>解释：</p>
+<p>-1+1+1+1+1 &#x3D; 3<br>+1-1+1+1+1 &#x3D; 3<br>+1+1-1+1+1 &#x3D; 3<br>+1+1+1-1+1 &#x3D; 3<br>+1+1+1+1-1 &#x3D; 3<br>一共有5种方法让最终目标和为3。</p>
+<p>提示：</p>
+<p>数组非空，且长度不会超过 20 。<br>初始的数组的和不会超过 1000 。<br>保证返回的最终结果能被 32 位整数存下。</p>
+<h3 id="解法-2"><a href="#解法-2" class="headerlink" title="解法"></a>解法</h3><p>这个回溯可以作为一种解法 不过超时了 同时回溯解法需要数学解算 把求结果转换成求组合才能使用回溯</p>
+<p>dp方法<br>看成背包 nums容量装满x的背包 组合问题<br>一样用这个转化方法<br>加法总和x 减法总和y<br>x-y &#x3D; target<br>x+y &#x3D;sum<br>所以 x &#x3D; (sum+target)&#x2F;2<br>考虑到其他两种情况 一种就是它们的差大于了sum 这种是错误的 还有一种就是它们的和取余之后有值 说明x不是对应整数也错了</p>
+<p>注意 要求的是装满有几种方法了 而不是是否能装满</p>
+<p>第一步骤 定义dp数组dp[i][j] 这回出现的值是装满这个背包的方法<br>第二步骤递推<br>dp[2][2] &#x3D; 容量为2的背包不放物品2有几种方法 + 容量为2的背包放物品2有几种方法<br>递推公式：dp[i][j] &#x3D; dp[i - 1][j] + dp[i - 1][j - nums[i]];<br>第三步初始化<br>从递推能看出来推导就是从左边和上边推导出来的 那么这个推导之前需要把最上边和最左边先推导出来<br>这个也好推<br>最上边这一行第一个是1 后面的根据这个物品去填 应该是除了dp[0][nums[0]] &#x3D; 1 这是正好装满了 其他的要不是少要不就是多<br>最左边这一列 如果是0的话 那么不放物品就是1种方法 但是如果有物品重量为0这种情况也能放进去<br>0 1 2 &#x3D; 0 1 2 12 四种   除了0之外剩下的就是本身物品的数量加上组合<br>0 1 2 3&#x3D; 0 1 2 3 12 13 23 123  总结出来的 就是重量为0的有两种选择 选或者不选 所以是 2的n次方<br>第四步遍历顺序<br>总左到右 从上到下<br>第五步 推导举例子</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/17/dp-%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" data-id="cm3nvq3o10000wovq6yunb49w" data-title="dp-背包问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">数据结构，动态规划</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-动态规划" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/15/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="article-date">
+  <time class="dt-published" datetime="2024-11-15T01:58:23.000Z" itemprop="datePublished">2024-11-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/11/15/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="大概步骤"><a href="#大概步骤" class="headerlink" title="大概步骤"></a>大概步骤</h2><p>确定dp数组（dp table）以及下标的含义<br>确定递推公式<br>dp数组如何初始化<br>确定遍历顺序<br>举例推导dp数组</p>
+<h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> N)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (N &lt;= <span class="number">1</span>) <span class="keyword">return</span> N;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(N + <span class="number">1</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= N; i++) &#123;</span><br><span class="line">            dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[N];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="爬楼梯"><a href="#爬楼梯" class="headerlink" title="爬楼梯"></a>爬楼梯</h2><p>假设你正在爬楼梯。需要 n 阶你才能到达楼顶。</p>
+<p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
+<p>注意：给定 n 是一个正整数。</p>
+<p>示例 1：</p>
+<p>输入： 2<br>输出： 2<br>解释： 有两种方法可以爬到楼顶。<br>1 阶 + 1 阶<br>2 阶<br>示例 2：</p>
+<p>输入： 3<br>输出： 3<br>解释： 有三种方法可以爬到楼顶。<br>1 阶 + 1 阶 + 1 阶<br>1 阶 + 2 阶<br>2 阶 + 1 阶</p>
+<h3 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h3><p>只能爬一个或者两个<br>方法总数分为最后跳一步和最后跳两步的方法 剩下没有其他的了 </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">climbStaris</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n&lt;=<span class="number">1</span>) <span class="keyword">return</span> n;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt;<span class="built_in">dp</span>(n<span class="number">+1</span>);</span><br><span class="line">    dp[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">    dp[<span class="number">2</span>]=<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">3</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        dp[i] = dp[i<span class="number">-1</span>]+dp[<span class="number">1</span><span class="number">-2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="最小花费爬楼梯"><a href="#最小花费爬楼梯" class="headerlink" title="最小花费爬楼梯"></a>最小花费爬楼梯</h2><p>数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。</p>
+<p>每当你爬上一个阶梯你都要花费对应的体力值，一旦支付了相应的体力值，你就可以选择向上爬一个阶梯或者爬两个阶梯。</p>
+<p>请你找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。</p>
+<p>示例 1：</p>
+<p>输入：cost &#x3D; [10, 15, 20]<br>输出：15<br>解释：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。<br>示例 2：</p>
+<p>输入：cost &#x3D; [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]<br>输出：6<br>解释：最低花费方式是从 cost[0] 开始，逐个经过那些 1 ，跳过 cost[3] ，一共花费 6 。<br>提示：</p>
+<p>cost 的长度范围是 [2, 1000]。<br>cost[i] 将会是一个整型数据，范围为 [0, 999]<br>修改之后的题意就比较明确了，题目中说 “你可以选择从下标为 0 或下标为 1 的台阶开始爬楼梯” 也就是相当于 跳到 下标 0 或者 下标 1 是不花费体力的， 从 下标 0 下标1 开始跳就要花费体力了。</p>
+<h3 id="解法-2"><a href="#解法-2" class="headerlink" title="解法"></a>解法</h3><p>从题意理解可以看出跳到第一个台阶和跳到第二个台阶所需要的花费是0 所以dp[0]dp[1] &#x3D;0 ;<br>之后以dp[i]为例子 可以看出跳到第i个台阶的时候依旧有两种选择 分别是dp[i-1]+cost[i-1];dp[i-2]cost[i-2];之后为了达到要求就选最小的那个 这样一直最小直到到达楼顶 感觉有点像贪心 但是贪心定义是不随着之前的局部条件改变 我这里是动态变化的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">minCostClimbingStairs</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; cost)</span> </span>&#123;</span><br><span class="line">   vector&lt;<span class="type">int</span>&gt;<span class="built_in">dp</span>(cost.<span class="built_in">size</span>()<span class="number">+1</span>);</span><br><span class="line">   dp[<span class="number">0</span>] =<span class="number">1</span>;</span><br><span class="line">   dp[<span class="number">1</span>] =<span class="number">1</span>;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">2</span>;i&lt;=cost.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">       dp[i] = <span class="built_in">min</span>(dp[i<span class="number">-1</span>]+cost[i<span class="number">-1</span>],dp[i<span class="number">-2</span>]+cost[i<span class="number">-2</span>]);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> dp[cost.<span class="built_in">size</span>()];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不同路径"><a href="#不同路径" class="headerlink" title="不同路径"></a>不同路径</h2><p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。</p>
+<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。</p>
+<p>问总共有多少条不同的路径？</p>
+<h3 id="解法-3"><a href="#解法-3" class="headerlink" title="解法"></a>解法</h3><p>建造一个二维矩阵dp[i][j]表示从00到ij有几种路线，限制于这个机器人每次只能向下和向右移动一步 所以dp[i][j]只有i-1 j 和i j-1两个地点到达这个位置 所以只有这两种方法 所以dp[i][j]&#x3D; dp[i-1][j] dp[i][j-1]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">uniquePaths</span><span class="params">(<span class="type">int</span> m, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;<span class="built_in">dp</span>(m,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n,<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">        dp[i][<span class="number">0</span>] =<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">        dp[<span class="number">0</span>][j] =<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">1</span>;i&lt;m;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j =<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">            dp[i][j] = dp[i<span class="number">-1</span>][j] + dp[i][j<span class="number">-1</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m<span class="number">-1</span>][n<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br><span class="line">动态规划五部曲</span><br></pre></td></tr></table></figure>
+
+<h2 id="不同路径2"><a href="#不同路径2" class="headerlink" title="不同路径2"></a>不同路径2</h2><p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。</p>
+<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。</p>
+<p>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p>
+<h3 id="解法-4"><a href="#解法-4" class="headerlink" title="解法"></a>解法</h3><p>当最边上的行和列起始的时候有障碍和障碍之后的为0<br>同时在整体地推的时候 遇到障碍的时候赋值为0</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; obstacleGrid)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> m = obstacleGrid.<span class="built_in">size</span>();</span><br><span class="line">    <span class="type">int</span> n = obstacleGrid[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">if</span>(obstcleGrid[<span class="number">0</span>][<span class="number">0</span>]==<span class="number">1</span> || obstacleGrid[m<span class="number">-1</span>][n<span class="number">-1</span>]==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    vertor&lt;vector&lt;<span class="type">int</span>&gt;&gt;<span class="built_in">dp</span>(m,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n,<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>;i&lt;m &amp;&amp; obstacleGrid[m][<span class="number">0</span>]==<span class="number">0</span>;i++)dp[i][<span class="number">0</span>]=<span class="number">1</span>;<span class="comment">//注意遇到障碍之后都是0的情况</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n &amp;&amp; obstacleGrid[<span class="number">0</span>][n]==<span class="number">0</span>;i++)dp[<span class="number">0</span>][i]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;m;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j= <span class="number">1</span>; j &lt;n;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obstacleGrid[i][j]==<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">            dp[i][j] = dp[i<span class="number">-1</span>][j]+dp[i][j<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m<span class="number">-1</span>][n<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="整数拆分"><a href="#整数拆分" class="headerlink" title="整数拆分"></a>整数拆分</h2><p>给定一个正整数 n，将其拆分为至少两个正整数的和，并使这些整数的乘积最大化。 返回你可以获得的最大乘积。</p>
+<p>示例 1:</p>
+<p>输入: 2<br>输出: 1<br>解释: 2 &#x3D; 1 + 1, 1 × 1 &#x3D; 1。<br>示例 2:</p>
+<p>输入: 10<br>输出: 36<br>解释: 10 &#x3D; 3 + 3 + 4, 3 × 3 × 4 &#x3D; 36。<br>说明: 你可以假设 n 不小于 2 且不大于 58<br>k &gt;&#x3D; 2</p>
+<h3 id="解法-5"><a href="#解法-5" class="headerlink" title="解法"></a>解法</h3><p>这个整数拆分有两种方式 一种是就直接拆分成两个数 一种是三个数以上的拆分<br>初始化问题<br>2 —1  1</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">integerBreak</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">   vector&lt;<span class="type">int</span>&gt;<span class="built_in">dp</span>(n<span class="number">+1</span>,<span class="number">0</span>);<span class="comment">//注意n+1</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> a = <span class="number">1</span>;a&lt;i;a++)&#123;<span class="comment">//可以换成i/2</span></span><br><span class="line">           dp[i] = <span class="built_in">max</span>(<span class="built_in">max</span>((i-a)*a,a*dp[i-a]),dp[i]);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> dp[n];</span><br><span class="line">       </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不同的搜索二叉树"><a href="#不同的搜索二叉树" class="headerlink" title="不同的搜索二叉树"></a>不同的搜索二叉树</h2><p>给定一个整数 n，求以 1 … n 为节点组成的二叉搜索树有多少种？</p>
+<h3 id="解法-6"><a href="#解法-6" class="headerlink" title="解法"></a>解法</h3><p>对于一个n个节点的搜索二叉树，那么它就有i（这个i会从0遍历到n）种左右节点的可能<br>这个时候对于其中一种节点个数就是dp[左边节点]*dp[右边节点]，这里dp含义就是有这个节点的时候一共有多少种摆放方法<br>这样递推方法就出来了<br>现在确定起始条件 dp[0]&#x3D;1 表示这是一种搜索二叉树 dp[1]&#x3D;1;dp[2]&#x3D;2;dp[3]&#x3D;5</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">numTrees</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt;<span class="built_in">dp</span>(n<span class="number">+1</span>,<span class="number">0</span>);</span><br><span class="line">    dp[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    dp[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> a = <span class="number">0</span>;a&lt;=i<span class="number">-1</span>;a++ )&#123;</span><br><span class="line">            dp[i] += dp[a]*dp[i-a<span class="number">-1</span>]; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/15/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" data-id="cm3nvq3o30001wovqgwbt8n3t" data-title="动态规划" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">数据结构，动态规划</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-贪心-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/11/13/%E8%B4%AA%E5%BF%83-2/" class="article-date">
@@ -840,111 +1006,12 @@ public:
 
 
   
-    <article id="post-“二叉树”" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/11/06/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91%E2%80%9D/" class="article-date">
-  <time class="dt-published" datetime="2024-11-06T15:36:15.000Z" itemprop="datePublished">2024-11-06</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/11/06/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91%E2%80%9D/">二叉树类型回顾</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="经过验证我认为-return-root和前中后序没关系-随时都可以使用"><a href="#经过验证我认为-return-root和前中后序没关系-随时都可以使用" class="headerlink" title="经过验证我认为 return root和前中后序没关系 随时都可以使用"></a>经过验证我认为 return root和前中后序没关系 随时都可以使用</h1><h1 id="二叉树累加计算"><a href="#二叉树累加计算" class="headerlink" title="二叉树累加计算"></a>二叉树累加计算</h1><p>从后往前写 第一个：<br>给出二叉搜树的根节点，该树的节点值各不相同，请你将其转换为累加树（Greater Sum Tree），使每个节点 node 的新值等于原树中大于或等于 node.val 的值之和。</p>
-<p>因为累加树的原因所以要求从最大的开始累加，定义就是从右到左 所以遍历顺序<br>右边 中 左边 加入一个数值用来记录前面所有的累加值</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> pre =<span class="number">0</span>;</span><br><span class="line">    <span class="function">TreeNode* <span class="title">convertBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!root) <span class="keyword">return</span> <span class="literal">NULL</span> ;</span><br><span class="line">        <span class="built_in">convertBST</span>(root-&gt;right);</span><br><span class="line">        root-&gt;val +=pre;</span><br><span class="line">        pre = root-&gt;val;</span><br><span class="line">        <span class="built_in">convertBST</span>(root-&gt;left);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h1 id="将有序数组转换为二叉搜索树"><a href="#将有序数组转换为二叉搜索树" class="headerlink" title="将有序数组转换为二叉搜索树"></a>将有序数组转换为二叉搜索树</h1><p>将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。<br>本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。</p>
-<p><span style="color: red;">因为是有序树，同时是高度平衡的，所以不用担心切割的时候找不到中间位置，通过中间位置的计算切割，之后递归的时候接住就可以了</span></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">traversal</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> left, <span class="type">int</span> right)</span> </span>&#123;<span class="comment">//左右闭区间</span></span><br><span class="line">        <span class="keyword">if</span> (left &gt; right) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="type">int</span> mid = left + ((right - left) / <span class="number">2</span>);</span><br><span class="line">        TreeNode* root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(nums[mid]);</span><br><span class="line">        root-&gt;left = <span class="built_in">traversal</span>(nums, left, mid - <span class="number">1</span>);</span><br><span class="line">        root-&gt;right = <span class="built_in">traversal</span>(nums, mid + <span class="number">1</span>, right);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">sortedArrayToBST</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        TreeNode* root = <span class="built_in">traversal</span>(nums, <span class="number">0</span>, nums.<span class="built_in">size</span>() - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h1 id="修剪二叉搜索树"><a href="#修剪二叉搜索树" class="headerlink" title="修剪二叉搜索树"></a>修剪二叉搜索树</h1><p>给定一个二叉搜索树，同时给定最小边界L 和最大边界 R。通过修剪二叉搜索树，使得所有节点的值在[L, R]中 (R&gt;&#x3D;L) 。你可能需要改变树的根节点，所以结果应当返回修剪好的二叉搜索树的新的根节点。</p>
-<p><span style="color: red;">每一次修建二叉树的时候有可能会发生二叉树的节点在这个边界里面，所以在删除节点的时候要求判定不违规的子节点续上。因为要续上所以返回的是有用的节点 retrun，  主要还是要判断之后跳过这个节点</span></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">trimBST</span><span class="params">(TreeNode* root, <span class="type">int</span> low, <span class="type">int</span> high)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">nullptr</span> ) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &lt; low) &#123;</span><br><span class="line">            TreeNode* right = <span class="built_in">trimBST</span>(root-&gt;right, low, high); <span class="comment">// 寻找符合区间[low, high]的节点</span></span><br><span class="line">            <span class="keyword">return</span> right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &gt; high) &#123;</span><br><span class="line">            TreeNode* left = <span class="built_in">trimBST</span>(root-&gt;left, low, high); <span class="comment">// 寻找符合区间[low, high]的节点</span></span><br><span class="line">            <span class="keyword">return</span> left;</span><br><span class="line">        &#125;</span><br><span class="line">        root-&gt;left = <span class="built_in">trimBST</span>(root-&gt;left, low, high); <span class="comment">// root-&gt;left接入符合条件的左孩子</span></span><br><span class="line">        root-&gt;right = <span class="built_in">trimBST</span>(root-&gt;right, low, high); <span class="comment">// root-&gt;right接入符合条件的右孩子</span></span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>快乐的一生</p>
-<h1 id=""><a href="#" class="headerlink" title=""></a></h1>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/06/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91%E2%80%9D/" data-id="cm3634hxx0001kgvq0s5mhzxw" data-title="二叉树类型回顾" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/11/06/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2024-11-06T12:20:42.188Z" itemprop="datePublished">2024-11-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/11/06/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/06/hello-world/" data-id="cm3634hxo0000kgvq3sgj1xvz" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
@@ -957,7 +1024,7 @@ public:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" rel="tag">贪心算法，数学结构</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">数据结构，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" rel="tag">贪心算法，数学结构</a></li></ul>
     </div>
   </div>
 
@@ -967,7 +1034,7 @@ public:
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 13.33px;">二叉树</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 16.67px;">回溯算法</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" style="font-size: 10px;">贪心算法，数学结构</a>
+      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 15px;">二叉树</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 17.5px;">回溯算法</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 12.5px;">数据结构，动态规划</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" style="font-size: 10px;">贪心算法，数学结构</a>
     </div>
   </div>
 
@@ -989,6 +1056,14 @@ public:
       <ul>
         
           <li>
+            <a href="/2024/11/17/dp-%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">dp-背包问题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/15/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
+          </li>
+        
+          <li>
             <a href="/2024/11/13/%E8%B4%AA%E5%BF%83-2/">贪心-2</a>
           </li>
         
@@ -998,14 +1073,6 @@ public:
         
           <li>
             <a href="/2024/11/12/%E5%9B%9E%E6%BA%AF-%E8%BF%9B%E9%98%B6/">回溯-进阶</a>
-          </li>
-        
-          <li>
-            <a href="/2024/11/11/%E5%9B%9E%E6%BA%AF%E5%AD%90%E9%9B%86/">回溯子集</a>
-          </li>
-        
-          <li>
-            <a href="/2024/11/09/%E2%80%9C%E4%BA%8C%E5%8F%89%E6%A0%91-3%E2%80%9D/">“二叉树-3”</a>
           </li>
         
       </ul>
