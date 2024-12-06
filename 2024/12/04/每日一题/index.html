@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>每日一题 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="2056有一个 8 x 8 的棋盘，它包含 n 个棋子（棋子包括车，后和象三种）。给你一个长度为 n 的字符串数组 pieces ，其中 pieces[i] 表示第 i 个棋子的类型（车，后或象）。除此以外，还给你一个长度为 n 的二维整数数组 positions ，其中 positions[i] &#x3D; [ri, ci] 表示第 i 个棋子现在在棋盘上的位置为 (ri, ci) ，棋盘下标">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日一题">
+<meta property="og:url" content="http://example.com/2024/12/04/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="2056有一个 8 x 8 的棋盘，它包含 n 个棋子（棋子包括车，后和象三种）。给你一个长度为 n 的字符串数组 pieces ，其中 pieces[i] 表示第 i 个棋子的类型（车，后或象）。除此以外，还给你一个长度为 n 的二维整数数组 positions ，其中 positions[i] &#x3D; [ri, ci] 表示第 i 个棋子现在在棋盘上的位置为 (ri, ci) ，棋盘下标">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-04T10:05:36.000Z">
+<meta property="article:modified_time" content="2024-12-06T06:45:23.594Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-每日一题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/04/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-12-04T10:05:36.000Z" itemprop="datePublished">2024-12-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      每日一题
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="2056"><a href="#2056" class="headerlink" title="2056"></a>2056</h2><p>有一个 8 x 8 的棋盘，它包含 n 个棋子（棋子包括车，后和象三种）。给你一个长度为 n 的字符串数组 pieces ，其中 pieces[i] 表示第 i 个棋子的类型（车，后或象）。除此以外，还给你一个长度为 n 的二维整数数组 positions ，其中 positions[i] &#x3D; [ri, ci] 表示第 i 个棋子现在在棋盘上的位置为 (ri, ci) ，棋盘下标从 1 开始。</p>
+<p>棋盘上每个棋子都可以移动 至多一次 。每个棋子的移动中，首先选择移动的 方向 ，然后选择 移动的步数 ，同时你要确保移动过程中棋子不能移到棋盘以外的地方。棋子需按照以下规则移动：</p>
+<p>车可以 水平或者竖直 从 (r, c) 沿着方向 (r+1, c)，(r-1, c)，(r, c+1) 或者 (r, c-1) 移动。<br>后可以 水平竖直或者斜对角 从 (r, c) 沿着方向 (r+1, c)，(r-1, c)，(r, c+1)，(r, c-1)，(r+1, c+1)，(r+1, c-1)，(r-1, c+1)，(r-1, c-1) 移动。<br>象可以 斜对角 从 (r, c) 沿着方向 (r+1, c+1)，(r+1, c-1)，(r-1, c+1)，(r-1, c-1) 移动。<br>移动组合 包含所有棋子的 移动 。每一秒，每个棋子都沿着它们选择的方向往前移动 一步 ，直到它们到达目标位置。所有棋子从时刻 0 开始移动。如果在某个时刻，两个或者更多棋子占据了同一个格子，那么这个移动组合 不有效 。</p>
+<p>请你返回 有效 移动组合的数目。</p>
+<p>注意：</p>
+<p>初始时，不会有两个棋子 在 同一个位置 。<br>有可能在一个移动组合中，有棋子不移动。<br>如果两个棋子 直接相邻 且两个棋子下一秒要互相占据对方的位置，可以将它们在同一秒内 交换位置 。</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Move</span> &#123;</span><br><span class="line">    <span class="type">int</span> x0, y0; <span class="comment">// 起点</span></span><br><span class="line">    <span class="type">int</span> dx, dy; <span class="comment">// 移动方向</span></span><br><span class="line">    <span class="type">int</span> step;   <span class="comment">// 移动次数</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; DIRS = &#123;&#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">1</span>&#125;, &#123;<span class="number">-1</span>, <span class="number">1</span>&#125;, &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">-1</span>&#125;&#125;; <span class="comment">// 上下左右 + 斜向</span></span><br><span class="line">    unordered_map&lt;<span class="type">char</span>, vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt;&gt; PIECE_DIRS = &#123;</span><br><span class="line">        &#123;<span class="string">&#x27;r&#x27;</span>, &#123;DIRS.<span class="built_in">begin</span>(), DIRS.<span class="built_in">begin</span>() + <span class="number">4</span>&#125;&#125;,</span><br><span class="line">        &#123;<span class="string">&#x27;b&#x27;</span>, &#123;DIRS.<span class="built_in">begin</span>() + <span class="number">4</span>, DIRS.<span class="built_in">end</span>()&#125;&#125;,</span><br><span class="line">        &#123;<span class="string">&#x27;q&#x27;</span>, DIRS&#125;,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算位于 (x0,y0) 的棋子在 dirs 这些方向上的所有合法移动</span></span><br><span class="line">    <span class="function">vector&lt;Move&gt; <span class="title">generate_moves</span><span class="params">(<span class="type">int</span> x0, <span class="type">int</span> y0, vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt;&amp; dirs)</span> </span>&#123;</span><br><span class="line">        <span class="type">const</span> <span class="type">int</span> SIZE = <span class="number">8</span>;</span><br><span class="line">        vector&lt;Move&gt; moves = &#123;&#123;x0, y0, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;&#125;; <span class="comment">// 原地不动</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> [dx, dy] : dirs) &#123;</span><br><span class="line">            <span class="comment">// 往 d 方向走 1,2,3,... 步</span></span><br><span class="line">            <span class="type">int</span> x = x0 + dx, y = y0 + dy;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> step = <span class="number">1</span>; <span class="number">0</span> &lt; x &amp;&amp; x &lt;= SIZE &amp;&amp; <span class="number">0</span> &lt; y &amp;&amp; y &lt;= SIZE; step++) &#123;</span><br><span class="line">                moves.<span class="built_in">emplace_back</span>(x0, y0, dx, dy, step);</span><br><span class="line">                x += dx;</span><br><span class="line">                y += dy;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> moves;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断两个移动是否合法，即不存在同一时刻两个棋子重叠的情况</span></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">is_valid</span><span class="params">(Move&amp; m1, Move&amp; m2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> x1 = m<span class="number">1.</span>x0, y1 = m<span class="number">1.</span>y0;</span><br><span class="line">        <span class="type">int</span> x2 = m<span class="number">2.</span>x0, y2 = m<span class="number">2.</span>y0;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">max</span>(m<span class="number">1.</span>step, m<span class="number">2.</span>step); i++) &#123;</span><br><span class="line">            <span class="comment">// 每一秒走一步</span></span><br><span class="line">            <span class="keyword">if</span> (i &lt; m<span class="number">1.</span>step) &#123;</span><br><span class="line">                x1 += m<span class="number">1.</span>dx;</span><br><span class="line">                y1 += m<span class="number">1.</span>dy;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; m<span class="number">2.</span>step) &#123;</span><br><span class="line">                x2 += m<span class="number">2.</span>dx;</span><br><span class="line">                y2 += m<span class="number">2.</span>dy;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (x1 == x2 &amp;&amp; y1 == y2) &#123; <span class="comment">// 重叠</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">countCombinations</span><span class="params">(vector&lt;string&gt;&amp; pieces, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; positions)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = pieces.<span class="built_in">size</span>();</span><br><span class="line">        <span class="comment">// 预处理所有合法移动</span></span><br><span class="line">        vector&lt;vector&lt;Move&gt;&gt; <span class="built_in">all_moves</span>(n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            all_moves[i] = <span class="built_in">generate_moves</span>(positions[i][<span class="number">0</span>], positions[i][<span class="number">1</span>], PIECE_DIRS[pieces[i][<span class="number">0</span>]]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function">vector&lt;Move&gt; <span class="title">path</span><span class="params">(n)</span></span>; <span class="comment">// 注意 path 的长度是固定的</span></span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">auto</span> dfs = [&amp;](<span class="keyword">auto</span>&amp; dfs, <span class="type">int</span> i) -&gt; <span class="type">void</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == n) &#123;</span><br><span class="line">                ans++;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 枚举当前棋子的所有合法移动</span></span><br><span class="line">            <span class="keyword">for</span> (Move&amp; move1 : all_moves[i]) &#123;</span><br><span class="line">                <span class="comment">// 判断合法移动 move1 是否有效</span></span><br><span class="line">                <span class="type">bool</span> ok = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (!<span class="built_in">is_valid</span>(move1, path[j])) &#123;</span><br><span class="line">                        ok = <span class="literal">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (ok) &#123;</span><br><span class="line">                    path[i] = move1; <span class="comment">// 直接覆盖，无需恢复现场</span></span><br><span class="line">                    <span class="built_in">dfs</span>(dfs, i + <span class="number">1</span>); <span class="comment">// 枚举后续棋子的所有合法移动组合</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="built_in">dfs</span>(dfs, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//大循环套着小循环 无敌的存在</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3001-捕捉黑皇后需要的最少移动次数"><a href="#3001-捕捉黑皇后需要的最少移动次数" class="headerlink" title="3001 捕捉黑皇后需要的最少移动次数"></a>3001 捕捉黑皇后需要的最少移动次数</h2><p>现有一个下标从 1 开始的 8 x 8 棋盘，上面有 3 枚棋子。</p>
+<p>给你 6 个整数 a 、b 、c 、d 、e 和 f ，其中：</p>
+<p>(a, b) 表示白色车的位置。<br>(c, d) 表示白色象的位置。<br>(e, f) 表示黑皇后的位置。<br>假定你只能移动白色棋子，返回捕获黑皇后所需的最少移动次数。</p>
+<p>请注意：</p>
+<p>车可以向垂直或水平方向移动任意数量的格子，但不能跳过其他棋子。<br>象可以沿对角线方向移动任意数量的格子，但不能跳过其他棋子。<br>如果车或象能移向皇后所在的格子，则认为它们可以捕获皇后。<br>皇后不能移动。</p>
+<h3 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h3><p>黑皇后无法移动 那么建立只需要判断移动路径上是否有黑皇后就可以了<br>这种迅速捕捉返回的问题属于回溯问题 当捕捉到有的时候count+1或者true<br>&#x2F;&#x2F; 但是有了可以挡住的问题 所以需要放弃回溯加入分类讨论算法<br>本身走的步数就很少所以直接把情况都列举出来<br>首先就是1步解决问题：<br>像和皇后在一条斜线上 中间没有车<br>车和皇后在一条行或者列上 中间没有象<br>这都是一步<br>剩下都是两步解决<br>象和皇后不在一条斜线上 ：车去解决问题 因为也不在一行上 所以两步<br>象和皇后在一条写线上：车把它挡住了 那么车移开 两步</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="comment">// m 在 l 和 r 之间（写不写等号都可以）</span></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">in_between</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> m, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">min</span>(l, r) &lt; m &amp;&amp; m &lt; <span class="built_in">max</span>(l, r);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">minMovesToCaptureTheQueen</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> c, <span class="type">int</span> d, <span class="type">int</span> e, <span class="type">int</span> f)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a == e &amp;&amp; (c != e || !<span class="built_in">in_between</span>(b, d, f)) || <span class="comment">// 车直接攻击到皇后（同一行）</span></span><br><span class="line">            b == f &amp;&amp; (d != f || !<span class="built_in">in_between</span>(a, c, e)) || <span class="comment">// 车直接攻击到皇后（同一列）</span></span><br><span class="line">            c + d == e + f &amp;&amp; (a + b != e + f || !<span class="built_in">in_between</span>(c, a, e)) || <span class="comment">// 象直接攻击到皇后</span></span><br><span class="line">            c - d == e - f &amp;&amp; (a - b != e - f || !<span class="built_in">in_between</span>(c, a, e)))<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="可以被一步捕获的棋子数"><a href="#可以被一步捕获的棋子数" class="headerlink" title="可以被一步捕获的棋子数"></a>可以被一步捕获的棋子数</h2><p>给定一个 8 x 8 的棋盘，只有一个 白色的车，用字符 ‘R’ 表示。棋盘上还可能存在白色的象 ‘B’ 以及黑色的卒 ‘p’。空方块用字符 ‘.’ 表示。</p>
+<p>车可以按水平或竖直方向（上，下，左，右）移动任意个方格直到它遇到另一个棋子或棋盘的边界。如果它能够在一次移动中移动到棋子的方格，则能够 吃掉 棋子。</p>
+<p>注意：车不能穿过其它棋子，比如象和卒。这意味着如果有其它棋子挡住了路径，车就不能够吃掉棋子。</p>
+<p>返回白车将能 吃掉 的 卒的数量。</p>
+<h3 id="解法-2"><a href="#解法-2" class="headerlink" title="解法"></a>解法</h3><p>class Solution {<br>public:<br>    int numRookCaptures(vector&lt;vector<char>&gt;&amp; board) {<br>        int cnt &#x3D; 0, st &#x3D; 0, ed &#x3D; 0;<br>        int dx[4] &#x3D; {0, 1, 0, -1};<br>        int dy[4] &#x3D; {1, 0, -1, 0};<br>        for (int i &#x3D; 0; i &lt; 8; ++i) {<br>            for (int j &#x3D; 0; j &lt; 8; ++j) {<br>                if (board[i][j] &#x3D;&#x3D; ‘R’) {<br>                    st &#x3D; i;<br>                    ed &#x3D; j;<br>                    break;<br>                }<br>            }<br>        }<br>        for (int i &#x3D; 0; i &lt; 4; i++) {<br>            for (int step &#x3D; 0;; step++) {<br>                int tx &#x3D; st + step * dx[i];<br>                int ty &#x3D; ed + step * dy[i];<br>                if (tx &lt; 0 || tx &gt;&#x3D; 8 || ty &lt; 0 || ty &gt;&#x3D; 8 || board[tx][ty] &#x3D;&#x3D; ‘B’) {<br>                    break;<br>                }<br>                if (board[tx][ty] &#x3D;&#x3D; ‘p’) {<br>                    cnt++;<br>                    break;<br>                }<br>            }<br>        }<br>        return cnt;<br>    }<br>};</p>
+<pre><code>
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/04/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" data-id="cm4ckzpei00014gvq4siw57l7" data-title="每日一题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/12/01/%E5%9B%BE%E8%AE%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">图论</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/" rel="tag">动态规划，算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E8%83%8C%E5%8C%85/" rel="tag">动态规划，背包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">数据结构，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">算法，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8D%95%E8%B0%83%E6%A0%88/" rel="tag">算法，单调栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%8C%E5%8C%85%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">背包，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" rel="tag">贪心算法，数学结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 15px;">二叉树</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">动态规划，算法</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E8%83%8C%E5%8C%85/" style="font-size: 10px;">动态规划，背包</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 17.5px;">回溯算法</a> <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="font-size: 10px;">图论</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">数据结构，动态规划</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 12.5px;">算法</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">算法，动态规划</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8D%95%E8%B0%83%E6%A0%88/" style="font-size: 10px;">算法，单调栈</a> <a href="/tags/%E8%83%8C%E5%8C%85%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">背包，动态规划</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" style="font-size: 10px;">贪心算法，数学结构</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/12/04/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">每日一题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/01/%E5%9B%BE%E8%AE%BA/">图论</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/28/%E5%8D%95%E8%B0%83%E6%A0%88/">单调栈</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/25/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-3/">动态规划-3</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/21/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-2/">动态规划-2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
