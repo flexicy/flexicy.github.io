@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>图论-总结 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="最短路径 起始我推荐去看代码原版 这是是我自己回归经验这里说的是最短路径 那么就是说不包含所有的点 有起点和终点就可以了 那么就有这些方法：dijkstra朴素版dijkstra堆优化版Bellman_fordBellman_ford 队列优化算法（又名SPFA）bellman_ford 算法判断负权回路bellman_ford之单源有限最短路Floyd 算法精讲启发式搜索：A * 算法 dijk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图论-总结">
+<meta property="og:url" content="http://example.com/2024/12/12/%E5%9B%BE%E8%AE%BA-%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="最短路径 起始我推荐去看代码原版 这是是我自己回归经验这里说的是最短路径 那么就是说不包含所有的点 有起点和终点就可以了 那么就有这些方法：dijkstra朴素版dijkstra堆优化版Bellman_fordBellman_ford 队列优化算法（又名SPFA）bellman_ford 算法判断负权回路bellman_ford之单源有限最短路Floyd 算法精讲启发式搜索：A * 算法 dijk">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-12T15:25:11.000Z">
+<meta property="article:modified_time" content="2024-12-13T07:51:50.732Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="图论">
+<meta property="article:tag" content="总结">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-图论-总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/12/%E5%9B%BE%E8%AE%BA-%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2024-12-12T15:25:11.000Z" itemprop="datePublished">2024-12-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      图论-总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="最短路径-起始我推荐去看代码原版-这是是我自己回归经验"><a href="#最短路径-起始我推荐去看代码原版-这是是我自己回归经验" class="headerlink" title="最短路径 起始我推荐去看代码原版 这是是我自己回归经验"></a>最短路径 起始我推荐去看代码原版 这是是我自己回归经验</h2><p>这里说的是最短路径 那么就是说不包含所有的点 有起点和终点就可以了</p>
+<p>那么就有这些方法：<br>dijkstra朴素版<br>dijkstra堆优化版<br>Bellman_ford<br>Bellman_ford 队列优化算法（又名SPFA）<br>bellman_ford 算法判断负权回路<br>bellman_ford之单源有限最短路<br>Floyd 算法精讲<br>启发式搜索：A * 算法</p>
+<p>dijkstra和bellman都是松弛操作 只不过前者是对没有采用的节点进行更新 后者对所有的节点都进行更新 所以一个是局部最优 一个是全局最优</p>
+<p>dijkstra 不算动态规划只是贪心操作 每次更新 新的minDist里面的节点都是起始节点到当前节点的距离 （源点开始到选点的更新点）<br>第一个 dijkstra:<br>第一步，选源点到哪个节点近且该节点未被访问过<br>第二步，该最近节点被标记访问过<br>第三步，更新非访问节点到源点的距离（即更新minDist数组）<br>复杂度O(N^2)</p>
+<p>第二个 dijkstra堆优化：<br>换成了按照边进行排序<br>第一步，选源点到哪个节点近且该节点未被访问过<br>第二步，该最近节点被标记访问过<br>第三步，更新非访问节点到源点的距离（即更新minDist数组）<br>原始的存储方式换成了邻接表的形式 同时因为是使用边来进行排序<br>所有使用了优先队列小顶堆  优先队列中存放 pair&lt;节点编号，源点到该节点的权值&gt;<br>复杂度O(ElogE)</p>
+<p>第三个Bellman-Ford:和上面不同的点在于为动态规划方式 每次松弛操作都是<br>因为有了新要求：权值可以有负数 需要检测负权回路 加上有走过节点数量的限制<br>步骤是对所有边进行松弛n-1次操作（n为节点数量），从而求得目标最短路<br>复杂度O(N*E)<br>可以判断负权回路：松弛超过n-1次就可以了 看数值是否还有变化<br>可以在节点数量限制下使用 注意既然要求严格控制边的数量限制 那么每次循环更新的minDist都要用上次的计算结果不要用一个数组进行控制</p>
+<p>第四个SPFA 是Bellman-Ford:队列优化版<br>只需要对上一次松弛的时候更新过的节点作为出发节点所连接的边 进行松弛就够了<br>while(!que.empty()){&#x2F;&#x2F;代替for循环}<br>同时对这之后的做出松弛能得到相同的结果 但是动态规划这个就不能很好体现出现了 但是本质上松弛的节点和原始是一样的<br>复杂度O(N*K)</p>
+<p>第五个Floyd 提出的需求是多个起点：也是动态规划<br>但是具体步骤在于：<br>grid[i][j][k] &#x3D; min(grid[i][k][k - 1] + grid[k][j][k - 1]， grid[i][j][k - 1])<br>优化成这个：<br>grid[i][j] &#x3D; min(grid[i][j], grid[i][k] + grid[k][j]);<br>但是还是三层遍历顺序解决问题<br>复杂度O(N^3)</p>
+<p>使用单源且为正数权值 还没有负权回路直接使用dijkstra<br>使用单源且可以为负数 直接使用Bellman-Ford<br>多个源 可以使用Floyd</p>
+<p>A*不一定得出最后准确结果 但是快</p>
+<h2 id="图论总结篇"><a href="#图论总结篇" class="headerlink" title="图论总结篇"></a>图论总结篇</h2><p>首先是两种存储方式 邻接表和邻接矩阵</p>
+<p>之后是基本的搜索方法 深搜和广搜</p>
+<h2 id="深搜的两种写法"><a href="#深搜的两种写法" class="headerlink" title="深搜的两种写法"></a>深搜的两种写法</h2><p>dfs有两种一种是处理当前节点 一种是处理以下各节点</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这是处理下一个节点</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(参数)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (终止条件) &#123;</span><br><span class="line">        存放结果;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (选择：本节点所连接的其他节点) &#123;</span><br><span class="line">        处理节点;</span><br><span class="line">        <span class="built_in">dfs</span>(图，选择的节点); <span class="comment">// 递归</span></span><br><span class="line">        回溯，撤销处理结果</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">//这种处理方法必须要在主函数的时候使用第一个节点先处理了</span></span><br><span class="line"><span class="comment">// 写法一：处理当前访问的节点</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">const</span> vector&lt;list&lt;<span class="type">int</span>&gt;&gt;&amp; graph, <span class="type">int</span> key, vector&lt;<span class="type">bool</span>&gt;&amp; visited)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (visited[key]) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    visited[key] = <span class="literal">true</span>;</span><br><span class="line">    list&lt;<span class="type">int</span>&gt; keys = graph[key];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> key : keys) &#123;</span><br><span class="line">        <span class="comment">// 深度优先搜索遍历</span></span><br><span class="line">        <span class="built_in">dfs</span>(graph, key, visited);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法二：处理下一个要访问的节点</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">const</span> vector&lt;list&lt;<span class="type">int</span>&gt;&gt;&amp; graph, <span class="type">int</span> key, vector&lt;<span class="type">bool</span>&gt;&amp; visited)</span> </span>&#123;</span><br><span class="line">    list&lt;<span class="type">int</span>&gt; keys = graph[key];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> key : keys) &#123;</span><br><span class="line">        <span class="keyword">if</span> (visited[key] == <span class="literal">false</span>) &#123; <span class="comment">// 确认下一个是没访问过的节点</span></span><br><span class="line">            visited[key] = <span class="literal">true</span>;</span><br><span class="line">            <span class="built_in">dfs</span>(graph, key, visited);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="岛屿问题系列-也就是染色系列不需要回溯-我得去看看"><a href="#岛屿问题系列-也就是染色系列不需要回溯-我得去看看" class="headerlink" title="岛屿问题系列 也就是染色系列不需要回溯 &#x2F;&#x2F;我得去看看"></a>岛屿问题系列 也就是染色系列不需要回溯 &#x2F;&#x2F;我得去看看</h2><p>路线问题必须回溯去掉头<br>完全可达只看能不能达到 不需要回溯</p>
+<h2 id="广搜超时问题"><a href="#广搜超时问题" class="headerlink" title="广搜超时问题"></a>广搜超时问题</h2><p>要加入队列就代表走过，就需要标记，而不是从队列拿出来的时候再去标记走过。<br>是的 如果已经加入队列之后 其他的点也可能去加入这个已经加入队列的点导致重复问题</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> dir[<span class="number">4</span>][<span class="number">2</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>&#125;; <span class="comment">// 四个方向</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">bfs</span><span class="params">(vector&lt;vector&lt;<span class="type">char</span>&gt;&gt;&amp; grid, vector&lt;vector&lt;<span class="type">bool</span>&gt;&gt;&amp; visited, <span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">    queue&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; que;</span><br><span class="line">    que.<span class="built_in">push</span>(&#123;x, y&#125;);</span><br><span class="line">    visited[x][y] = <span class="literal">true</span>; <span class="comment">// 只要加入队列，立刻标记</span></span><br><span class="line">    <span class="keyword">while</span>(!que.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        pair&lt;<span class="type">int</span> ,<span class="type">int</span>&gt; cur = que.<span class="built_in">front</span>(); que.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="type">int</span> curx = cur.first;</span><br><span class="line">        <span class="type">int</span> cury = cur.second;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">            <span class="type">int</span> nextx = curx + dir[i][<span class="number">0</span>];</span><br><span class="line">            <span class="type">int</span> nexty = cury + dir[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (nextx &lt; <span class="number">0</span> || nextx &gt;= grid.<span class="built_in">size</span>() || nexty &lt; <span class="number">0</span> || nexty &gt;= grid[<span class="number">0</span>].<span class="built_in">size</span>()) <span class="keyword">continue</span>;  <span class="comment">// 越界了，直接跳过</span></span><br><span class="line">            <span class="keyword">if</span> (!visited[nextx][nexty] &amp;&amp; grid[nextx][nexty] == <span class="string">&#x27;1&#x27;</span>) &#123;</span><br><span class="line">                que.<span class="built_in">push</span>(&#123;nextx, nexty&#125;);</span><br><span class="line">                visited[nextx][nexty] = <span class="literal">true</span>; <span class="comment">// 只要加入队列立刻标记</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串接龙自做无向图-这个需要注意一下"><a href="#字符串接龙自做无向图-这个需要注意一下" class="headerlink" title="字符串接龙自做无向图 这个需要注意一下"></a>字符串接龙自做无向图 这个需要注意一下</h2><p> unordered_map&lt;string, int&gt; visitMap; &#x2F;&#x2F; &lt;记录的字符串，路径长度&gt;<br>  visitMap.insert(pair&lt;string, int&gt;(beginStr, 1));</p>
+<h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><p>并查集主要有两个功能：</p>
+<p>将两个元素添加到一个集合中。<br>判断两个元素在不在同一个集合</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> n = <span class="number">1005</span>; <span class="comment">// n根据题目中节点数量而定，一般比节点数量大一点就好</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; father = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; (n, <span class="number">0</span>); <span class="comment">// C++里的一种数组结构</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 并查集初始化</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        father[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 并查集里寻根的过程</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> u == father[u] ? u : father[u] = <span class="built_in">find</span>(father[u]); <span class="comment">// 路径压缩</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断 u 和 v是否找到同一个根</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isSame</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">    u = <span class="built_in">find</span>(u);</span><br><span class="line">    v = <span class="built_in">find</span>(v);</span><br><span class="line">    <span class="keyword">return</span> u == v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将v-&gt;u 这条边加入并查集</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">join</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">    u = <span class="built_in">find</span>(u); <span class="comment">// 寻找u的根</span></span><br><span class="line">    v = <span class="built_in">find</span>(v); <span class="comment">// 寻找v的根</span></span><br><span class="line">    <span class="keyword">if</span> (u == v) <span class="keyword">return</span> ; <span class="comment">// 如果发现根相同，则说明在一个集合，不用两个节点相连直接返回</span></span><br><span class="line">    father[v] = u;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>寻找根节点，函数：find(int u)，也就是判断这个节点的祖先节点是哪个<br>将两个节点接入到同一个集合，函数：join(int u, int v)，将两个节点连在同一个根节点上<br>判断两个节点是否在同一个集合，函数：isSame(int u, int v)，就是判断两个节点是不是同一个根节点</p>
+<h2 id="最小生成树：以最小的成本（边的权值）将图中所有节点链接到一起"><a href="#最小生成树：以最小的成本（边的权值）将图中所有节点链接到一起" class="headerlink" title="最小生成树：以最小的成本（边的权值）将图中所有节点链接到一起"></a>最小生成树：以最小的成本（边的权值）将图中所有节点链接到一起</h2><p>注意是所有边<br>prim 和 kruskal<br>在 稀疏图中，用Kruskal更优。 在稠密图中，用prim算法更优。<br>Prim 算法 时间复杂度为 O(n^2)其中 n 为节点数量<br>Kruskal算法 时间复杂度 为 O(nlogn)，其中n 为边的数量</p>
+<h2 id="prime"><a href="#prime" class="headerlink" title="prime"></a>prime</h2><p>第一步，选距离生成树最近节点<br>第二步，最近节点加入生成树<br>第三步，更新非生成树节点到生成树的距离（即更新minDist数组）</p>
+<h2 id="kruscal"><a href="#kruscal" class="headerlink" title="kruscal"></a>kruscal</h2><p>边的权值排序，因为要优先选最小的边加入到生成树里<br>遍历排序后的边<br>如果边首尾的两个节点在同一个集合，说明如果连上这条边图中会出现环<br>如果边首尾的两个节点不在同一个集合，加入到最小生成树，并把两个节点加入同一个集合</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (e--) &#123;</span><br><span class="line">      cin &gt;&gt; v1 &gt;&gt; v2 &gt;&gt; val;</span><br><span class="line">      edges.<span class="built_in">push_back</span>(&#123;v1, v2, val&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 执行Kruskal算法</span></span><br><span class="line">  <span class="comment">// 按边的权值对边进行从小到大排序</span></span><br><span class="line">  <span class="built_in">sort</span>(edges.<span class="built_in">begin</span>(), edges.<span class="built_in">end</span>(), [](<span class="type">const</span> Edge&amp; a, <span class="type">const</span> Edge&amp; b) &#123;</span><br><span class="line">          <span class="keyword">return</span> a.val &lt; b.val;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果祖先不同，则不在同一个集合</span></span><br><span class="line">      <span class="keyword">if</span> (x != y) &#123;</span><br><span class="line">          result_val += edge.val; <span class="comment">// 这条边可以作为生成树的边</span></span><br><span class="line">          <span class="built_in">join</span>(x, y); <span class="comment">// 两个节点加入到同一个集合</span></span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">  cout &lt;&lt; result_val &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><p>给出一个 有向图，把这个有向图转成线性的排序 就叫拓扑排序。<br>步骤：<br>找到入度为0 的节点，加入结果集<br>将该节点从图中移除</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//因为每次寻找入度为0的节点，不一定只有一个节点，可能很多节点入度都为0，所以要将这些入度为0的节点放到队列里，依次去处理。</span></span><br><span class="line">queue&lt;<span class="type">int</span>&gt; que;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(inDegree[i] ==<span class="number">0</span>) que.<span class="built_in">push</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//开始从队列里遍历入度为0 的节点，将其放入结果集。</span></span><br><span class="line"><span class="keyword">while</span>(que.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="type">int</span> cur =que.<span class="built_in">front</span>();</span><br><span class="line">    que.<span class="built_in">pop</span>();</span><br><span class="line">    result.<span class="built_in">push_back</span>(cur);</span><br><span class="line">    <span class="comment">//将该节点从图中移除</span></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; files = umap[cur]; <span class="comment">//获取cur指向的节点</span></span><br><span class="line">    <span class="keyword">if</span> (files.<span class="built_in">size</span>()) &#123; <span class="comment">// 如果cur有指向的节点</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; files.<span class="built_in">size</span>(); i++) &#123; <span class="comment">// 遍历cur指向的节点</span></span><br><span class="line">            inDegree[files[i]] --; <span class="comment">// cur指向的节点入度都做减一操作</span></span><br><span class="line">            <span class="comment">// 如果指向的节点减一之后，入度为0，说明是我们要选取的下一个节点，放入队列。</span></span><br><span class="line">            <span class="keyword">if</span>(inDegree[files[i]] == <span class="number">0</span>) que.<span class="built_in">push</span>(files[i]); </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/12/%E5%9B%BE%E8%AE%BA-%E6%80%BB%E7%BB%93/" data-id="cm4pqjdwh000304vq9q0k3n4g" data-title="图论-总结" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/12/13/xv6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          xv6
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/12/10/%E6%9D%82%E9%A1%B9%E8%AF%AD%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">杂项语法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/" rel="tag">动态规划，算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E8%83%8C%E5%8C%85/" rel="tag">动态规划，背包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">数据结构，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">算法，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8D%95%E8%B0%83%E6%A0%88/" rel="tag">算法，单调栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E8%AE%BA/" rel="tag">算法，图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%8C%E5%8C%85%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">背包，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" rel="tag">贪心算法，数学结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 15px;">二叉树</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">动态规划，算法</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E8%83%8C%E5%8C%85/" style="font-size: 10px;">动态规划，背包</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 17.5px;">回溯算法</a> <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="font-size: 12.5px;">图论</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 10px;">字符串</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 10px;">总结</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">操作系统</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">数据结构，动态规划</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15px;">算法</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">算法，动态规划</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8D%95%E8%B0%83%E6%A0%88/" style="font-size: 10px;">算法，单调栈</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E8%AE%BA/" style="font-size: 10px;">算法，图论</a> <a href="/tags/%E8%83%8C%E5%8C%85%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">背包，动态规划</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 10px;">语法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" style="font-size: 10px;">贪心算法，数学结构</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/12/17/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/13/xv6/">xv6</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/12/%E5%9B%BE%E8%AE%BA-%E6%80%BB%E7%BB%93/">图论-总结</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/10/%E6%9D%82%E9%A1%B9%E8%AF%AD%E6%B3%95/">杂项语法</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/07/%E5%9B%BE%E8%AE%BA-2/">图论-2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

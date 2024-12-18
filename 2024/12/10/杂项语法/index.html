@@ -14,7 +14,7 @@
 <meta property="og:description" content="优先队列实现小顶堆 12345678910&#x2F;&#x2F;因为优先队列本身是大的在顶部被排序排出的 所以小顶堆就得重写CMPclass myconparison&#123;    public:    bool operator()(const pair&lt;int,int&gt;&amp; hls,const pair&lt;int,int&gt;&amp;rhs)&#123;        return">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-10T12:24:17.000Z">
-<meta property="article:modified_time" content="2024-12-10T12:30:01.815Z">
+<meta property="article:modified_time" content="2024-12-15T15:35:18.614Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="语法">
 <meta name="twitter:card" content="summary">
@@ -96,6 +96,22 @@
       
         <p>优先队列实现小顶堆</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//因为优先队列本身是大的在顶部被排序排出的 所以小顶堆就得重写CMP</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">myconparison</span>&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&amp; hls,<span class="type">const</span> pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&amp;rhs)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> lhs.second &gt;rhs.second<span class="comment">//优先队列这么做是为了反过来操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;；</span><br><span class="line"><span class="comment">// 优先队列中存放 pair&lt;节点编号，源点到该节点的权值&gt; </span></span><br><span class="line">priority_queue&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt;,vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt;,mycomparsion&gt;pq;</span><br><span class="line"><span class="comment">//第一个参数是存储什么 第二个参数是用什么存储</span></span><br></pre></td></tr></table></figure>
+
+<p>构造函数参数形式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Rdge</span>&#123;</span><br><span class="line">    <span class="type">int</span> to;</span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    <span class="built_in">Edge</span>(<span class="type">int</span> t,<span class="type">int</span> w):<span class="built_in">to</span>(t),<span class="built_in">val</span>(w)&#123;&#125;<span class="comment">//构造函数</span></span><br><span class="line">&#125;;<span class="comment">//;</span></span><br></pre></td></tr></table></figure>
+
+<p>填充</p>
+<p>memset(moves, 0, sizeof(moves));<br>moves ：目标内存区域的起始地址（通常是数组或指针）。<br>0填充的<br>sizeof(moves)：指定填充的内存字节数，这里是 moves 数组的总大小。</p>
+<p>重载运算符</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">返回类型 <span class="keyword">operator</span>运算符 (参数列表) &#123;</span><br><span class="line">    <span class="comment">// 运算逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>返回迭代器最小的值并且解引用</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">getFinalState</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k, <span class="type">int</span> multiplier)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (k--) &#123;</span><br><span class="line">            <span class="keyword">auto</span> iter = <span class="built_in">min_element</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">            *iter *= multiplier;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>还学会一个快速幂<br>x是原始数值 n是次方也是 要转换的二进制数<br>首先判定n这个此项是否大于0小于0等于0 把他们改成大于0 等于0直接等于1的结果了<br>如果这个时候数值的二进制最小值是1 那么就把结果和当前的x 相乘<br>之后进入和数组二进制最小值不是1的一个分支 x变为x平方 之后把二进制数右移动一位</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">myPow</span><span class="params">(<span class="type">double</span> x, <span class="type">int</span> N)</span> </span>&#123;</span><br><span class="line">        <span class="type">double</span> ans = <span class="number">1</span>;</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> n = N;</span><br><span class="line">        <span class="keyword">if</span> (n &lt; <span class="number">0</span>) &#123; <span class="comment">// x^-n = (1/x)^n</span></span><br><span class="line">            n = -n;</span><br><span class="line">            x = <span class="number">1</span> / x;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (n) &#123; <span class="comment">// 从低到高枚举 n 的每个比特位</span></span><br><span class="line">            <span class="keyword">if</span> (n &amp; <span class="number">1</span>) &#123; <span class="comment">// 这个比特位是 1</span></span><br><span class="line">                ans *= x; <span class="comment">// 把 x 乘到 ans 中</span></span><br><span class="line">            &#125;</span><br><span class="line">            x *= x; <span class="comment">// x 自身平方</span></span><br><span class="line">            n &gt;&gt;= <span class="number">1</span>; <span class="comment">// 继续枚举下一个比特位</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">填充</span><br><span class="line">unordered_set&lt;string&gt; strSet;</span><br><span class="line">strSet.<span class="built_in">insert</span>(str);</span><br><span class="line"></span><br><span class="line">结构绑定化声明</span><br><span class="line"><span class="keyword">auto</span> [u, v] 是 C+<span class="number">+17</span> 引入的 结构化绑定声明，它允许你从一个包含多个元素的对象（比如元组、pair 或数组）中提取多个值并将它们分别绑定到变量中。</span><br><span class="line"></span><br><span class="line">例如，考虑如下 pair 类型的元素：</span><br><span class="line"></span><br><span class="line">cpp</span><br><span class="line">复制代码</span><br><span class="line">pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; p = &#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">你可以通过结构化绑定将 pair 的两个元素分别绑定到 u 和 v：</span><br><span class="line"></span><br><span class="line">cpp</span><br><span class="line">复制代码</span><br><span class="line"><span class="keyword">auto</span> [u, v] = p;  <span class="comment">// 结构化绑定</span></span><br><span class="line">这等价于：</span><br><span class="line"></span><br><span class="line">cpp</span><br><span class="line">复制代码</span><br><span class="line"><span class="keyword">auto</span> u = p.first;</span><br><span class="line"><span class="keyword">auto</span> v = p.second;</span><br></pre></td></tr></table></figure>
+<h3 id="我好像做过质数筛法-找一下"><a href="#我好像做过质数筛法-找一下" class="headerlink" title="我好像做过质数筛法 找一下"></a>我好像做过质数筛法 找一下</h3><p>c++20<br> ranges::sort(cnt, greater());<br>默认升序 这是降序</p>
+
       
     </div>
     <footer class="article-footer">
@@ -110,6 +126,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2024/12/12/%E5%9B%BE%E8%AE%BA-%E6%80%BB%E7%BB%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          图论-总结
+        
+      </div>
+    </a>
   
   
     <a href="/2024/12/07/%E5%9B%BE%E8%AE%BA-2/" id="article-nav-older" class="article-nav-link-wrap">
@@ -134,7 +159,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/" rel="tag">动态规划，算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E8%83%8C%E5%8C%85/" rel="tag">动态规划，背包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">数据结构，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">算法，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8D%95%E8%B0%83%E6%A0%88/" rel="tag">算法，单调栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E8%AE%BA/" rel="tag">算法，图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%8C%E5%8C%85%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">背包，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" rel="tag">贪心算法，数学结构</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/" rel="tag">动态规划，算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E8%83%8C%E5%8C%85/" rel="tag">动态规划，背包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">数据结构，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">算法，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8D%95%E8%B0%83%E6%A0%88/" rel="tag">算法，单调栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E8%AE%BA/" rel="tag">算法，图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%8C%E5%8C%85%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">背包，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" rel="tag">贪心算法，数学结构</a></li></ul>
     </div>
   </div>
 
@@ -144,7 +169,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 15px;">二叉树</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">动态规划，算法</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E8%83%8C%E5%8C%85/" style="font-size: 10px;">动态规划，背包</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 17.5px;">回溯算法</a> <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="font-size: 10px;">图论</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">数据结构，动态规划</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 12.5px;">算法</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">算法，动态规划</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8D%95%E8%B0%83%E6%A0%88/" style="font-size: 10px;">算法，单调栈</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E8%AE%BA/" style="font-size: 10px;">算法，图论</a> <a href="/tags/%E8%83%8C%E5%8C%85%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">背包，动态规划</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 10px;">语法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" style="font-size: 10px;">贪心算法，数学结构</a>
+      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 15px;">二叉树</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">动态规划，算法</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E8%83%8C%E5%8C%85/" style="font-size: 10px;">动态规划，背包</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 17.5px;">回溯算法</a> <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="font-size: 12.5px;">图论</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 10px;">字符串</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 10px;">总结</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">操作系统</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">数据结构，动态规划</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15px;">算法</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">算法，动态规划</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8D%95%E8%B0%83%E6%A0%88/" style="font-size: 10px;">算法，单调栈</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E8%AE%BA/" style="font-size: 10px;">算法，图论</a> <a href="/tags/%E8%83%8C%E5%8C%85%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">背包，动态规划</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 10px;">语法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" style="font-size: 10px;">贪心算法，数学结构</a>
     </div>
   </div>
 
@@ -166,23 +191,23 @@
       <ul>
         
           <li>
+            <a href="/2024/12/17/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/13/xv6/">xv6</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/12/%E5%9B%BE%E8%AE%BA-%E6%80%BB%E7%BB%93/">图论-总结</a>
+          </li>
+        
+          <li>
             <a href="/2024/12/10/%E6%9D%82%E9%A1%B9%E8%AF%AD%E6%B3%95/">杂项语法</a>
           </li>
         
           <li>
             <a href="/2024/12/07/%E5%9B%BE%E8%AE%BA-2/">图论-2</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/04/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">每日一题</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/01/%E5%9B%BE%E8%AE%BA/">图论</a>
-          </li>
-        
-          <li>
-            <a href="/2024/11/28/%E5%8D%95%E8%B0%83%E6%A0%88/">单调栈</a>
           </li>
         
       </ul>

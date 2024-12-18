@@ -4,14 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Tag: 贪心算法 | Hexo</title>
+  <title>xv6 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/index.html">
+  <meta name="description" content="一些操作系统上的东西文件系统mknod(“&#x2F;console”, 1, 1);这行是关键。mknod 系统调用用来创建特殊文件。它接受三个参数： 第一个参数 &#x2F;console 是你要创建的设备文件的路径。第二个参数 1 是主设备号（major device number）。第三个参数 1 是次设备号（minor device number） &#x2F;&#x2F; find.c #include">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xv6">
+<meta property="og:url" content="http://example.com/2024/12/13/xv6/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一些操作系统上的东西文件系统mknod(“&#x2F;console”, 1, 1);这行是关键。mknod 系统调用用来创建特殊文件。它接受三个参数： 第一个参数 &#x2F;console 是你要创建的设备文件的路径。第二个参数 1 是主设备号（major device number）。第三个参数 1 是次设备号（minor device number） &#x2F;&#x2F; find.c #include">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-13T08:17:31.000Z">
+<meta property="article:modified_time" content="2024-12-15T13:40:57.810Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -67,39 +72,152 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2024/11/12/%E8%B4%AA%E5%BF%83/" class="archive-article-date">
-  <time class="dt-published" datetime="2024-11-12T03:08:49.000Z" itemprop="datePublished">Nov 12</time>
+        <section id="main"><article id="post-xv6" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/13/xv6/" class="article-date">
+  <time class="dt-published" datetime="2024-12-13T08:17:31.000Z" itemprop="datePublished">2024-12-13</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/11/12/%E8%B4%AA%E5%BF%83/">贪心</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      xv6
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一些操作系统上的东西"><a href="#一些操作系统上的东西" class="headerlink" title="一些操作系统上的东西"></a>一些操作系统上的东西</h2><h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><p>mknod(“&#x2F;console”, 1, 1);<br>这行是关键。mknod 系统调用用来创建特殊文件。它接受三个参数：</p>
+<p>第一个参数 &#x2F;console 是你要创建的设备文件的路径。<br>第二个参数 1 是主设备号（major device number）。<br>第三个参数 1 是次设备号（minor device number）</p>
+<pre><code class="cpp">// find.c
+#include &quot;kernel/types.h&quot;    // 引入基本数据类型定义
+#include &quot;kernel/stat.h&quot;     // 引入文件状态结构体定义
+#include &quot;user/user.h&quot;       // 引入用户空间的系统调用和函数声明
+#include &quot;kernel/fs.h&quot;       // 引入文件系统相关结构体和常量定义
+
+// 定义一个递归查找函数，接受两个参数：起始路径和目标文件名
+void find(char *path, char *target) &#123;
+    char buf[512], *p;          // buf用于构建新的路径，p是指向buf中当前操作位置的指针
+    int fd;                     // 文件描述符，用于打开文件或目录
+    struct dirent de;           // 目录项结构体，用于存储读取的目录项信息
+    struct stat st;             // 文件状态结构体，用于存储文件的元数据
+
+    // 尝试以只读方式打开指定路径
+    if((fd = open(path, 0)) &lt; 0)&#123;
+        fprintf(2, &quot;find: cannot open %s\n&quot;, path);  // 如果打开失败，向标准错误输出错误信息
+        return;                                       // 返回，结束当前函数
+    &#125;
+
+    // 获取打开文件的状态信息
+    if(fstat(fd, &amp;st) &lt; 0)&#123;
+        fprintf(2, &quot;find: cannot stat %s\n&quot;, path);  // 如果获取失败，输出错误信息
+        close(fd);                                    // 关闭文件描述符，释放资源
+        return;                                       // 返回，结束当前函数
+    &#125;
+
+    // 根据文件类型进行不同的处理
+    switch(st.type)&#123;
+    case T_FILE:
+        // 如果当前路径是一个文件，检查文件名是否以目标名结尾
+        // 通过比较路径字符串的最后部分是否与目标字符串相同
+        if(strcmp(path + strlen(path) - strlen(target), target) == 0) &#123;
+            printf(&quot;%s\n&quot;, path);  // 如果匹配，打印文件的完整路径
+        &#125;
+        break;  // 结束当前case
+    case T_DIR:
+        // 如果当前路径是一个目录，首先检查构建新路径时是否会超出缓冲区大小
+        if(strlen(path) + 1 + DIRSIZ + 1 &gt; sizeof buf)&#123;
+            printf(&quot;find: path too long\n&quot;);  // 如果超出，输出错误信息
+            break;                             // 结束当前case
+        &#125;
+        strcpy(buf, path);          // 将当前路径复制到buf中
+        p = buf + strlen(buf);     // 设置指针p指向buf的末尾
+        *p++ = &#39;/&#39;;                 // 在buf末尾添加一个斜杠，准备拼接子目录或文件名
+
+        // 循环读取目录中的每一个目录项
+        while(read(fd, &amp;de, sizeof(de)) == sizeof(de))&#123;
+            if(de.inum == 0)
+                continue;  // 如果目录项的inode号为0，表示无效，跳过
+
+            memmove(p, de.name, DIRSIZ);  // 将目录项的名称复制到buf的当前指针位置
+            p[DIRSIZ] = 0;                // 在复制的名称后添加字符串终止符
+
+            // 获取新路径的文件状态信息
+            if(stat(buf, &amp;st) &lt; 0)&#123;
+                printf(&quot;find: cannot stat %s\n&quot;, buf);  // 如果获取失败，输出错误信息
+                continue;                                 // 跳过当前目录项，继续下一个
+            &#125;
+
+            // 跳过当前目录和父目录，避免无限递归
+            if(strcmp(buf + strlen(buf) - 2, &quot;/.&quot;) != 0 &amp;&amp; strcmp(buf + strlen(buf) - 3, &quot;/..&quot;) != 0) &#123;
+                find(buf, target);  // 递归调用find函数，继续查找
+            &#125;
+        &#125;
+        break;  // 结束当前case
+    &#125;
+    close(fd);  // 关闭文件描述符，释放资源
+&#125;
+
+// 程序的主入口函数
+int main(int argc, char *argv[])
+&#123;
+    // 检查命令行参数的数量是否少于3个
+    if(argc &lt; 3)&#123;
+        exit(0);  // 如果参数不足，程序退出
+    &#125;
+
+    char target[512];        // 定义一个字符数组用于存储目标文件名
+    target[0] = &#39;/&#39;;         // 在目标文件名前添加一个斜杠
+    strcpy(target + 1, argv[2]);  // 将命令行的第三个参数（目标文件名）复制到target中，紧跟斜杠之后
+
+    find(argv[1], target);   // 调用find函数，传入起始路径和目标文件名
+    exit(0);                 // 程序正常退出
+&#125;
+
+
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/13/xv6/" data-id="cm4pqjdw6000004vqgfe1gzrn" data-title="xv6" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/12/17/%E5%AD%97%E7%AC%A6%E4%B8%B2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          字符串
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/12/12/%E5%9B%BE%E8%AE%BA-%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">图论-总结</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>

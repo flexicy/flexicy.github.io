@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>字符串 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="字典树结构 #include &lt;cstdio&gt; &#x2F;&#x2F; 引入C标准输入输出库 using namespace std; &#x2F;&#x2F; 使用标准命名空间  constexpr int N &#x3D; 500010; &#x2F;&#x2F; 定义常量N，表示数组的最大大小  char s[N]; &#x2F;&#x2F; 定义字符数组s，用于存储输入的字符串 int n, m; &#x2F;&#x2F; 定义整数n和m，分别用于存储字符串数量和查询次数 int c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符串">
+<meta property="og:url" content="http://example.com/2024/12/17/%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="字典树结构 #include &lt;cstdio&gt; &#x2F;&#x2F; 引入C标准输入输出库 using namespace std; &#x2F;&#x2F; 使用标准命名空间  constexpr int N &#x3D; 500010; &#x2F;&#x2F; 定义常量N，表示数组的最大大小  char s[N]; &#x2F;&#x2F; 定义字符数组s，用于存储输入的字符串 int n, m; &#x2F;&#x2F; 定义整数n和m，分别用于存储字符串数量和查询次数 int c">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-17T08:52:20.000Z">
+<meta property="article:modified_time" content="2024-12-18T02:24:40.038Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="字符串">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-字符串" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/17/%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="article-date">
+  <time class="dt-published" datetime="2024-12-17T08:52:20.000Z" itemprop="datePublished">2024-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      字符串
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="字典树结构"><a href="#字典树结构" class="headerlink" title="字典树结构"></a>字典树结构</h2><pre><code class="cpp">
+#include &lt;cstdio&gt; // 引入C标准输入输出库
+using namespace std; // 使用标准命名空间
+
+constexpr int N = 500010; // 定义常量N，表示数组的最大大小
+
+char s[N]; // 定义字符数组s，用于存储输入的字符串
+int n, m; // 定义整数n和m，分别用于存储字符串数量和查询次数
+int ch[N][26]; // 定义二维数组ch，用于表示Trie树的子节点，ch[u][c]表示节点u的字符c的子节点
+int tag[N]; // 定义数组tag，用于标记字符串的状态（未访问、已访问、重复访问等）
+int tot = 1; // 定义并初始化变量tot为1，表示当前Trie树中节点的总数，根节点编号为1
+
+int main() &#123;
+  scanf(&quot;%d&quot;, &amp;n); // 从输入中读取整数n，表示要插入的字符串数量
+
+  for (int i = 1; i &lt;= n; ++i) &#123; // 循环n次，处理每一个要插入的字符串
+    scanf(&quot;%s&quot;, s + 1); // 从输入中读取一个字符串，存储在数组s的索引1开始的位置
+    int u = 1; // 初始化当前节点u为根节点（编号为1）
+    
+    for (int j = 1; s[j]; ++j) &#123; // 遍历字符串s中的每一个字符，直到遇到字符串结束符
+      int c = s[j] - &#39;a&#39;; // 将字符转换为对应的索引（&#39;a&#39;-&gt;0, &#39;b&#39;-&gt;1, ..., &#39;z&#39;-&gt;25）
+      
+      // 如果当前节点u的子节点中没有字符c对应的节点，则创建一个新的节点
+      if (!ch[u][c]) ch[u][c] = ++tot; // 将ch[u][c]设置为新的节点编号，并递增tot
+      u = ch[u][c]; // 移动到子节点u的字符c对应的节点，继续向下搜索
+    &#125;
+    
+    tag[u] = 1; // 标记节点u为一个完整字符串的结尾，表示该字符串已经被插入
+  &#125;
+
+  scanf(&quot;%d&quot;, &amp;m); // 从输入中读取整数m，表示查询的次数
+
+  while (m--) &#123; // 循环m次，处理每一个查询
+    scanf(&quot;%s&quot;, s + 1); // 从输入中读取一个查询字符串，存储在数组s的索引1开始的位置
+    int u = 1; // 初始化当前节点u为根节点（编号为1）
+    
+    for (int j = 1; s[j]; ++j) &#123; // 遍历查询字符串s中的每一个字符，直到遇到字符串结束符
+      int c = s[j] - &#39;a&#39;; // 将字符转换为对应的索引（&#39;a&#39;-&gt;0, &#39;b&#39;-&gt;1, ..., &#39;z&#39;-&gt;25）
+      u = ch[u][c]; // 移动到子节点u的字符c对应的节点
+      
+      if (!u) break; // 如果节点u不存在，说明该字符串不在Trie中，提前退出循环
+    &#125;
+    
+    if (tag[u] == 1) &#123; // 如果节点u被标记为1，表示该字符串存在且尚未被访问
+      tag[u] = 2; // 将节点u的标记更新为2，表示该字符串已经被访问
+      puts(&quot;OK&quot;); // 输出&quot;OK&quot;表示第一次成功访问该字符串
+    &#125; 
+    else if (tag[u] == 2) &#123; // 如果节点u被标记为2，表示该字符串已经被访问过
+      puts(&quot;REPEAT&quot;); // 输出&quot;REPEAT&quot;表示重复访问该字符串
+    &#125;
+    else &#123; // 如果节点u未被标记，或者u为0，表示该字符串不存在于Trie中
+      puts(&quot;WRONG&quot;); // 输出&quot;WRONG&quot;表示字符串不存在或查询无效
+    &#125;
+  &#125;
+
+  return 0; // 返回0，表示程序正常结束
+&#125;
+
+//正常结构体
+struct trie &#123;
+  int nex[100000][26], cnt; //横坐标表示数组几号 纵坐标表示英文字符多少
+  bool exist[100000];  // 该结点结尾的字符串是否存在
+
+  void insert(char *s, int l) &#123;  // 插入字符串
+    int p = 0;
+    for (int i = 0; i &lt; l; i++) &#123;
+      int c = s[i] - &#39;a&#39;;
+      if (!nex[p][c]) nex[p][c] = ++cnt;  // 如果没有，就添加结点
+      p = nex[p][c];
+    &#125;
+    exist[p] = true;
+  &#125;
+
+  bool find(char *s, int l) &#123;  // 查找字符串
+    int p = 0;
+    for (int i = 0; i &lt; l; i++) &#123;
+      int c = s[i] - &#39;a&#39;;
+      if (!nex[p][c]) return 0;
+      p = nex[p][c];
+    &#125;
+    return exist[p];
+  &#125;
+&#125;;
+
+//用链表形式实现更好一点 容易理解：
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+// 定义字典树节点结构
+class TrieNode &#123;
+public:
+    TrieNode* children[26];  // 存储26个字母的子节点指针
+    bool isEndOfWord;         // 是否是单词的结束节点
+
+    // 构造函数，初始化节点
+    TrieNode() &#123;
+        for (int i = 0; i &lt; 26; ++i) &#123;
+            children[i] = nullptr;  // 初始化为 nullptr，表示没有子节点
+        &#125;
+        isEndOfWord = false;  // 默认不是单词结束节点
+    &#125;
+&#125;;
+
+// 字典树类
+class Trie &#123;
+public:
+    TrieNode* root;  // 根节点
+
+    // 构造函数，初始化字典树
+    Trie() &#123;
+        root = new TrieNode();  // 初始化根节点
+    &#125;
+
+    // 插入一个单词到字典树
+    void insert(const string&amp; word) &#123;
+        TrieNode* node = root;  // 从根节点开始
+        for (char c : word) &#123;
+            int index = c - &#39;a&#39;;  // 将字符转换为索引，&#39;a&#39; -&gt; 0, ..., &#39;z&#39; -&gt; 25
+            if (node-&gt;children[index] == nullptr) &#123;
+                node-&gt;children[index] = new TrieNode();  // 如果没有该字符的子节点，创建新的节点
+            &#125;
+            node = node-&gt;children[index];  // 向下移动到对应子节点
+        &#125;
+        node-&gt;isEndOfWord = true;  // 在最后一个字符的节点标记为单词结束
+    &#125;
+
+    // 查找一个单词是否在字典树中
+    bool search(const string&amp; word) &#123;
+        TrieNode* node = root;  // 从根节点开始
+        for (char c : word) &#123;
+            int index = c - &#39;a&#39;;  // 将字符转换为索引
+            if (node-&gt;children[index] == nullptr) &#123;
+                return false;  // 如果某个字符没有对应的子节点，返回 false
+            &#125;
+            node = node-&gt;children[index];  // 向下移动到对应子节点
+        &#125;
+        return node-&gt;isEndOfWord;  // 如果找到并且是单词结束节点，则返回 true
+    &#125;
+
+    // 查找是否有以某个前缀开始的单词
+    bool startsWith(const string&amp; prefix) &#123;
+        TrieNode* node = root;  // 从根节点开始
+        for (char c : prefix) &#123;
+            int index = c - &#39;a&#39;;  // 将字符转换为索引
+            if (node-&gt;children[index] == nullptr) &#123;
+                return false;  // 如果某个字符没有对应的子节点，返回 false
+            &#125;
+            node = node-&gt;children[index];  // 向下移动到对应子节点
+        &#125;
+        return true;  // 如果前缀存在，返回 true
+    &#125;
+&#125;;
+
+// 主函数用于测试
+int main() &#123;
+    Trie trie;
+
+    // 插入单词
+    trie.insert(&quot;apple&quot;);
+    trie.insert(&quot;app&quot;);
+    trie.insert(&quot;banana&quot;);
+
+    // 查找单词
+    cout &lt;&lt; &quot;Search &#39;apple&#39;: &quot; &lt;&lt; trie.search(&quot;apple&quot;) &lt;&lt; endl;  // 应该输出 1 (true)
+    cout &lt;&lt; &quot;Search &#39;app&#39;: &quot; &lt;&lt; trie.search(&quot;app&quot;) &lt;&lt; endl;      // 应该输出 1 (true)
+    cout &lt;&lt; &quot;Search &#39;banana&#39;: &quot; &lt;&lt; trie.search(&quot;banana&quot;) &lt;&lt; endl;  // 应该输出 1 (true)
+    cout &lt;&lt; &quot;Search &#39;bat&#39;: &quot; &lt;&lt; trie.search(&quot;bat&quot;) &lt;&lt; endl;      // 应该输出 0 (false)
+
+    // 查找前缀
+    cout &lt;&lt; &quot;Starts with &#39;ban&#39;: &quot; &lt;&lt; trie.startsWith(&quot;ban&quot;) &lt;&lt; endl;  // 应该输出 1 (true)
+    cout &lt;&lt; &quot;Starts with &#39;bat&#39;: &quot; &lt;&lt; trie.startsWith(&quot;bat&quot;) &lt;&lt; endl;  // 应该输出 0 (false)
+
+    return 0;
+&#125;
+
+
+
+
+
+
+//博客理解KMP强大 next数组 这里f数组的含义是：该最长相同前缀后缀中的前缀的结束字符的数组位置（从０开始编号
+for (int i=1;i&lt;m;i++)
+&#123;
+    int j=F[i-1];
+    while ((B[j+1]!=B[i])&amp;&amp;(j&gt;=0))
+        j=F[j];
+    if (B[j+1]==B[i])
+        F[i]=j+1;
+    else
+        F[i]=-1;
+&#125;
+//利用next数组取匹配：
+while (i&lt;n)
+&#123;
+    if (A[i]==B[j])
+    &#123;
+        i++;
+        j++;
+        if (j==m)
+        &#123;
+            printf(&quot;%d\n&quot;,i-m+1);//注意,这里输出的位置是从1开始标号的,如果你要输出从0开始标号的位置,应该是是i-m.这份代码是我做一道题时写的,那道题要求输出的字符串位置从1开始标号.感谢@Draymonder指出了这个疏漏,更多内容请看评论区
+            j=F[j-1]+1;
+        &#125;
+    &#125;
+    else
+    &#123;
+        if (j==0)
+            i++;
+        else
+            j=F[j-1]+1;//j前一个数可以匹配找到之后 去看B[匹配加1]能不能匹配
+    &#125;
+&#125;
+//AC自动机
+
+#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+#define DEBUG (1)
+
+#define Len(x)              sizeof(x)/sizeof(x[0]) 
+
+/**********************************************
+    aho corasick
+**********************************************/
+#define ALPHABET   (26)
+
+int cnt = 0;                // debug
+
+typedef struct _NODE
+&#123;
+    int name;               // debug
+    vector&lt;int&gt; exist;
+    _NODE *fail;
+    _NODE *child[ALPHABET];
+    _NODE()
+    &#123;
+        name = 0;           // debug
+        fail = NULL;
+        memset(child, NULL, ALPHABET*sizeof(_NODE *));
+    &#125;
+&#125;NODE;
+
+/**********************************************
+    &quot;he&quot; &quot;she&quot; &quot;hers&quot; &quot;his&quot; 
+    ahishers
+     his
+       she
+        he
+        hers
+**********************************************/
+void print_matching_result(const char *T, int start, int len)
+&#123;
+    for(int i = 0; i &lt; start; i++)
+        printf(&quot; &quot;);
+    for(int i = 0; i &lt; len; i++)
+        printf(&quot;%c&quot;,T[start+i]);
+    printf(&quot;\n&quot;);
+&#125;
+
+/**********************************************
+    用于debug确认构造完成的状态机的[fail指针]和[exist信息]
+    bfs遍历一遍trie,按顺序给节点命名,同时输出fail指向信息
+**********************************************/
+void print_automaton_info(NODE *tmp)
+&#123;
+    printf(&quot;---------------------info----------------------\n&quot;);
+    queue&lt;NODE *&gt; q;
+    q.push(tmp);
+    while(!q.empty())
+    &#123;
+        NODE *tmp = q.front(); q.pop();
+        tmp-&gt;name = cnt++;
+        if(tmp-&gt;fail)
+            printf(&quot;%d --fail--&gt; %d, has %d word\n&quot;, tmp-&gt;name, tmp-&gt;fail-&gt;name, tmp-&gt;exist.size());
+        for(int i = 0; i &lt; ALPHABET; i++)
+            if(tmp-&gt;child[i])
+                q.push(tmp-&gt;child[i]);
+    &#125;
+    printf(&quot;---------------------end----------------------\n&quot;);
+&#125;
+
+void trie_insert(NODE *root, const char *word)
+&#123;
+    NODE *tmp = root;
+
+    for(int i = 0; i &lt; strlen(word); i++)
+    &#123;
+        int c = word[i]-&#39;a&#39;;
+        if(NULL == tmp-&gt;child[c])
+            tmp-&gt;child[c] = new NODE();
+        tmp = tmp-&gt;child[c];
+    &#125;
+    tmp-&gt;exist.push_back(strlen(word));
+&#125;
+
+void ac_build(NODE *root, const char *P[], int n)
+&#123;
+    for(int i = 0; i &lt; n; i++)
+        trie_insert(root, P[i]);
+    
+    queue&lt;NODE *&gt; q;
+    for(int i = 0; i &lt; ALPHABET; i++)
+    &#123;
+        if(root-&gt;child[i])
+        &#123;
+            root-&gt;child[i]-&gt;fail = root;
+            q.push(root-&gt;child[i]);
+        &#125;
+    &#125;
+
+    while(!q.empty())
+    &#123;
+        NODE *x = q.front(); q.pop();
+        for(int i = 0; i &lt; ALPHABET; i++)
+        &#123;
+            if(x-&gt;child[i])
+            &#123;
+                NODE *y = x-&gt;child[i], *fafail = x-&gt;fail;
+                /*
+                    x--fail-→fafail         x--fail-→fafail
+                      ↘ⁱ             ==&gt;     ↘ⁱ        ↘ⁱ      
+                        y                      y--fail--→★
+                */
+                while(fafail &amp;&amp; NULL == fafail-&gt;child[i])
+                    fafail = fafail-&gt;fail;
+                if(NULL == fafail)
+                    y-&gt;fail = root;
+                else
+                    y-&gt;fail = fafail-&gt;child[i];
+
+                if(y-&gt;fail-&gt;exist.size())
+                    for(int j = 0; j &lt; y-&gt;fail-&gt;exist.size(); j++)
+                        y-&gt;exist.push_back(y-&gt;fail-&gt;exist[j]);
+                q.push(y);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+
+void ac_query(NODE *root, const char *T)
+&#123;
+    NODE *tmp = root;
+    for(int i = 0; i &lt; strlen(T); i++)
+    &#123;
+        int c = T[i]-&#39;a&#39;;
+        while(NULL == tmp-&gt;child[c] &amp;&amp; tmp-&gt;fail)
+            tmp = tmp-&gt;fail;
+        if(tmp-&gt;child[c])
+            tmp = tmp-&gt;child[c];
+        else
+            continue;
+        if(tmp-&gt;exist.size())
+        &#123;
+            for(int j = 0; j &lt; tmp-&gt;exist.size(); j++)
+            &#123;
+                int len = tmp-&gt;exist[j];
+                print_matching_result(T, i-len+1, len);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+
+void aho_corasick(const char *P[], int n, const char *T)
+&#123;
+    printf(&quot;**********************************************\n&quot;);
+    for(int i = 0; i &lt; n; i++)
+        printf(&quot;\&quot;%s\&quot; &quot;, P[i]);
+    printf(&quot;\n%s\n&quot;, T);
+
+    NODE *root = new NODE();
+    ac_build(root, P, n);
+    ac_query(root, T);
+
+    print_automaton_info(root);         // debug
+&#125;
+
+int main()
+&#123;
+    const char *P[] = &#123;&quot;he&quot;, &quot;she&quot;, &quot;hers&quot;, &quot;his&quot;, &quot;is&quot;&#125;; 
+    const char *T = &quot;ahishersheishiser&quot;;
+
+    aho_corasick(P, Len(P), T);
+
+    return 0;
+&#125;
+//
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/17/%E5%AD%97%E7%AC%A6%E4%B8%B2/" data-id="cm4tmk3y80000d8vqh51x3gug" data-title="字符串" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/12/13/xv6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">xv6</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/" rel="tag">动态规划，算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E8%83%8C%E5%8C%85/" rel="tag">动态规划，背包</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" rel="tag">回溯算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">数据结构，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">算法，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8D%95%E8%B0%83%E6%A0%88/" rel="tag">算法，单调栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E8%AE%BA/" rel="tag">算法，图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%8C%E5%8C%85%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">背包，动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" rel="tag">贪心算法，数学结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 15px;">二叉树</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">动态规划，算法</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E8%83%8C%E5%8C%85/" style="font-size: 10px;">动态规划，背包</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" style="font-size: 17.5px;">回溯算法</a> <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="font-size: 12.5px;">图论</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 10px;">字符串</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 10px;">总结</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">操作系统</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">数据结构，动态规划</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15px;">算法</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">算法，动态规划</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%8D%95%E8%B0%83%E6%A0%88/" style="font-size: 10px;">算法，单调栈</a> <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E8%AE%BA/" style="font-size: 10px;">算法，图论</a> <a href="/tags/%E8%83%8C%E5%8C%85%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">背包，动态规划</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 10px;">语法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%EF%BC%8C%E6%95%B0%E5%AD%A6%E7%BB%93%E6%9E%84/" style="font-size: 10px;">贪心算法，数学结构</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/12/17/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/13/xv6/">xv6</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/12/%E5%9B%BE%E8%AE%BA-%E6%80%BB%E7%BB%93/">图论-总结</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/10/%E6%9D%82%E9%A1%B9%E8%AF%AD%E6%B3%95/">杂项语法</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/07/%E5%9B%BE%E8%AE%BA-2/">图论-2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
