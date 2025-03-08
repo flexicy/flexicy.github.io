@@ -4,14 +4,20 @@
   <meta charset="utf-8">
   
   
-  <title>Tag: 动态规划，算法 | Hexo</title>
+  <title>hot100 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E7%AE%97%E6%B3%95/index.html">
+  <meta name="description" content="LRU双向链表 + 哈希表 构建使用难点在于链表操作指针赋值  #include &lt;iostream&gt; #include &lt;unordered_map&gt; struct DLinkedNode&#123;     int  key;     int value;     DLinkedNode* prev;     DLinkedNode* next;     DLinked">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hot100">
+<meta property="og:url" content="http://example.com/2024/12/25/hot100/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="LRU双向链表 + 哈希表 构建使用难点在于链表操作指针赋值  #include &lt;iostream&gt; #include &lt;unordered_map&gt; struct DLinkedNode&#123;     int  key;     int value;     DLinkedNode* prev;     DLinkedNode* next;     DLinked">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-24T16:16:48.000Z">
+<meta property="article:modified_time" content="2024-12-24T16:49:32.506Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="hot100">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -67,39 +73,130 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2024/11/21/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-2/" class="archive-article-date">
-  <time class="dt-published" datetime="2024-11-21T12:31:04.000Z" itemprop="datePublished">Nov 21</time>
+        <section id="main"><article id="post-hot100" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/25/hot100/" class="article-date">
+  <time class="dt-published" datetime="2024-12-24T16:16:48.000Z" itemprop="datePublished">2024-12-25</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/11/21/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-2/">动态规划-2</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      hot100
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h2><p>双向链表 + 哈希表 构建使用<br>难点在于链表操作指针赋值</p>
+<pre><code class="cpp">
+#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+struct DLinkedNode&#123;
+    int  key;
+    int value;
+    DLinkedNode* prev;
+    DLinkedNode* next;
+    DLinkedNode():key(0),value(0),prev(nullptr),next(nullptr)&#123;&#125;;
+    DLinkedNode(int _key,int _value):key(_key),value(_value),prev(nullptr),next(nullptr)&#123;&#125;;
+&#125;;
+
+class LRUCache &#123;
+ private:
+    std::unordered_map&lt;int,DLinkedNode*&gt; cache;
+    DLinkedNode* head;
+    DLinkedNode* tail;
+    int size;
+    int capacity;
+    public:
+    LRUCache(int _capacity):capacity(_capacity),size(0)&#123;
+        head = new DLinkedNode();
+        tail = new DLinkedNode();
+        head-&gt;next = tail;
+        tail-&gt;prev = head;
+    &#125;
+    int get(int key)&#123;
+        if(!cache.count(key))&#123;
+            return -1;
+        &#125;
+        DLinkedNode* node = cache[key];
+        moveToHead(node);
+        return node-&gt;value;
+    &#125;
+    void moveToHead(DLinkedNode* node)&#123;//移动到头部
+        removeNode(node);//删除节点
+        addToHead(node);//添加到头部
+    &#125;
+    void removeNode(DLinkedNode* node)&#123;
+        node -&gt;prev-&gt;next = node-&gt;next;;
+        node-&gt;next-&gt;prev = node-&gt;prev;
+    &#125;
+    void  addToHead(DLinkedNode* node)&#123;//添加到头部
+        node-&gt;prev = head;
+        node-&gt;next = head-&gt;next;
+        head-&gt;next-&gt;prev = node;
+        head-&gt;next = node;
+    &#125;
+    DLinkedNode* removeTail()&#123;
+        DLinkedNode* node = tail-&gt;prev;
+        removeNode(node);
+        return node;
+    &#125;
+    void put(int key,int value)&#123;
+        if(!cache.count(key))&#123;
+            DLinkedNode* node =new DLinkedNode(key,value);
+            cache[key] =node;
+            addToHead(node);
+            size++;
+            if(size &gt; capacity)&#123;
+                DLinkedNode* removed = removeTail();
+                cache.erase(removed-&gt;key);//删除哈希表中对应的项
+                delete removed;//删除节点
+                size--;
+            &#125;
+     
+        &#125;
+        else&#123;
+            DLinkedNode* node = cache[key];//获取节点
+            node-&gt;value = value;//更新值
+            moveToHead(node);//移动到头部
+        &#125;
+    &#125;
+&#125;;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/25/hot100/" data-id="cm7zw0a0q0000t4vqf423e5pi" data-title="hot100" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hot100/" rel="tag">hot100</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/12/17/%E5%AD%97%E7%AC%A6%E4%B8%B2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">字符串</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>
