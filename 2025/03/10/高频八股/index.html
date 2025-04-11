@@ -14,7 +14,7 @@
 <meta property="og:description" content="HTTPS和HTTP有哪些区别HTTP（HyperText Transfer Protocol）：超文本传输协议，负责在客户端（浏览器）和服务器之间传输数据，明文传输，安全性低。HTTPS（HTTP Secure）：安全超文本传输协议，在 HTTP 基础上加入 SSL&#x2F;TLS 加密层，确保数据传输的安全性。HTTP：TCP 三次握手后即可传输数据。HTTPS：TCP 三次握手后，还需进行">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-03-10T12:34:41.000Z">
-<meta property="article:modified_time" content="2025-03-27T06:57:46.825Z">
+<meta property="article:modified_time" content="2025-04-11T11:59:28.218Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股文">
 <meta name="twitter:card" content="summary">
@@ -155,6 +155,10 @@
 <p>如果对方响应，则说明连接仍然有效；<br>如果对方未响应多次，TCP 可能会认为连接已断开，并终止该连接。<br>TCP Keepalive 适用于多种协议，不仅限于 HTTP，还包括 FTP、SMTP 等网络协议。它的作用类似于垃圾回收机制（GC），用于清理长期不活动但未正式关闭的连接。</p>
 <p>3.3. HTTP Keep-Alive 与 TCP Keepalive 的关系<br>虽然 HTTP Keep-Alive 和 TCP Keepalive 听起来相似，但它们是完全不同的机制：</p>
 <p>HTTP Keep-Alive：由应用层（HTTP 协议）控制，主要用于在同一 TCP 连接上复用多个 HTTP 请求，减少 TCP 连接的建立与释放。<br>TCP Keepalive：由 TCP 层（传输层）实现，主要用于检测连接是否仍然存活，避免死连接长时间占用资源。<br>两者的配合场景：如果 HTTP 连接开启了 Keep-Alive，但一段时间没有数据传输，而没有显式关闭连接，此时 TCP Keepalive 可能会起作用，检测连接状态并在必要时关闭连接，防止无效连接占用资源。</p>
+<h2 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h2><p> 一、基本定义<br>进程（Process）：是操作系统进行资源分配和调度的基本单位，每个进程有独立的内存空间。<br>线程（Thread）：是程序执行的最小单位，属于进程内部，是进程的子任务。一个进程可以有多个线程，共享该进程的内存资源。<br>二、主要区别对比<br>1️⃣ 资源开销<br>进程：创建、销毁和切换时开销大（因为需要切换完整上下文和内存空间）。<br>线程：开销小，仅切换少量上下文，共享内存更高效。<br>2️⃣ 通信与共享<br>进程：进程间相互隔离，通信需要使用IPC机制（如管道、消息队列、共享内存等）。<br>线程：共享同一个地址空间，可以直接访问共享变量，通信简单高效。<br>3️⃣ 稳定性与安全性<br>进程：隔离性强，一个进程崩溃不会影响其他进程，更安全。<br>线程：共享内存，一个线程出错可能导致整个进程崩溃，风险更大。</p>
+<h2 id="并行和并发的区别"><a href="#并行和并发的区别" class="headerlink" title="并行和并发的区别"></a>并行和并发的区别</h2><p>✅ 定义解释<br>1️⃣ 并发（Concurrency）<br>指在同一时间段内有多个任务在执行，<br>但不一定真正同时运行，可能是交替进行。<br>依赖任务调度机制（如时间片轮转、事件驱动）实现“同时进行”的效果。<br>📌 类比：一个人用一只手做饭、接电话、炒菜 —— 来回切换，但表面上都在进行。<br>2️⃣ 并行（Parallelism）<br>指在同一时刻有多个任务真正同时执行，<br>每个任务运行在不同的处理器或核心上。<br>依赖多核 CPU、多线程或多进程来实现任务物理并行处理。<br>📌 类比：三个人分别做饭、接电话、炒菜 —— 真正同时干活。</p>
+<h2 id="解释一下用户态和核心态，什么场景下，会发生内核态和用户态的切换？"><a href="#解释一下用户态和核心态，什么场景下，会发生内核态和用户态的切换？" class="headerlink" title="解释一下用户态和核心态，什么场景下，会发生内核态和用户态的切换？"></a>解释一下用户态和核心态，什么场景下，会发生内核态和用户态的切换？</h2><p>用户态和内核态的区别<br>用户态和内核态是操作系统为了保护系统资源和实现权限控制而设计的两种不同的CPU运行级别，可以控制进程或程序对计算机硬件资源的访问权限和操作范围。</p>
+<p>用户态：在用户态下，进程或程序只能访问受限的资源和执行受限的指令集，不能直接访问操作系统的核心部分，也不能直接访问硬件资源。<br>核心态：核心态是操作系统的特权级别，允许进程或程序执行特权指令和访问操作系统的核心部分。在核心态下，进程可以直接访问硬件资源，执行系统调用，管理内存、文件系统等操作。<br>在什么场景下，会发生内核态和用户态的切换<br>系统调用：当用户程序需要请求操作系统提供的服务时，会通过系统调用进入内核态。<br>异常：当程序执行过程中出现错误或异常情况时，CPU会自动切换到内核态，以便操作系统能够处理这些异常。<br>中断：外部设备（如键盘、鼠标、磁盘等）产生的中断信号会使CPU从用户态切换到内核态。操作系统会处理这些中断，执行相应的中断处理程序，然后再将CPU切换回用户态。</p>
 <h2 id="什么是死锁-如何避免死锁"><a href="#什么是死锁-如何避免死锁" class="headerlink" title="什么是死锁 如何避免死锁"></a>什么是死锁 如何避免死锁</h2><p>🔹 方法 1：破坏“循环等待”条件（常见做法）<br>让进程按照固定的顺序请求资源，避免环形等待。</p>
 <p>例如：规定所有进程必须先申请 R1，再申请 R2，这样不会形成环路。<br>🔹 方法 2：破坏“请求保持”条件<br>强制进程一次性申请所有资源，如果无法全部分配，则必须先释放已有资源，等所有资源可用时再重新申请。</p>
 <p>优点：避免了进程在等待额外资源时持有部分资源。<br>缺点：可能会降低资源利用率。<br>🔹 方法 3：破坏“不可剥夺”条件<br>允许操作系统强行回收资源，将资源从某个进程转移给另一个进程，以解除死锁。</p>
@@ -224,6 +228,10 @@
 <h2 id="MySQL-和-Redis-的区别是什么？"><a href="#MySQL-和-Redis-的区别是什么？" class="headerlink" title="MySQL 和 Redis 的区别是什么？"></a>MySQL 和 Redis 的区别是什么？</h2><ol>
 <li>数据存储方式：<br>Redis：基于键值对，支持多种数据结构（如字符串、哈希、列表、集合、有序集合等），存储在内存中。<br>MySQL：关系型数据库，使用表来组织数据，存储在磁盘中。<br>🔹 2. 数据持久化：<br>Redis：主要存储数据在内存中，支持持久化机制（如 RDB 快照和 AOF 日志）将数据写入磁盘。<br>MySQL：数据持久化存储在磁盘中。<br>🔹 3. 查询语言：<br>Redis：使用自定义命令集，不支持 SQL 查询。<br>MySQL：使用标准的<strong>SQL（结构化查询语言）</strong>进行数据操作。<br>🔹 4. 性能和应用场景：<br>Redis：专注于高性能和低延迟，适用于高速、高并发的读写，特别是缓存系统、会话存储等场景。<br>MySQL：适用于复杂查询、事务处理和需要大规模数据存储的场景，尤其是在涉及关系数据和数据一致性时。<br>🔹 5. 使用场景：<br>Redis：适合缓存系统、实时数据处理、排行榜、消息队列等。<br>MySQL：适合需要复杂查询、多表关联、事务支持的应用，如电商系统、社交网络等。<br>🔹 6. 结合使用：<br>在实际应用中，许多系统同时使用 MySQL 和 Redis，Redis 用作缓存，加速读写性能，MySQL 用作持久化存储和处理复杂查询。</li>
 </ol>
+<h2 id="Redis有什么优缺点-为什么查询快"><a href="#Redis有什么优缺点-为什么查询快" class="headerlink" title="Redis有什么优缺点 为什么查询快"></a>Redis有什么优缺点 为什么查询快</h2><p>一、Redis 有什么优缺点？ 优点：<br>基于内存，读写速度极快，适合作为缓存中间层；<br>支持多种数据结构：如字符串、哈希、列表、集合、有序集合等；<br>丰富的应用场景：可以用于缓存、消息队列、排行榜、分布式锁等；<br>支持持久化机制：如 RDB 和 AOF，数据可落盘；<br>支持高可用和分布式部署：如主从复制、哨兵、集群等；<br>操作原子性强：命令是原子执行，保证数据一致性；<br>缺点：<br>基于内存存储，成本高：对内存容量要求大，不适合超大数据集；<br>数据容量受限于物理内存；<br>单线程核心处理：虽然高效，但部分复杂操作仍可能成为瓶颈；<br>不适合作为主数据库，更适合作为“辅助缓存”。<br>二、 为什么查询快<br>基于内存操作：<br>所有数据都在内存中，避免磁盘 I&#x2F;O 的瓶颈，访问速度是纳秒级。<br>高效数据结构设计：<br>Redis 为不同场景设计了专用的数据结构（如 ziplist, intset, skiplist 等）；<br>查询和操作复杂度低，如 O(1)、O(logN)。<br>单线程模型：<br>核心命令处理是单线程，没有线程上下文切换开销；<br>不存在资源竞争和加锁问题，每个命令执行快且安全。<br>I&#x2F;O 多路复用机制：<br>Redis 使用 epoll + 非阻塞 I&#x2F;O，能同时处理大量客户端连接而不阻塞。<br>✅ 总结一句话：<br>Redis 查询快，核心原因是：全内存 + 高效结构 + 单线程无锁 + I&#x2F;O 多路复用。<br>它的设计目标就是在高并发场景下保证“低延迟 + 高吞吐”。</p>
+<h2 id="Redis的数据类型有哪些？"><a href="#Redis的数据类型有哪些？" class="headerlink" title="Redis的数据类型有哪些？"></a>Redis的数据类型有哪些？</h2><p>Redis 常见的五种数据类型：String（字符串），Hash（哈希），List（列表），Set（集合）及 Zset(sorted set：有序集合)。<br>字符串STRING：存储字符串数据，最基本的数据类型。<br>哈希表HASH：存储字段和值的映射，用于存储对象。<br>列表LIST：存储有序的字符串元素列表。<br>集合SET：存储唯一的字符串元素，无序。<br>有序集合ZSET：类似于集合，但每个元素都关联一个分数，可以按分数进行排序。<br>Redis版本更新，又增加了几种数据类型，<br>BitMap: 存储位的数据结构，可以用于处理一些位运算操作。<br>HyperLogLog：用于基数估算的数据结构，用于统计元素的唯一数量。<br>GEO： 存储地理位置信息的数据结构。<br>Stream：专门为消息队列设计的数据类型</p>
+<h2 id="Redis是单线程吗？为什么Redis能支持高并发？"><a href="#Redis是单线程吗？为什么Redis能支持高并发？" class="headerlink" title="Redis是单线程吗？为什么Redis能支持高并发？"></a>Redis是单线程吗？为什么Redis能支持高并发？</h2><p>一、核心结论：<br>Redis 的核心逻辑处理是单线程的（如命令解析、数据读写），但从 Redis 6.0 开始，部分 I&#x2F;O 操作使用多线程进行了优化。<br>✅ 二、为什么 Redis 采用单线程模型？<br>Redis 最初采用单线程（处理客户端命令）的原因主要有以下几点：<br>简化并发模型：<br>单线程避免了多线程编程中常见的锁竞争、数据同步等问题，程序逻辑更简单，稳定性更高。<br>内存操作快：<br>Redis 所有数据都在内存中操作，本身就非常快，单线程处理效率就足够高，不是瓶颈。<br>原子性天然保证：<br>同一时间只有一个命令在执行，天然具备原子性，简化了事务、并发控制的处理。<br>顺序执行有利于调试和可控性：<br>命令执行顺序可预测，系统行为更可控。<br>✅ 三、那 Redis 是完全单线程吗？<br>不是的，从 Redis 6.0 开始，引入了多线程的 I&#x2F;O 模块，主要优化的是：<br>连接建立<br>读写网络数据<br>协议解析前的准备工作<br>这部分耗时在高并发下影响大，使用多线程后，可以充分利用多核 CPU 资源，降低网络 I&#x2F;O 阻塞带来的开销。<br>⚠️ 注意：核心命令执行逻辑仍然是单线程的！<br>✅ 四、总结一句话：<br>Redis 是<strong>“单线程为主 + 多线程做 I&#x2F;O 辅助”的模型</strong>，<br>既保证了执行的简单与安全，又在 Redis 6.0 后实现了更好的性能优化。</p>
+<h2 id="Redis的持久化方式有哪些"><a href="#Redis的持久化方式有哪些" class="headerlink" title="Redis的持久化方式有哪些"></a>Redis的持久化方式有哪些</h2><p>✅ 1. RDB（快照）持久化   (一个按时间保存 一个按命令记录)<br>方式：在某个时间点，将内存中的数据生成快照，保存为 .rdb 文件（二进制格式）。<br>触发时机：<br>手动执行 SAVE 或 BGSAVE 命令<br>或通过配置的保存策略自动触发（如 save 900 1）<br>优点：体积小、恢复快、适合全量备份<br>缺点：可能会丢失最近一次快照之后的数据（不实时）<br>✅ 2. AOF（Append Only File）日志持久化<br>方式：将 Redis 的每一条写命令（如 SET, DEL）以日志方式追加写入到 .aof 文件。<br>刷盘策略：<br>每次写入都同步（最安全但最慢）<br>每秒同步（默认）<br>操作系统控制刷盘（性能最好）<br>优点：数据更完整，丢失更少（几乎实时）<br>缺点：文件体积较大，恢复速度较慢<br>✅ 3. 混合持久化（Hybrid）<br>方式：从 Redis 4.0 开始，支持将 RDB 快照 + AOF 日志融合为一个 AOF 文件。<br>过程：先写入一个 RDB 格式的内存快照，然后继续以 AOF 方式记录写操作。<br>优点：同时具备 RDB 的快速恢复能力 + AOF 的数据完整性<br>✅ 总结一句话：<br>Redis 有 RDB 快照（按时间保存）、AOF 日志（按命令记录）和混合持久化三种机制，<br>实际使用中可以单独使用，也可以搭配使用以实现更高的数据可靠性。</p>
 <h2 id="Redis-有什么优缺点？为什么-Redis-查询会比较快？"><a href="#Redis-有什么优缺点？为什么-Redis-查询会比较快？" class="headerlink" title="Redis 有什么优缺点？为什么 Redis 查询会比较快？"></a>Redis 有什么优缺点？为什么 Redis 查询会比较快？</h2><p>优点：<br>基于内存：读写速度非常快，适用于需要高性能的场景，如 缓存、消息队列、分布式锁 和 键值存储。<br>丰富的数据结构：支持字符串、哈希、列表、集合、有序集合等多种数据类型，方便处理不同的应用场景。<br>分布式特性：可以将数据分布在多个节点上，提高 可扩展性 和 可用性，并支持主从复制、哨兵和集群模式。<br>缺点：<br>受限于物理内存：由于数据存储在内存中，存储空间受到物理内存的限制，存储超大数据时不适合。<br>高内存成本：相比磁盘存储，内存成本较高，因此存储大量数据时需要付出较高的成本。</p>
 <p>2 基于内存操作：Redis 数据完全存储在内存中，减少了磁盘 I&#x2F;O 操作，大幅提升了查询速度。<br>高效的数据结构：Redis 使用 专门设计的数据结构（如字符串、哈希、列表、集合等）优化了读写操作，提升了查询效率。<br>单线程模型：Redis 采用单线程处理请求，省去了上下文切换的开销，避免了多线程带来的资源竞争和死锁问题。<br>I&#x2F;O 多路复用：Redis 使用 I&#x2F;O 多路复用机制，可以同时监听多个请求，根据事件处理不同的客户端请求，减少了阻塞操作，提高了并发性能。</p>
 <h2 id="介绍一下Redis缓存雪崩和缓存穿透，如何解决这些问题？"><a href="#介绍一下Redis缓存雪崩和缓存穿透，如何解决这些问题？" class="headerlink" title="介绍一下Redis缓存雪崩和缓存穿透，如何解决这些问题？"></a>介绍一下Redis缓存雪崩和缓存穿透，如何解决这些问题？</h2><p>缓存雪崩是指在某个时间点，大量缓存同时失效，导致请求直接访问数据库或其他后端系统，增加了系统负载。<br>对于缓存雪崩，可以通过合理设置缓存的过期时间，分散缓存失效时间点，或者采用永不过期的策略，再结合定期更新缓存。</p>
@@ -239,6 +247,398 @@
 <h2 id="指针和引用的区别"><a href="#指针和引用的区别" class="headerlink" title="指针和引用的区别"></a>指针和引用的区别</h2><p>指针和引用的主要区别在于本质、初始化方式、可变性和用法。<br>指针是一个变量，存储另一个变量的地址，可以为空（比如设为 nullptr），也可以随时指向别的地址；<br>引用是变量的别名，定义时必须初始化，而且一旦绑定就不能再改为引用别的变量，也不能是空引用。<br>操作上，指针需要通过 * 解引用、通过 &amp; 取地址，而引用使用起来和变量本身一样，不需要额外操作符。<br>用途方面：<br>指针更灵活，适用于动态内存管理、数据结构操作（比如链表）；<br>引用更安全，常用于函数参数传递（特别是避免拷贝开销）或运算符重载等场景。<br>简单说，引用更像“语法糖”，更安全，但灵活性不如指针。</p>
 <h2 id="C-内存分区"><a href="#C-内存分区" class="headerlink" title="C++内存分区"></a>C++内存分区</h2><p>栈区（Stack）：由编译器自动管理，存储局部变量和函数调用时的上下文，比如函数参数、返回地址等。特点是分配释放快，但空间较小。<br>堆区（Heap）：由程序员手动管理，用于动态分配内存，比如使用 new&#x2F;delete 或 malloc&#x2F;free。不及时释放可能造成内存泄漏。<br>全局&#x2F;静态区：用于存储全局变量和静态变量，这部分内存在程序整个生命周期内都存在。具体来说又可以细分为：<br>数据段：放初始化过的全局&#x2F;静态变量；<br>BSS 段：放未初始化的全局&#x2F;静态变量，系统会自动初始化为 0。</p>
 <p>常量区：存放像字符串常量、const 修饰的全局变量等不可修改的数据，通常是只读的。<br>代码段：也叫 text segment，存放程序的机器指令，也就是代码本身，这部分一般是只读的。</p>
+<h2 id="static关键字和const关键字的作用"><a href="#static关键字和const关键字的作用" class="headerlink" title="static关键字和const关键字的作用"></a>static关键字和const关键字的作用</h2><p>static 和 const 是 C++ 中两个常用的关键字，分别用于控制生命周期&#x2F;作用域和只读性。<br>🔹 static 的作用：<br>静态变量：在函数内部声明 static 变量，它只会初始化一次，生命周期直到程序结束，适合保存函数的状态；<br>类的静态成员变量：属于整个类而不是某个对象，所有对象共享同一份数据；<br>静态成员函数：在类内使用static关键字修饰的成员函数，所有对象共享同一个函数；静态成员函数只能访问静态成员变量；静态成员函数调用可以不需要通过创建类的实例，而是直接通过类名调用。<br>作用域控制：在全局或文件作用域中，static 还可以限制函数或变量只能在本文件中使用（编译单元私有）。<br>静态变量在多线程环境中要注意线程安全。</p>
+<p>🔹 const 的作用：<br>const变量：定义不可修改的值，防止意外修改；<br>const成员函数：承诺不会修改对象的成员变量；<br>const指针：可以限定“指针的值”或“指向的对象”是只读的；<br>const 本质上强调“只读”，而且天然具有线程安全性。<br>static + const 可以组合使用<br>常用于类中的静态常量，比如定义全局配置信息，既不变又共享。</p>
+<p>🔚 总结一句话：<br>static 控生命周期和作用域，const 控只读性；<br>一个管“活多久和谁能用”，一个管“能不能改”。</p>
+<h2 id="常量指针和指针常量之间有什么区别"><a href="#常量指针和指针常量之间有什么区别" class="headerlink" title="常量指针和指针常量之间有什么区别"></a>常量指针和指针常量之间有什么区别</h2><p>常量指针”和 “指针常量”是两种不同的概念，它们的区别主要在于它们所指向的数据是否可以被修改，以及它们自己的值是否可以改变。<br>常量指针是指指针所指向的数据是常量，不能通过这个指针来修改它指向的数据。但是，指针本身的值（即它所指向的地址）是可以改变的。<br>指针常量是指指针本身的值是常量，一旦被初始化后就不能指向其他地址。但是，它所指向的数据是可以修改的（除非那个数据本身是常量）<br>也可以同时使用 const 关键字来定义一个指针，既是常量指针又是指针常量，即它所指向的数据不能被修改，同时指针本身的值也不能改变。<br>总结<br>常量指针：可以改变指针本身的值，但不能修改它所指向的数据。<br>指针常量：指针本身的值不能改变，但可以修改它所指向的数据（除非数据本身是常量）。</p>
+<h2 id="结构体和类的区别"><a href="#结构体和类的区别" class="headerlink" title="结构体和类的区别"></a>结构体和类的区别</h2><p>在 C++ 中，struct 和 class 的本质是一样的，两者都可以有成员变量、成员函数、构造函数、继承和多态。<br>它们的主要区别在于默认访问权限和默认继承方式：<br>struct 默认的成员和继承是 public；<br>class 默认的成员和继承是 private。<br>其他方面，如是否能定义模板、是否能写成员函数、继承虚函数等，其实都是支持的。<br>使用习惯上：<br>struct 更多用于表示一些简单的数据结构，比如 POD（plain old data）类型，类似于 C 语言中的数据块；<br>class 更常用于真正的面向对象设计，比如封装、继承、多态等。<br>总结一句话：<br>struct 和 class 在 C++ 中功能几乎一样；<br>区别只在默认权限不同；<br>语义上通常用 struct 表示“数据”，用 class 表示“对象”。</p>
+<h2 id="什么是智能指针-有哪几种智能指针"><a href="#什么是智能指针-有哪几种智能指针" class="headerlink" title="什么是智能指针 有哪几种智能指针"></a>什么是智能指针 有哪几种智能指针</h2><p>在 C++ 中，智能指针是一种自动管理动态内存的工具类，用于避免手动调用 delete 带来的内存泄漏或悬空指针问题。<br>智能指针会在对象生命周期结束时，自动释放所管理的内存资源。<br>C++11 起，标准库中提供了三种主要的智能指针：<br>✅ 1. std::unique_ptr —— 独占式智能指针<br>只能有一个 unique_ptr 拥有同一块内存资源（不可拷贝，只能移动）。<br>离开作用域时自动释放资源。<br>适合对象所有权唯一、不共享的场景，比如栈对象、局部资源等。<br>📌 关键词：独占、不可共享、资源唯一。<br>✅ 2. std::shared_ptr —— 引用计数型智能指针<br>多个 shared_ptr 可以共同指向同一个资源。<br>内部使用引用计数机制来记录有多少个指针在共享资源。<br>当最后一个 shared_ptr 被销毁时，才释放资源。<br>适合多个对象需要共享同一资源的场景。<br>📌 关键词：共享、引用计数、生命周期自动管理。<br>✅ 3. std::weak_ptr —— 弱引用智能指针<br>不拥有对象，仅作为 shared_ptr 的旁观者。<br>用于解决 shared_ptr 循环引用的问题，不会增加引用计数。<br>通常用于观察者模式或缓存系统中。<br>📌 关键词：不参与计数、解决循环引用、配合 shared_ptr 使用。<br>✅ 总结一句话：<br>智能指针让我们写 C++ 时不再担心手动释放内存：<br>unique_ptr 独占资源，shared_ptr 共享资源，weak_ptr 安全旁观。</p>
+<h2 id="智能指针的原理"><a href="#智能指针的原理" class="headerlink" title="智能指针的原理"></a>智能指针的原理</h2><p>在 C++11 中，智能指针是一种自动管理内存资源的封装类模板，主要通过析构时释放资源 + 引用计数机制来避免内存泄漏。三种核心智能指针分别如下：<br>✅ 1. std::unique_ptr —— 独占式智能指针<br>核心原理：确保资源在任何时刻只被一个指针拥有。<br>实现方式：<br>禁用拷贝构造和拷贝赋值（&#x3D; delete）<br>提供移动构造和移动赋值，实现所有权转移<br>析构时自动调用 delete 释放资源<br>📌 特点：轻量、安全、无引用计数，适合独占资源的场景。<br>✅ 2. std::shared_ptr —— 引用计数式智能指针<br>核心原理：多个 shared_ptr 共享资源，通过引用计数决定何时释放。<br>实现方式：<br>每个资源对应一个控制块（control block）<br>控制块中包含：<br>资源指针<br>引用计数（use_count）<br>每次拷贝&#x2F;赋值引用计数+1，销毁&#x2F;重置引用计数-1<br>当引用计数为 0，资源与控制块一并销毁<br>📌 特点：适合多个对象共享同一资源的场景。<br>✅ 3. std::weak_ptr —— 非拥有型智能指针<br>核心原理：观察 shared_ptr 管理的资源，不增加引用计数。<br>实现方式：<br>weak_ptr 指向 shared_ptr 的控制块<br>不参与资源生命周期控制<br>使用 lock() 可临时转换为 shared_ptr 使用资源</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">std::shared_ptr&lt;Person&gt; p = std::<span class="built_in">make_shared</span>&lt;Person&gt;();</span><br><span class="line">std::weak_ptr&lt;Person&gt; wp = p;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">auto</span> sp = wp.<span class="built_in">lock</span>()) &#123;</span><br><span class="line">    sp-&gt;<span class="built_in">sayHello</span>();  <span class="comment">// ✅ 资源还在，临时用 shared_ptr 使用对象</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;对象已经被释放，不能用了\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用途：用于解决 shared_ptr 的循环引用问题<br>📌 特点：轻量、安全，常用于缓存、观察者等非强依赖场景。<br>✅ 总结一句话：<br>unique_ptr 独占资源，不拷贝只转移；<br>shared_ptr 通过引用计数共享资源；<br>weak_ptr 观察资源，打破循环引用，防止内存泄漏。</p>
+<h2 id="new-和-malloc-的区别"><a href="#new-和-malloc-的区别" class="headerlink" title="new 和 malloc 的区别"></a>new 和 malloc 的区别</h2><p>在 C++ 中，new 和 malloc 都可以用于动态内存分配，但它们在语法、类型安全、构造析构和异常处理等方面有明显区别。<br>一、语法层面：<br>new 是 C++ 的运算符，可以直接用于分配对象或对象数组。<br>malloc 是 C 语言的函数，需要包含 <cstdlib> 头文件，只负责分配一块原始内存。<br>二、类型安全：<br>new 是类型安全的，分配时会自动推导和返回正确类型的指针。<br>malloc 返回的是 void*，需要手动强制类型转换。<br>三、构造和析构行为：<br>new 分配内存的同时会自动调用构造函数，释放时用 delete，会自动调用析构函数。<br>malloc 只负责内存分配，不会调用构造函数，释放时用 free，也不会自动调用析构函数，如果是类对象，必须手动调用析构函数。<br>四、异常处理：<br>new 分配失败时会抛出 std::bad_alloc 异常。<br>malloc 分配失败时返回 NULL 指针，程序员需要手动判断。<br>五、内存管理机制：<br>new 和 delete 是由 C++ 编译器管理的，符合面向对象的语言特性。<br>malloc 和 free 是 C 标准库提供的，更底层，和编译器无关。<br>✅ 总结一句话：<br>new 提供类型安全、自动构造与析构，更符合 C++ 的设计理念；<br>malloc 更底层，仅适合手动内存管理，不建议在现代 C++ 中直接使用。</p>
+<h2 id="delete和free的区别"><a href="#delete和free的区别" class="headerlink" title="delete和free的区别"></a>delete和free的区别</h2><p>在 C++ 中，delete 和 free 都可以用来释放动态内存，但它们的适用场景、语法行为和底层机制都有明显不同：<br>一、语法和来源<br>delete 是 C++ 的关键字，用于释放 new 分配的对象或数组。<br>free 是 C 语言的函数，定义在 <cstdlib>（或 &lt;stdlib.h&gt;）中，用于释放 malloc 分配的内存。<br>二、对象销毁行为<br>使用 delete 释放对象时，会自动调用析构函数，用于清理资源。<br>使用 free 只释放内存，不调用析构函数。如果释放 C++ 对象，需要手动调用析构函数后再 free。<br>三、数组处理方式<br>C++ 中，如果是数组，必须使用 delete[] 来释放；否则行为未定义。对应着new[]创建<br>C 中没有数组区分，所有 malloc 分配的内存都统一用 free 释放。<br>四、类型检查和安全性<br>delete 会进行类型检查，确保类型匹配。<br>free 不进行类型检查，参数为 void*，不感知实际类型。<br>五、返回值处理<br>delete 没有返回值，执行后指针仍然有效（需手动设为 nullptr）。<br>free 也没有返回值，释放失败时也不会提示，可能导致悬空指针。<br>⚠️ 注意：你原文说 “delete 之后指针会自动置为 nullptr” 是错误的，不会自动变为 nullptr，必须手动置空 👇</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> ptr;</span><br><span class="line">ptr = <span class="literal">nullptr</span>;  <span class="comment">// 必须手动写</span></span><br></pre></td></tr></table></figure>
+<p>✅ 总结一句话：<br>delete 是 C++ 专用，自动调用析构函数，类型安全；<br>free 是 C 风格，只释放内存，不会清理对象，不适合处理 C++ 对象。</p>
+<h2 id="什么是内存泄漏，如何检测和防止"><a href="#什么是内存泄漏，如何检测和防止" class="headerlink" title="什么是内存泄漏，如何检测和防止"></a>什么是内存泄漏，如何检测和防止</h2><p>当程序在内存池中动态申请了一块内存而没有及时释放，这块内存就会一直处于占用状态，无法被其他操作使用，从而造成资源浪费。虽然这块内存并没有物理上“消失”，但由于程序无法再访问它，外界就认为这块内存“泄漏”了。<br>内存泄漏的常见原因包括：</p>
+<ol>
+<li>忘记释放内存<br>使用 new 或 malloc 分配内存后，没有使用 delete 或 free 进行释放。</li>
+<li>.基类析构函数未定义为虚函数<br>当子类继承父类时，如果父类的析构函数不是 virtual，使用基类指针删除子类对象时不会调用子类析构函数，导致内存未正确释放。</li>
+<li>野指针<br>指针被置为 nullptr 或指向其他地址后，丢失了对原先动态分配内存的引用，导致无法释放。</li>
+<li>循环引用<br>使用引用计数智能指针（如 std::shared_ptr）时，如果两个对象互相持有对方的 shared_ptr，会导致引用计数无法归零，从而内存无法释放。</li>
+<li>释放方式不匹配<br>使用 delete 释放由 new[] 分配的内存，或使用 delete[] 释放由 new 分配的内存，会导致未定义行为，可能引发内存泄漏。</li>
+<li>资源未释放<br>对于文件、网络连接等系统资源，如果没有正确关闭，虽然不属于严格的内存泄漏，但也会占用资源，可能导致资源耗尽。</li>
+</ol>
+<h3 id="检测内存泄漏的方法："><a href="#检测内存泄漏的方法：" class="headerlink" title="检测内存泄漏的方法："></a>检测内存泄漏的方法：</h3><p>可使用以下工具进行检测：<br>Valgrind（Linux 平台）瓦尔格赖（德）<br>AddressSanitizer（跨平台，GCC&#x2F;Clang 支持）啊-dress 三尼-taɪ-zər<br>Visual Studio 内存诊断工具（Windows 平台）</p>
+<h3 id="如何防止内存泄漏："><a href="#如何防止内存泄漏：" class="headerlink" title="如何防止内存泄漏："></a>如何防止内存泄漏：</h3><ol>
+<li>使用智能指针<br>优先使用 std::unique_ptr 或 std::shared_ptr 来自动管理内存，避免手动释放。</li>
+<li>手动释放资源时要谨慎<br>对于必须手动分配的内存，确保在不再需要时及时释放。</li>
+<li>使用内存检测工具<br>在开发和测试阶段，定期使用内存检测工具，及时发现潜在问题。</li>
+</ol>
+<h2 id="什么是野指针"><a href="#什么是野指针" class="headerlink" title="什么是野指针"></a>什么是野指针</h2><p><strong>野指针</strong>是指“指向已经被释放或无效内存地址的指针”。在 C 和 C++ 这类允许直接操作内存的语言中，如果指针没有被正确初始化，或者它所指<code>向的内存已经被释放，那么这个指针就成为了野指针。</code></p>
+<p>使用野指针可能会导致程序崩溃、数据损坏，甚至出现不可预测的行为。</p>
+<hr>
+<h2 id="哪些情况会产生野指针？"><a href="#哪些情况会产生野指针？" class="headerlink" title="哪些情况会产生野指针？"></a>哪些情况会产生野指针？</h2><ol>
+<li><p><strong>释放后未置空指针</strong><br>使用 <code>delete</code> 或 <code>free</code> 释放内存后，如果没有将指针设置为 <code>nullptr</code>，指针仍然指向一块无效内存。</p>
+</li>
+<li><p><strong>返回局部变量的指针</strong><br>如果一个函数返回了指向其局部变量的指针，那么函数返回后这些局部变量就失效了，返回的指针就成了野指针。</p>
+</li>
+<li><p><strong>越界访问</strong><br>指针访问超过其合法内存范围，也可能导致指向无效内存，从而变成野指针。</p>
+</li>
+<li><p><strong>函数参数指针被释放</strong><br>如果一个函数内部错误地释放了通过参数传进来的指针，那么该指针在外部就变成了野指针。</p>
+</li>
+</ol>
+<hr>
+<h2 id="如何避免野指针？"><a href="#如何避免野指针？" class="headerlink" title="如何避免野指针？"></a>如何避免野指针？</h2><ul>
+<li>在释放内存后，**将指针设置为 <code>nullptr</code>**，避免误用。</li>
+<li><strong>不要返回局部变量的指针</strong>，因为它们的生命周期会在函数返回后结束。</li>
+<li><strong>使用智能指针</strong>（如 <code>std::unique_ptr</code> 和 <code>std::shared_ptr</code>），让资源管理自动化，避免手动释放。</li>
+<li><strong>注意指针参数的生命周期管理</strong>，特别要避免在函数内部释放外部传入的资源。</li>
+</ul>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>野指针是“指着不该再用的内存”，它隐蔽又危险，<strong>规范使用指针和资源管理机制</strong>是避免它的关键。</p>
+</blockquote>
+<h2 id="C-面向对象的三大特性"><a href="#C-面向对象的三大特性" class="headerlink" title="C++面向对象的三大特性"></a>C++面向对象的三大特性</h2><p>一、什么是面向对象？<br>面向对象编程（OOP）是 C++ 的核心思想，它通过“对象”组织数据和行为，通过对象间的交互完成任务。<br>核心特性有 三大支柱：封装、继承、多态。<br>二、三大特性详解<br>1️⃣ 封装（Encapsulation）<br>定义：把数据和操作数据的方法封装到一个类中，对外只暴露必要接口。<br>目的：保护内部数据，防止被随意访问或修改，提高代码的安全性和稳定性。<br>关键词：private &#x2F; public、访问权限、接口与实现分离。<br>📌 一句话总结：封装让对象像“黑盒子”，外部只能通过接口与之交互。<br>2️⃣ 继承（Inheritance）<br>定义：一个类（子类）可以继承另一个类（父类）的属性和行为。<br>作用：代码复用 + 建立层次结构 + 易于扩展和维护。<br>关键词：class Derived : public Base<br>📌 一句话总结：继承让“旧类”变成“新类”的起点，写一次复用多次。<br>3️⃣ 多态（Polymorphism）<br>定义：相同的操作作用在不同对象上，表现出不同的行为。<br>实现方式：主要通过虚函数（virtual）+ 指针或引用 + 重写（override）<br>区分：<br>编译时多态：函数重载 &#x2F; 运算符重载<br>运行时多态：虚函数 + 动态绑定<br>📌 一句话总结：多态让“统一的调用”变成“不同的响应”。<br>三、收尾升华（面试通杀）<br>所以，C++ 通过封装保证模块安全，通过继承实现代码复用，通过多态提升扩展能力，这三者构成了面向对象编程的核心基础。</p>
+<h2 id="重载和重写的区别"><a href="#重载和重写的区别" class="headerlink" title="重载和重写的区别"></a>重载和重写的区别</h2><p>重载和重写是两种不同的概念，它们都用于实现多态性，但方式和使用场景有所不同。<br>重载：在同一个类或命名空间中，声明多个同名函数， 但是参数列表不同。编译器根据参数的类型、数量或顺序来区分不同的函数。<br>重写：重写发生在继承体系中，在子类中，声明一个与父类中虚函数具有相同名称、相同参数列表和相同返回类型的函数，并在子类函数前加上 override 关键字。<br>区别：<br>作用域：重载发生在同一个作用域内，而重写发生在继承体系中。<br>参数列表：对于重载的函数，参数列表必须不同；对于重写的函数，参数列表必须与被重写的函数完全相同。<br>返回类型：重载函数的返回类型可以不同，但重写函数的返回类型必须与被重写的函数相同（或与之兼容，C++中称为协变返回类型）。<br>虚函数：重写通常与虚函数一起使用，以实现运行时多态性；而重载是编译时多态性，由编译器在编译期间确定调用哪个函数。<br>关键字：重写函数可以使用 override 关键字，明确指出该函数是对父类虚函数的重写。</p>
+<h2 id="C-怎么实现多态"><a href="#C-怎么实现多态" class="headerlink" title="C++怎么实现多态"></a>C++怎么实现多态</h2><p>C++ 的多态分为两类：</p>
+<ul>
+<li><strong>编译时多态</strong>（也被称为静态多态）</li>
+<li><strong>运行时多态</strong>（也被称为动态多态）</li>
+</ul>
+<hr>
+<h2 id="一、编译时多态"><a href="#一、编译时多态" class="headerlink" title="一、编译时多态"></a>一、编译时多态</h2><p>编译时多态在 <strong>编译期间</strong> 就确定了具体的函数或类型调用方式，由编译器根据函数的签名或模板实例化选择正确的函数或实例。</p>
+<h3 id="常见实现方式："><a href="#常见实现方式：" class="headerlink" title="常见实现方式："></a>常见实现方式：</h3><ul>
+<li><p><strong>函数重载（Function Overloading）</strong>：<br>允许在同一作用域内声明多个同名函数，只要它们的参数列表不同。</p>
+</li>
+<li><p><strong>运算符重载（Operator Overloading）</strong>：<br>允许为自定义类型定义或修改运算符的行为。</p>
+</li>
+<li><p><strong>模板（Templates）</strong>：<br>允许创建泛型类和函数，使代码能够适用于多种数据类型。</p>
+</li>
+</ul>
+<hr>
+<h2 id="二、运行时多态"><a href="#二、运行时多态" class="headerlink" title="二、运行时多态"></a>二、运行时多态</h2><p>运行时多态主要通过<strong>虚函数和抽象类</strong>实现。父类中定义虚函数，子类中重写该虚函数，通过基类指针或引用在运行时调用时，由程序根据对象实际类型决定调用哪个函数。</p>
+<h3 id="常见实现方式：-1"><a href="#常见实现方式：-1" class="headerlink" title="常见实现方式："></a>常见实现方式：</h3><ul>
+<li><p><strong>虚函数（Virtual Functions）</strong>：<br>在基类中定义虚函数，派生类可以重写这些函数，实现多态行为。</p>
+</li>
+<li><p><strong>抽象类（Abstract Classes）</strong>：<br>包含至少一个纯虚函数的类，不能被实例化，但可以作为其他类的基类。</p>
+</li>
+</ul>
+<hr>
+<h2 id="三、运行时多态的实现原理"><a href="#三、运行时多态的实现原理" class="headerlink" title="三、运行时多态的实现原理"></a>三、运行时多态的实现原理</h2><p>运行时多态依赖以下两个机制：</p>
+<ul>
+<li><strong>虚函数表（vtable）</strong></li>
+<li><strong>虚函数指针（vptr）</strong></li>
+</ul>
+<h3 id="具体说明："><a href="#具体说明：" class="headerlink" title="具体说明："></a>具体说明：</h3><ul>
+<li>当类中包含虚函数时，编译器会为该类创建一个虚函数表（vtable），表中记录所有虚函数的地址。</li>
+<li>每个对象中包含一个指向虚函数表的指针（vptr）。</li>
+<li>子类的虚函数表会继承父类的表，并将被重写的函数地址覆盖原有的对应项。</li>
+<li>当通过基类指针或引用调用虚函数时，程序在运行时会通过 vptr 定位到 vtable，并调用实际对象对应的函数，从而实现多态。</li>
+</ul>
+<hr>
+<h2 id="虚函数和纯虚函数的区别"><a href="#虚函数和纯虚函数的区别" class="headerlink" title="虚函数和纯虚函数的区别"></a>虚函数和纯虚函数的区别</h2><p>虚函数和纯虚函数都用于实现 <strong>多态性（Polymorphism）</strong>。</p>
+<hr>
+<h2 id="一、虚函数（Virtual-Function）"><a href="#一、虚函数（Virtual-Function）" class="headerlink" title="一、虚函数（Virtual Function）"></a>一、虚函数（Virtual Function）</h2><ul>
+<li>在普通成员函数前加上 <code>virtual</code> 关键字。</li>
+<li>在<strong>基类中声明</strong>，可以在<strong>派生类中被重写（override）</strong>。</li>
+<li>可以<strong>有实现</strong>（即函数体）：<ul>
+<li>派生类可以选择是否提供自己的实现；</li>
+<li>也可以使用基类的默认实现。</li>
+</ul>
+</li>
+<li>通过虚函数，可以在<strong>基类指针或引用中实现动态绑定</strong>，<br>即在运行时决定调用哪一个类中的函数实现（运行时多态）。</li>
+</ul>
+<hr>
+<h2 id="二、纯虚函数（Pure-Virtual-Function）"><a href="#二、纯虚函数（Pure-Virtual-Function）" class="headerlink" title="二、纯虚函数（Pure Virtual Function）"></a>二、纯虚函数（Pure Virtual Function）</h2><ul>
+<li>在虚函数声明后加上 <code>= 0</code>，例如：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">func</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">只有函数声明，没有实现。</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>当一个类中包含至少一个纯虚函数，它就成为了一个抽象类（Abstract Class）：</p>
+<p>抽象类不能被实例化；</p>
+<p>但可以声明该类型的指针或引用；</p>
+<p>通常用于定义接口，要求派生类提供具体实现。</p>
+<h2 id="三、区别对比"><a href="#三、区别对比" class="headerlink" title="三、区别对比"></a>三、区别对比</h2><ol>
+<li>是否有实现<br>虚函数：提供函数声明和默认实现。<br>纯虚函数：只有函数声明，没有具体实现。</li>
+<li>派生类是否必须重写<br>虚函数：派生类可以选择是否重写。<br>纯虚函数：派生类必须提供实现，否则该派生类也变成抽象类。</li>
+<li>是否可实例化<br>包含虚函数的类：只要不含纯虚函数，可以被实例化。<br>包含纯虚函数的类：是抽象类，不能被实例化。</li>
+<li>使用目的<br>虚函数：用于提供可被重写的默认方法，实现多态。<br>纯虚函数：用于定义接口规范，强制派生类必须实现。</li>
+<li>动态绑定行为<br>虚函数：支持动态绑定。<br>纯虚函数：本身不参与动态绑定（因为没有实现），但作为接口的组成部分影响多态性。</li>
+</ol>
+<h2 id="四、总结表格"><a href="#四、总结表格" class="headerlink" title="四、总结表格"></a>四、总结表格</h2><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>虚函数</th>
+<th>纯虚函数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>是否有实现</td>
+<td>有默认实现</td>
+<td>无实现（只有声明）</td>
+</tr>
+<tr>
+<td>是否必须重写</td>
+<td>可选</td>
+<td>必须重写</td>
+</tr>
+<tr>
+<td>是否可实例化</td>
+<td>可实例化</td>
+<td>不可实例化（抽象类）</td>
+</tr>
+<tr>
+<td>使用目的</td>
+<td>提供默认行为，支持多态</td>
+<td>定义接口规范，强制实现</td>
+</tr>
+<tr>
+<td>是否支持多态</td>
+<td>支持</td>
+<td>本身不绑定，但影响类的多态性</td>
+</tr>
+</tbody></table>
+<h2 id="虚函数是怎么实现的"><a href="#虚函数是怎么实现的" class="headerlink" title="虚函数是怎么实现的"></a>虚函数是怎么实现的</h2><p>一、核心结论一句话：<br>虚函数是通过“虚函数表（vtable）”和“虚指针（vptr）”机制实现的动态绑定。<br>二、实现机制逐步拆解<br>✅ 1. 虚函数表（vtable）是什么？<br>编译器为含有虚函数的类生成一个 虚函数表。<br>它本质上是一个函数指针数组，每个元素指向类的一个虚函数实现。<br>✅ 2. 虚指针（vptr）是什么？<br>编译器会在类的每个对象中插入一个隐藏指针（vptr）。<br>这个指针指向对象所属类的 vtable。<br>✅ 3. 调用过程（动态绑定）<br>当通过 基类指针或引用 调用虚函数时：<br>程序通过对象的 vptr 找到其对应的 vtable<br>在 vtable 中查找对应函数的指针<br>然后调用该函数（实现动态派发）<br>三、重写虚函数的处理<br>当派生类重写基类的虚函数时：<br>编译器会在派生类的 vtable 中用新的函数地址替换基类的对应项。<br>所以用基类指针指向派生类对象时，仍然能调用到派生类的版本。<br>四、总结口诀：<br>每个类有一个虚表（vtable），<br>每个对象有一个虚指针（vptr），<br>虚表里放的是虚函数地址，<br>调用虚函数就靠它们动态派发。<br>五、面试收尾升华一句话：<br>所以虚函数底层就是通过 vtable 和 vptr 实现的多态机制，解决了运行时动态选择函数版本的问题，也是 C++ 实现面向对象多态性的关键。</p>
+<h2 id="什么是虚函数表"><a href="#什么是虚函数表" class="headerlink" title="什么是虚函数表"></a>什么是虚函数表</h2><p>一、核心定义<br>虚函数表（vtable）是 C++ 实现运行时多态（动态绑定）的关键机制。<br>它是一个由函数指针组成的表，用于在运行时决定调用哪个虚函数版本。<br>二、虚函数表的组成和作用<br>✅ 内容：存的是类中所有虚函数的地址（函数指针数组）。<br>✅ 目的：当我们通过基类指针或引用调用虚函数时，能够根据对象的真实类型，调用正确的派生类函数实现。<br>三、工作原理（一步步理解）<br>1️⃣ 编译器生成虚表<br>只要类里有至少一个虚函数，编译器就会为这个类生成一张虚函数表。<br>每个虚函数在表里占一个“入口”，表项指向函数实现。<br>2️⃣ 每个对象含有一个隐藏的虚函数表指针（vptr）<br>vptr 是一个隐藏成员变量，它指向该对象所属类的虚函数表。<br>每个对象都有自己的 vptr，但它们一般共享同一张虚表。<br>3️⃣ 调用虚函数时的过程</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Base* ptr = <span class="keyword">new</span> <span class="built_in">Derived</span>();</span><br><span class="line">ptr-&gt;<span class="built_in">f</span>(); <span class="comment">// 实际调用 Derived::f()，不是 Base::f()</span></span><br></pre></td></tr></table></figure>
+<p>调用流程：<br>通过 ptr 找到对象的 vptr<br>vptr 指向虚表<br>在虚表中查找 f() 对应的地址<br>跳转到 Derived::f() 执行<br>四、总结记忆口诀<br>虚函数进表，<br>每类一表，<br>每个对象一个指针（vptr）指向它；<br>调用走表，<br>动态派发靠它查！<br>五、面试结尾升华一句话<br>所以虚函数表是 C++ 实现面向对象多态性的核心机制，它让程序能够在运行时根据对象的真实类型调用正确的函数，实现动态绑定。</p>
+<h2 id="什么是构造函数和析构函数？构造函数、析构函数可以是虚函数嘛"><a href="#什么是构造函数和析构函数？构造函数、析构函数可以是虚函数嘛" class="headerlink" title="什么是构造函数和析构函数？构造函数、析构函数可以是虚函数嘛"></a>什么是构造函数和析构函数？构造函数、析构函数可以是虚函数嘛</h2><h2 id="一、构造函数（Constructor）"><a href="#一、构造函数（Constructor）" class="headerlink" title="一、构造函数（Constructor）"></a>一、构造函数（Constructor）</h2><p>构造函数是在创建对象时<strong>自动调用</strong>的成员函数，作用是：</p>
+<ul>
+<li>初始化成员变量；</li>
+<li>分配资源（如内存）；</li>
+<li>执行其他必要的初始化操作。</li>
+</ul>
+<h3 id="📌-特点"><a href="#📌-特点" class="headerlink" title="📌 特点"></a>📌 特点</h3><ul>
+<li>函数名必须与类名<strong>完全相同</strong>；</li>
+<li>没有返回类型（甚至不能写 <code>void</code>）；</li>
+<li>可以<strong>重载</strong>（即：可以定义多个构造函数）；</li>
+<li>如果没有定义，编译器会自动生成一个<strong>默认构造函数</strong>；</li>
+<li><strong>构造函数不能是虚函数</strong>。</li>
+</ul>
+<hr>
+<h2 id="❗-为什么构造函数不能是虚函数？"><a href="#❗-为什么构造函数不能是虚函数？" class="headerlink" title="❗ 为什么构造函数不能是虚函数？"></a>❗ 为什么构造函数不能是虚函数？</h2><ol>
+<li><strong>构造函数在对象创建前就需要调用</strong>，而虚函数的调用机制依赖于对象的虚函数表（vtable），这个表是在对象构造完成之后才设置的；</li>
+<li><strong>虚函数是运行时绑定</strong>，而构造函数需要在<strong>编译期就确定</strong>；</li>
+<li>如果允许构造函数是虚的，创建派生类对象时就可能存在<strong>多重候选构造函数</strong>，造成<strong>调用二义性</strong>；</li>
+<li>构造函数常用于分配资源，如内存、文件句柄等；若无法确定调用哪个构造函数，就无法正确初始化资源；</li>
+<li>C++中，<strong>基类构造函数总在派生类构造函数之前调用</strong>，若构造函数为虚的，就无法保证这种顺序；</li>
+<li>构造函数是对象生命周期的<strong>起点</strong>，虚函数在生命周期内起作用，二者在时机上不兼容。</li>
+</ol>
+<hr>
+<h2 id="二、析构函数（Destructor）"><a href="#二、析构函数（Destructor）" class="headerlink" title="二、析构函数（Destructor）"></a>二、析构函数（Destructor）</h2><p>析构函数是在对象生命周期结束时<strong>自动调用</strong>的函数，主要负责：</p>
+<ul>
+<li>释放对象持有的资源（如堆内存）；</li>
+<li>执行清理操作。</li>
+</ul>
+<h3 id="📌-特点-1"><a href="#📌-特点-1" class="headerlink" title="📌 特点"></a>📌 特点</h3><ul>
+<li>函数名为 <code>~类名</code>；</li>
+<li><strong>没有参数</strong>，也没有返回值；</li>
+<li>可以定义，也可以使用编译器自动生成的默认析构函数；</li>
+<li><strong>析构函数可以是虚函数</strong>。</li>
+</ul>
+<hr>
+<h2 id="✅-为什么析构函数可以（而且应当）是虚函数？"><a href="#✅-为什么析构函数可以（而且应当）是虚函数？" class="headerlink" title="✅ 为什么析构函数可以（而且应当）是虚函数？"></a>✅ 为什么析构函数可以（而且应当）是虚函数？</h2><ul>
+<li>析构函数作为多态类的成员，<strong>必须是虚的</strong>，才能在通过基类指针删除派生类对象时，<strong>正确调用派生类的析构函数</strong>；</li>
+<li>如果不是虚析构，只有基类的析构函数会被调用，派生类资源不会被释放，<strong>可能导致资源泄漏</strong>。</li>
+</ul>
+<hr>
+<h2 id="三、经典示例"><a href="#三、经典示例" class="headerlink" title="三、经典示例"></a>三、经典示例</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Base</span>() &#123; cout &lt;&lt; <span class="string">&quot;Base constructor\n&quot;</span>; &#125;</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">Base</span>() &#123; cout &lt;&lt; <span class="string">&quot;Base destructor\n&quot;</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Derived</span>() &#123; cout &lt;&lt; <span class="string">&quot;Derived constructor\n&quot;</span>; &#125;</span><br><span class="line">    ~<span class="built_in">Derived</span>() &#123; cout &lt;&lt; <span class="string">&quot;Derived destructor\n&quot;</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Base* obj = <span class="keyword">new</span> <span class="built_in">Derived</span>();</span><br><span class="line">    <span class="keyword">delete</span> obj; <span class="comment">// 正确释放基类和派生类资源（因为Base析构是virtual的）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Base constructor<br>Derived constructor<br>Derived destructor<br>Base destructor</p>
+<h2 id="C-构造函数有哪些"><a href="#C-构造函数有哪些" class="headerlink" title="C++构造函数有哪些"></a>C++构造函数有哪些</h2><p>在C++中，构造函数有几种不同的类型，每种都有其特定的作用：</p>
+<p>默认构造函数：没有参数的构造函数，用于创建对象的默认实例。<br>参数化构造函数：带参数的构造函数，允许在创建对象时初始化成员变量。<br>拷贝构造函数：以同一类的实例为参数的构造函数，用于复制已有对象。<br>移动构造函数：以同一类的实例的右值引用为参数，用于利用即将销毁的对象的资源。<br>转换构造函数：允许将其他类型或值隐式转换为当前类类型的实例。<br>委托构造函数：一个构造函数调用另一个构造函数来完成初始化，可以是同一个类的其他构造函数。<br>初始化列表构造函数：使用成员初始化列表来初始化成员变量，这是最高效的初始化方式。<br>常量构造函数：声明为const的构造函数，可以用于创建常量对象。<br>⚠️ 注意：你提到的“常量构造函数”其实并不存在。构造函数不能声明为 const，因为它会修改对象状态。<br>🧠 正确说法应该是：构造函数可以构造出 const 对象，但自身不能是 const 的。<br>📌 示例：<br>const A a(5);  &#x2F;&#x2F; OK，构造出来的对象是 const 的<br>constexpr构造函数：允许在编译时初始化对象，用于定义和初始化字面量类型的对象。<br>每种构造函数的使用场景不同，例如：</p>
+<h2 id="默认构造函数用于快速创建对象，而不需要显式提供任何初始化参数。参数化构造函数提供了灵活性，允许在创建对象时定制其状态。拷贝构造函数和移动构造函数分别用于对象的复制和移动，是实现资源管理的关键。转换构造函数和委托构造函数提供了更灵活的对象初始化方式。初始化列表构造函数是C-中推荐的成员初始化方式，因为它可以提高效率。-常用容器有哪些C-STL-提供了多种容器，主要分为三类：序列容器、关联容器-和-容器适配器。"><a href="#默认构造函数用于快速创建对象，而不需要显式提供任何初始化参数。参数化构造函数提供了灵活性，允许在创建对象时定制其状态。拷贝构造函数和移动构造函数分别用于对象的复制和移动，是实现资源管理的关键。转换构造函数和委托构造函数提供了更灵活的对象初始化方式。初始化列表构造函数是C-中推荐的成员初始化方式，因为它可以提高效率。-常用容器有哪些C-STL-提供了多种容器，主要分为三类：序列容器、关联容器-和-容器适配器。" class="headerlink" title="默认构造函数用于快速创建对象，而不需要显式提供任何初始化参数。参数化构造函数提供了灵活性，允许在创建对象时定制其状态。拷贝构造函数和移动构造函数分别用于对象的复制和移动，是实现资源管理的关键。转换构造函数和委托构造函数提供了更灵活的对象初始化方式。初始化列表构造函数是C++中推荐的成员初始化方式，因为它可以提高效率。## 常用容器有哪些C++ STL 提供了多种容器，主要分为三类：序列容器、关联容器 和 容器适配器。"></a>默认构造函数用于快速创建对象，而不需要显式提供任何初始化参数。<br>参数化构造函数提供了灵活性，允许在创建对象时定制其状态。<br>拷贝构造函数和移动构造函数分别用于对象的复制和移动，是实现资源管理的关键。<br>转换构造函数和委托构造函数提供了更灵活的对象初始化方式。<br>初始化列表构造函数是C++中推荐的成员初始化方式，因为它可以提高效率。<br>## 常用容器有哪些<br>C++ STL 提供了多种容器，主要分为三类：<strong>序列容器</strong>、<strong>关联容器</strong> 和 <strong>容器适配器</strong>。</h2><h2 id="一、序列容器（Sequence-Containers）"><a href="#一、序列容器（Sequence-Containers）" class="headerlink" title="一、序列容器（Sequence Containers）"></a>一、序列容器（Sequence Containers）</h2><p>按元素插入顺序存储，常用于线性结构。</p>
+<ul>
+<li>**<code>std::vector</code>**：动态数组，支持快速随机访问。</li>
+<li>**<code>std::deque</code>**：双端队列，支持从两端快速插入和删除。</li>
+<li>**<code>std::list</code>**：双向链表，适合频繁的插入和删除操作。</li>
+<li>**<code>std::forward_list</code>**：单向链表，仅支持向前遍历，内存开销更小。</li>
+<li>**<code>std::array</code>**：固定大小的数组，大小在编译时确定，内存为静态分配。</li>
+</ul>
+<hr>
+<h2 id="二、关联容器（Associative-Containers）"><a href="#二、关联容器（Associative-Containers）" class="headerlink" title="二、关联容器（Associative Containers）"></a>二、关联容器（Associative Containers）</h2><p>基于平衡树（如红黑树）或哈希表，提供高效的查找和排序。</p>
+<h3 id="🌲-有序容器（基于红黑树）："><a href="#🌲-有序容器（基于红黑树）：" class="headerlink" title="🌲 有序容器（基于红黑树）："></a>🌲 有序容器（基于红黑树）：</h3><ul>
+<li>**<code>std::set</code>**：存储唯一元素，自动排序（默认升序）。</li>
+<li>**<code>std::multiset</code>**：允许有重复元素，自动排序。</li>
+<li>**<code>std::map</code>**：键值对映射，键唯一，自动排序。</li>
+<li>**<code>std::multimap</code>**：允许多个相同键的键值对。</li>
+</ul>
+<h3 id="🔢-无序容器（基于哈希表）："><a href="#🔢-无序容器（基于哈希表）：" class="headerlink" title="🔢 无序容器（基于哈希表）："></a>🔢 无序容器（基于哈希表）：</h3><ul>
+<li>**<code>std::unordered_set</code>**：哈希集合，元素唯一，平均查找时间复杂度 O(1)。</li>
+<li>**<code>std::unordered_map</code>**：哈希映射，存储键值对，键唯一，无序。</li>
+</ul>
+<hr>
+<h2 id="三、容器适配器（Container-Adapters）"><a href="#三、容器适配器（Container-Adapters）" class="headerlink" title="三、容器适配器（Container Adapters）"></a>三、容器适配器（Container Adapters）</h2><p>对底层容器进行封装，提供特定接口行为。</p>
+<ul>
+<li>**<code>std::stack</code>**：栈，后进先出（LIFO）。</li>
+<li>**<code>std::queue</code>**：队列，先进先出（FIFO）。</li>
+<li>**<code>std::priority_queue</code>**：优先队列，元素按优先级自动排序（默认大顶堆）。</li>
+</ul>
+<hr>
+<h2 id="💡-小结记忆口诀（可选）"><a href="#💡-小结记忆口诀（可选）" class="headerlink" title="💡 小结记忆口诀（可选）"></a>💡 小结记忆口诀（可选）</h2><ul>
+<li><strong>vector &#x2F; deque &#x2F; list</strong> 是拿来“排队”的；</li>
+<li><strong>set &#x2F; map</strong> 是用来“查找”的；</li>
+<li><strong>stack &#x2F; queue &#x2F; priority_queue</strong> 是用来“排流程”的；</li>
+<li><strong>unordered_xxx</strong> 是查找更快但不排序的版本。</li>
+</ul>
+<h2 id="浅拷贝和深拷贝的区别"><a href="#浅拷贝和深拷贝的区别" class="headerlink" title="浅拷贝和深拷贝的区别"></a>浅拷贝和深拷贝的区别</h2><h2 id="一、浅拷贝（Shallow-Copy）"><a href="#一、浅拷贝（Shallow-Copy）" class="headerlink" title="一、浅拷贝（Shallow Copy）"></a>一、浅拷贝（Shallow Copy）</h2><h3 id="✅-定义："><a href="#✅-定义：" class="headerlink" title="✅ 定义："></a>✅ 定义：</h3><p>浅拷贝<strong>仅复制对象本身的值</strong>，不复制对象内部<strong>指向的动态内存</strong>，多个对象共享同一份资源。</p>
+<h3 id="🔧-实现方式："><a href="#🔧-实现方式：" class="headerlink" title="🔧 实现方式："></a>🔧 实现方式：</h3><ul>
+<li>默认的复制构造函数</li>
+<li>默认的赋值运算符 <code>=</code></li>
+</ul>
+<h3 id="⭐-特点："><a href="#⭐-特点：" class="headerlink" title="⭐ 特点："></a>⭐ 特点：</h3><ul>
+<li>拷贝快，只复制基本成员变量。</li>
+<li>如果包含指针，多个对象会指向同一块内存，可能出现：<ul>
+<li><strong>悬空指针（Dangling Pointer）</strong></li>
+<li><strong>重复释放内存（Double Free）</strong></li>
+</ul>
+</li>
+<li>易出 bug，资源管理不安全。</li>
+</ul>
+<hr>
+<h2 id="二、深拷贝（Deep-Copy）"><a href="#二、深拷贝（Deep-Copy）" class="headerlink" title="二、深拷贝（Deep Copy）"></a>二、深拷贝（Deep Copy）</h2><h3 id="✅-定义：-1"><a href="#✅-定义：-1" class="headerlink" title="✅ 定义："></a>✅ 定义：</h3><p>深拷贝不仅复制对象的成员变量，还会<strong>重新分配内存并复制指针指向的内容</strong>，实现完全独立的副本。</p>
+<h3 id="🔧-实现方式：-1"><a href="#🔧-实现方式：-1" class="headerlink" title="🔧 实现方式："></a>🔧 实现方式：</h3><ul>
+<li>需要<strong>自定义复制构造函数</strong>和<strong>赋值运算符</strong></li>
+<li>使用 <code>new</code> 手动分配内存，并进行内容拷贝</li>
+</ul>
+<h3 id="⭐-特点：-1"><a href="#⭐-特点：-1" class="headerlink" title="⭐ 特点："></a>⭐ 特点：</h3><ul>
+<li>拷贝慢，因为涉及内存分配和内容复制；</li>
+<li>但更<strong>安全可靠</strong>，每个对象管理自己的资源，避免资源冲突；</li>
+<li>不会出现共享内存导致的问题。</li>
+</ul>
+<hr>
+<h2 id="三、对比总结"><a href="#三、对比总结" class="headerlink" title="三、对比总结"></a>三、对比总结</h2><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>浅拷贝</th>
+<th>深拷贝</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>拷贝内容</td>
+<td>对象本身（指针地址）</td>
+<td>对象本身 + 指针所指内容</td>
+</tr>
+<tr>
+<td>内存使用</td>
+<td>多个对象共享同一份资源</td>
+<td>每个对象独立拥有一份资源</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>拷贝快</td>
+<td>拷贝慢</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>可能导致悬空指针、重复释放等问题</td>
+<td>安全，资源独立管理</td>
+</tr>
+<tr>
+<td>是否需要自定义构造函数</td>
+<td>不需要</td>
+<td>通常需要自定义复制构造或赋值运算</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="四、小例子（加深理解）"><a href="#四、小例子（加深理解）" class="headerlink" title="四、小例子（加深理解）"></a>四、小例子（加深理解）</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span>* data;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 浅拷贝（默认构造）</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">const</span> MyClass&amp; other) &#123;</span><br><span class="line">        data = other.data; <span class="comment">// 指针共享</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 深拷贝（自定义）</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">const</span> MyClass&amp; other) &#123;</span><br><span class="line">        data = <span class="keyword">new</span> <span class="built_in">int</span>(*other.data); <span class="comment">// 创建一份新拷贝</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="C-STL-中-vector-和-list-的区别"><a href="#C-STL-中-vector-和-list-的区别" class="headerlink" title="C++ STL 中 vector 和 list 的区别"></a>C++ STL 中 vector 和 list 的区别</h2><h2 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h2><ul>
+<li><p><strong>基于动态数组</strong>：<code>std::vector</code> 基于可以动态扩展的数组实现，元素在内存中是连续存储的。</p>
+</li>
+<li><p><strong>随机访问</strong>：提供快速的随机访问能力，可以通过索引快速访问任何元素。</p>
+</li>
+<li><p><strong>内存分配</strong>：内存分配较紧凑，元素紧密排列，没有额外空间用于指针或链接。</p>
+</li>
+<li><p><strong>时间复杂度</strong>：</p>
+<ul>
+<li><strong>元素访问</strong>：<code>O(1)</code>，即常数时间复杂度。</li>
+<li><strong>插入和删除</strong>：在末尾是 <code>O(1)</code>，但如果在中间插入或删除，可能需要 <code>O(n)</code>，因为需要移动后续所有元素。</li>
+</ul>
+</li>
+<li><p><strong>内存管理</strong>：使用连续内存分配，能利用缓存优化访问速度。</p>
+</li>
+</ul>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><ul>
+<li><p><strong>基于双向链表</strong>：<code>std::list</code> 基于双向链表，元素通过节点链接到前后元素。</p>
+</li>
+<li><p><strong>非连续存储</strong>：元素在内存中不连续存储，每个元素包含指向前后元素的指针。</p>
+</li>
+<li><p><strong>时间复杂度</strong>：</p>
+<ul>
+<li><strong>元素访问</strong>：<code>O(n)</code>，需要从头开始遍历到所需位置。</li>
+<li><strong>插入和删除</strong>：特别高效，尤其是插入或删除中间元素时，操作为 <code>O(1)</code>，前提是已有指向目标元素的迭代器。</li>
+</ul>
+</li>
+<li><p><strong>内存管理</strong>：由于指针链接，内存分配较分散，但插入和删除操作不需要移动其他元素。</p>
+</li>
+</ul>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><ul>
+<li><p>**<code>std::vector</code>**：</p>
+<ul>
+<li>需要快速随机访问元素时。</li>
+<li>需要在末尾快速添加或删除元素时。</li>
+<li>需要关心内存使用效率时。</li>
+</ul>
+</li>
+<li><p>**<code>std::list</code>**：</p>
+<ul>
+<li>需要高效在列表中间插入或删除元素时。</li>
+<li>不需要随机访问元素时。</li>
+<li>需要一个灵活容器来动态地添加和删除元素而不会导致大量内存复制或移动时。</li>
+</ul>
+</li>
+</ul>
+<h2 id="vector-底层原理和扩容过程"><a href="#vector-底层原理和扩容过程" class="headerlink" title="vector 底层原理和扩容过程"></a>vector 底层原理和扩容过程</h2><h2 id="一、底层原理"><a href="#一、底层原理" class="headerlink" title="一、底层原理"></a>一、底层原理</h2><ul>
+<li><code>vector</code> 是 C++ STL 中的动态数组容器，底层通过在 <strong>堆</strong> 上分配一块 <strong>连续内存空间</strong> 来存储元素。</li>
+<li>支持 <strong>O(1)</strong> 时间复杂度的随机访问（可以像数组一样通过下标访问）。</li>
+</ul>
+<h3 id="内部结构"><a href="#内部结构" class="headerlink" title="内部结构"></a>内部结构</h3><p><code>vector</code> 底层维护了：</p>
+<ul>
+<li><p><strong>三个指针（迭代器）</strong>：</p>
+<ul>
+<li><code>begin</code>：指向起始元素位置；</li>
+<li><code>end</code>：指向最后一个元素之后的位置；</li>
+<li><code>end_of_storage</code>：指向整块内存空间的末尾。</li>
+</ul>
+</li>
+<li><p><strong>两个变量</strong>：</p>
+<ul>
+<li><code>size</code>：当前已存储的元素个数；</li>
+<li><code>capacity</code>：当前分配的最大存储容量（不一定等于 size）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><ul>
+<li>创建 <code>vector</code> 时会分配一块初始内存，默认大小为 0，也可以通过构造函数指定。</li>
+<li>添加或删除元素时，只需调整 <code>end</code> 指针，不涉及移动整个内存块（前提是不扩容）。</li>
+</ul>
+<hr>
+<h2 id="二、扩容机制"><a href="#二、扩容机制" class="headerlink" title="二、扩容机制"></a>二、扩容机制</h2><p>当添加的元素数 <strong>超过当前 capacity</strong> 时，会触发扩容操作：</p>
+<ol>
+<li>重新申请一块<strong>更大的内存空间</strong>；</li>
+<li>将旧元素 <strong>拷贝到新内存</strong>；</li>
+<li>释放旧内存；</li>
+<li>更新指针和容量。</li>
+</ol>
+<p>⚠️ 注意：<strong>扩容会使原来的指针和迭代器失效</strong>，必须使用新返回的指针或迭代器。</p>
+<hr>
+<h2 id="三、扩容策略"><a href="#三、扩容策略" class="headerlink" title="三、扩容策略"></a>三、扩容策略</h2><h3 id="1-固定扩容（Fixed-Growth）"><a href="#1-固定扩容（Fixed-Growth）" class="headerlink" title="1. 固定扩容（Fixed Growth）"></a>1. 固定扩容（Fixed Growth）</h3><ul>
+<li>每次扩容按固定大小增加（例如每次增加 N 个元素容量）。</li>
+<li>缺点：可能频繁扩容，导致效率低。</li>
+</ul>
+<h3 id="2-加倍扩容（Doubling-Growth）"><a href="#2-加倍扩容（Doubling-Growth）" class="headerlink" title="2. 加倍扩容（Doubling Growth）"></a>2. 加倍扩容（Doubling Growth）</h3><ul>
+<li>每次扩容时将当前容量翻倍。</li>
+<li>优点：扩容次数少，摊销时间复杂度更低；</li>
+<li>缺点：可能造成内存浪费，空间利用率低。</li>
+</ul>
+<hr>
+<h2 id="四、总结一句话"><a href="#四、总结一句话" class="headerlink" title="四、总结一句话"></a>四、总结一句话</h2><blockquote>
+<p>vector 底层是一个支持快速访问的动态数组，随着元素增加自动扩容，扩容时通过重新分配内存并拷贝旧数据来实现，通常采用<strong>加倍策略</strong>以提升性能。</p>
+</blockquote>
+<h2 id="push-back-和emplace-back的区别"><a href="#push-back-和emplace-back的区别" class="headerlink" title="push_back 和emplace_back的区别"></a>push_back 和emplace_back的区别</h2><p>在 C++ 中，push_back() 和 emplace_back() 都是标准库容器（如 std::vector）用于在末尾添加元素的方法，但它们的实现机制有所不同：<br>✅ push_back()<br>用法：container.push_back(value);<br>作用：将一个已构造好的对象（可以是拷贝或移动构造）添加到容器末尾。<br>特点：需要先构造出一个对象，再通过拷贝或移动的方式插入容器。<br>✅ emplace_back()<br>用法：container.emplace_back(args…);<br>作用：直接在容器的内存空间中构造对象，即”就地构造”。<br>特点：不需要预先创建对象，传入构造参数，容器内部直接调用构造函数。<br>🔧 性能比较：<br>emplace_back() 通常比 push_back() 更高效，因为它避免了临时对象的创建和复制&#x2F;移动操作。<br>特别是在构造代价较高或者禁止复制的对象类型上，emplace_back() 的优势更明显。</p>
+<h2 id="map-deque-list"><a href="#map-deque-list" class="headerlink" title="map deque list"></a>map deque list</h2><p>STL 常见容器的实现原理：map、list、deque<br>🟥 std::map —— 基于红黑树的有序关联容器<br>底层结构：采用红黑树（一种自平衡的二叉搜索树）实现。<br>自动排序：元素按照键值自动排序，通常依据 &lt; 运算符定义的顺序。<br>键唯一性：每个键只能出现一次，不允许重复。<br>性能特点：<br>查找 &#x2F; 插入 &#x2F; 删除：O(log n)<br>迭代器特性：支持有序遍历（中序遍历），迭代器稳定，但不支持随机访问。<br>🟦 std::list —— 基于双向链表的序列容器<br>底层结构：双向链表，每个节点包含前驱和后继指针。<br>元素顺序：按插入顺序维护，无自动排序。<br>性能特点：<br>任意位置插入 &#x2F; 删除：O(1)（需已知位置）<br>查找：O(n)<br>迭代器特性：只支持顺序访问（前进&#x2F;后退），不支持随机访问（比如用 [] 不行）。<br>🟨 std::deque —— 双端队列，基于分段数组实现<br>底层结构：动态分段数组，不是单块连续内存，支持前后扩展。<br>两端操作高效：支持从头部和尾部高效插入&#x2F;删除。<br>性能特点：<br>头尾插入&#x2F;删除：O(1)<br>中间插入&#x2F;删除：O(n)（因为可能涉及元素移动）<br>迭代器特性：支持随机访问（如 vec[i]），性能类似 vector。</p>
+<h2 id="map-和unordered-map的区别"><a href="#map-和unordered-map的区别" class="headerlink" title="map 和unordered_map的区别"></a>map 和unordered_map的区别</h2><p>一、核心区别一句话总结<br>map 用红黑树，有序；unordered_map 用哈希表，无序。<br>二、std::map 的特点（关键词：有序 &#x2F; 红黑树）<br>✅ 底层结构：基于红黑树，属于自平衡二叉搜索树。<br>✅ 元素有序：自动按键的大小关系排序（按 &lt; 运算符）。<br>✅ 键唯一：不允许重复键。<br>✅ 时间复杂度：查找 &#x2F; 插入 &#x2F; 删除操作都是 O(log n)。<br>✅ 迭代器稳定：除非删除元素，其他插入&#x2F;修改操作不会使迭代器失效。<br>✅ 适用场景：当需要有序遍历或者对迭代器稳定性有要求时使用。<br>三、std::unordered_map 的特点（关键词：无序 &#x2F; 哈希表）<br>✅ 底层结构：基于哈希表实现。<br>✅ 元素无序：不能按照键的顺序遍历。<br>✅ 键唯一：同样不允许重复键；冲突通过链表或开放寻址解决。<br>✅ 时间复杂度：<br>平均：查找 &#x2F; 插入 &#x2F; 删除为 O(1)<br>最坏：退化到 O(n)<br>⚠️ 迭代器不稳定：rehash 可能使所有迭代器失效。<br>✅ 适用场景：当只关心查找效率，不关心顺序时使用。<br>五、结尾升华一句话（面试收尾用）<br>所以，当我需要有序数据结构或稳定遍历时我会选用 map，否则我更倾向于使用性能更高的 unordered_map。</p>
+<h2 id="C-11的新特性"><a href="#C-11的新特性" class="headerlink" title="C++ 11的新特性"></a>C++ 11的新特性</h2><p>一、类型推导（Type Deduction）<br>✅ auto<br>编译器自动推导变量类型，省去了显式声明。<br>👉 例：auto x &#x3D; 1.0; 推导为 double<br>✅ decltype<br>根据表达式的类型来声明变量类型，不会真正执行表达式。<br>👉 例：decltype(x + y) z &#x3D; 0;<br>二、范围 for 循环（Range-based for）<br>✅ 更简洁的容器遍历方式<br>👉 例：for (auto&amp; elem : vec) { … }<br>替代 begin() ~ end() 循环，代码更清晰。<br>三、Lambda 表达式（匿名函数）<br>✅ 在需要的地方内联定义函数对象，简洁高效。<br>👉 例：auto f &#x3D; [](int a, int b) { return a + b; };<br>用于算法、自定义排序、回调等场景。<br>四、智能指针（Smart Pointer）<br>✅ 自动管理内存，避免内存泄露<br>std::unique_ptr：独占所有权，不可拷贝<br>std::shared_ptr：引用计数，可共享所有权<br>五、右值引用 &amp; 移动语义<br>✅ 引入 T&amp;&amp; 右值引用，实现资源的“移动”而非“复制”<br>👉 适用于临时对象、提升性能<br>移动构造函数 &#x2F; 移动赋值运算符<br>std::move() 用于将左值转换为右值<br>六、nullptr 关键字<br>✅ 新的空指针类型，替代 NULL 和 0<br>👉 明确表示指针为空，更类型安全，防止重载歧义<br>七、补充记忆建议（可选扩展）<br>可提一句还有如下 C++11 常用特性（但不需要展开）：<br>constexpr：编译期常量<br>static_assert：静态断言<br>std::function、std::bind：函数封装与绑定<br>thread、mutex：多线程支持</p>
 
       
     </div>
